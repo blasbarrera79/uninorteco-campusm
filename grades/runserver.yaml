@@ -1,6 +1,0 @@
-homepage:
-  menu:
-    replace:
-
-      - desc: My New Screen
-        screenName: grades
