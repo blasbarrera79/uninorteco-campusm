@@ -1,0 +1,19 @@
+<<
+@configure
+  connected:true
+  scripts:[
+    "grades"
+  ]
+>>
+ 
+<< extend "templates/master.ect" >>
+ 
+<< block "init": >>
+{# using create_service to define a service - often used for third-party vendor integrations #}
+{% if aek.action == "get-grades" %}
+    {% set get_service = aek.create_service("https://intunqa.uninorte.edu.co/sba-estudiantes/api/v1/notas-parciales") %}
+    {{ get_service.set_method("POST") }}
+    {{ aek.respond(get_service.json) }}
+{% endif %}
+
+<< end >>
