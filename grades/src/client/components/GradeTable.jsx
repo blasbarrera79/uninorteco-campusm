@@ -9,8 +9,18 @@ import {
   TableRow,
   Typography,
 } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  GradeCell: {
+    textAlign: "end",
+  },
+});
 
 const GradeTable = ({ items }) => {
+
+  const classes = useStyles();
+
   return (
     <Table>
       <TableBody>
@@ -18,7 +28,7 @@ const GradeTable = ({ items }) => {
           items.map((item, index) => (
             <TableRow key={index}>
               <TableCell>{item.name}</TableCell>
-              <TableCell>{item.value}</TableCell>
+              <TableCell className={classes.GradeCell}>{item.value}</TableCell>
             </TableRow>
           ))
         ) : (
