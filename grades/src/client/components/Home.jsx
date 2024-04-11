@@ -8,7 +8,9 @@ import GradeCard from "./GradeCard";
 // for a server action located at `/src/server/dosomething.action.twig`
 
 const useStyles = makeStyles({
-  container: {},
+  container: {
+    padding:'0',
+  },
 });
 
 export default function Screen() {

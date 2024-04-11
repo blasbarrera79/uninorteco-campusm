@@ -8,7 +8,7 @@ import GradeTable from "./GradeTable";
 
 const useStyles = makeStyles({
   CardContent: {
-    padding: "0 2em",
+    borderRadius: '0px',
     "&:last-child": {
       paddingBottom: "unset",
     },
@@ -19,7 +19,7 @@ const GradeCard = ({ gradeName, items }) => {
   const classes = useStyles();
 
   return (
-    <Card style={{ marginTop: "1em" }}>
+    <Card className={classes.CardContent}>
       <GradeHeader gradeName={gradeName} />
       <CardContent className={classes.CardContent}>
         <GradeTable items={items} />
