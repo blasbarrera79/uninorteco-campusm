@@ -1,0 +1,6 @@
+homepage:
+  menu:
+    replace:
+
+      - desc: Calificaciones
+        screenName: grades
