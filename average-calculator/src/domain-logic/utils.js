@@ -77,35 +77,6 @@ function computeWeightedAverageGivenTotalWeight(grades, weights, totalWeight) {
   return weightedSum / totalWeight;
 }
 
-/**
- * Given a list of grades and a list of weights, compute the weighted average.
- * This function is different from computeWeightedAverage because it takes the total weight as a parameter. This is useful when you want to compute the weighted average of a subset of components.
- *
- * Both grades and weights can be empty.
- *
- * @param grades the list of grades. grades are between 0 and 5.
- * @param weights the list of weights. weigths can be any number, but they must be positive
- * @param totalWeight the total weight of the components
- * @returns the weighted average
- */
-function computeWeightedAverageGivenTotalWeight(grades, weights, totalWeight) {
-  checkGradesAndWeightsLenght(grades, weights);
-
-  if (totalWeight <= 0) {
-    throw new DomainError(
-      "El peso total debe ser mayor a 0",
-      ErrorCode.INVALID_LOGIC
-    );
-  }
-
-  const weightedSum = grades.reduce((sum, grade, index) => {
-    const weight = weights[index];
-    return sum + grade * weight;
-  }, 0);
-
-  return weightedSum / totalWeight;
-}
-
 function computeNeededGrade(
   desiredGrade,
   currentGrade,

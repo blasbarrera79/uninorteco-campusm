@@ -1,10 +1,4 @@
 import { useEffect, useState } from "react";
-import { AppLogger } from "../../../core/config/logger";
-import { Course, PartialComponent } from "../../../core/entities/course";
-
-const myLogger = AppLogger.getAppLogger().createContextLogger(
-  "partial-components-hook"
-);
 
 /**
  * Props for the usePartialComponents hook

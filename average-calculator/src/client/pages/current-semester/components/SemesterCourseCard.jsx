@@ -1,14 +1,15 @@
 import React from "react";
-import { Typography, Link as MuiLink } from "@mui/material";
+import Typography from '@material-ui/core/Typography';
+import { Link as MuiLink } from "@material-ui/core/Link";
 import { Link } from "react-router-dom";
-import { Stack } from "../../../components/Stack";
+import { Stack } from "../../components/Stack";
 import { CardLockButton } from "../../common/components/lockIconButtons";
-import { BaseCard } from "../../../components/BaseCard";
+import { BaseCard } from "../../components/BaseCard";
 import { GradeTextField } from "../../common/components/GradeTextField";
 import {
   containOnlyValidGrades,
   getCourseParcelacionMessage,
-} from "../../../core/domain-logic/course-utils";
+} from "../../../../domain-logic/utils";
 
 /**
  * Props for the ParcelacionTypography component.
@@ -29,8 +30,7 @@ function ParcelacionTypography({ isSpecialCourse, parcelacionUrl, message }) {
       <Typography
         variant="body2"
         color="textSecondary"
-        sx={{ display: "flex", alignItems: "center", width: "fit-content" }}
-      >
+        sx={{ display: "flex", alignItems: "center", width: "fit-content" }}>
         {message}
       </Typography>
     );
@@ -42,8 +42,7 @@ function ParcelacionTypography({ isSpecialCourse, parcelacionUrl, message }) {
       color="textSecondary"
       component={Link}
       to={parcelacionUrl}
-      style={{ textDecoration: "none" }}
-    >
+      style={{ textDecoration: "none" }}>
       {message}
     </MuiLink>
   );
@@ -67,7 +66,8 @@ export function SemesterCourseCard({
   onGradeChange,
   onLockIconPress,
 }) {
-  const disableTextField = onLockIconPress !== undefined && semesterCourse.isLocked;
+  const disableTextField =
+    onLockIconPress !== undefined && semesterCourse.isLocked;
   const bgProps = disableTextField ? { backgroundColor: "#f8f8f8" } : {};
 
   const isSpecialCourse = !containOnlyValidGrades(semesterCourse);
@@ -79,7 +79,10 @@ export function SemesterCourseCard({
     <BaseCard sx={bgProps}>
       <Stack sx={{ flexGrow: 1 }}>
         <Typography variant="h4">{semesterCourse.name}</Typography>
-        <Typography variant="body2" color="textSecondary" sx={{ mb: 3 }}>
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          sx={{ mb: 3 }}>
           Créditos: {semesterCourse.credits}
         </Typography>
         <ParcelacionTypography

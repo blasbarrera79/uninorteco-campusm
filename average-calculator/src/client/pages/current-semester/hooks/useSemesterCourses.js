@@ -1,16 +1,10 @@
 import { useEffect, useState } from "react";
-import { AppLogger } from "../../../core/config/logger";
-import { sortSemesterCoursesByCredits } from "../../../core/domain-logic/course-utils";
-
-const myLogger = AppLogger.getAppLogger().createContextLogger(
-  "semester-courses-hook"
-);
+import { sortSemesterCoursesByCredits } from "../../../../domain-logic/utils";
 
 export function useSemesterCourses({ academicSemester }) {
   const [courses, setCourses] = useState([]);
 
   const onGradeChange = (id, grade) => {
-    myLogger.debug("grade changed", { id, grade });
     const newCourses = courses.map((course) => {
       if (course.id === id) {
         return { ...course, grade };

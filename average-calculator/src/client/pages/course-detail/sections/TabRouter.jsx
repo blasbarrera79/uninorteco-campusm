@@ -1,9 +1,8 @@
 import React from "react";
-import { CircularProgress } from "@ellucian/react-design-system/core";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { FinalGradeCourse } from "./FinalGradeCourse";
 import { HowMuchCourse } from "./HowMuchCourse";
-import { Stack } from "../../../components/Stack";
-import { Course } from "../../../core/entities/course";
+import { Stack } from "../../components/Stack";
 
 export function TabRouter({ index, course }) {
   if (index === 0) {

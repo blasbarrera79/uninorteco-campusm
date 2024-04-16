@@ -1,7 +1,7 @@
 import React from "react";
-import { Icon } from "@ellucian/ds-icons/lib";
-
-import { IconButton, Tooltip } from "@ellucian/react-design-system/core";
+import Icon from "@material-ui/core/Icon";
+import { IconButton } from "@material-ui/core";
+import Tooltip from "@material-ui/core/Tooltip";
 
 export function BaseLockIconButton({ onClick, toolTipTitle, iconName }) {
   return (

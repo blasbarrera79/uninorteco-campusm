@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { Typography } from "@ellucian/react-design-system/core";
 import { useFinalPGA } from "./useFinalPGA";
 import { CoursesContainer } from "../../../common/components/CoursesContainer";
 import { PGASemesterCard } from "../../components/PGASemesterCard";
 import { PGAInfoModal } from "../../components/PGAInfoModal";
-import { ClickableTypography } from "../../../../components/ClickableTypography";
+import { ClickableTypography } from "../../../components/ClickableTypography";
 
 export function FinalPGA({ academicInfo }) {
   const { finalPGA, onGradeChange, semesterAverage } = useFinalPGA({ academicInfo });

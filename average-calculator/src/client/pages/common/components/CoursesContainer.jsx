@@ -1,6 +1,6 @@
 import React from "react";
-import { Box } from "../../../components/Box";
-import { withStyles } from "@ellucian/react-design-system/core/styles";
+import { Box } from "../../components/Box";
+import { withStyles } from "@material-ui/core/styles";
 
 export function CoursesContainer({ children, sxProps, classes }) {
   return (

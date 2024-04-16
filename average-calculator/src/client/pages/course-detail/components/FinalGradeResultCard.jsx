@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Typography } from "@ellucian/react-design-system/core";
-import { Stack } from "../../../components/Stack";
-import { BaseCard } from "../../../components/BaseCard";
+import Typography from '@material-ui/core/Typography';
+import { Stack } from "../../components/Stack";
+import { BaseCard } from "../../components/BaseCard";
 import { CourseInfoModal } from "./CourseInfoModal";
-import { ClickableTypography } from "../../../components/ClickableTypography";
+import { ClickableTypography } from "../../components/ClickableTypography";
 
 /**
  * Props for the FinalGradeResultCard component

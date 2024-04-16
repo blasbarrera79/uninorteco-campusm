@@ -1,6 +1,6 @@
 import React from "react";
-import { Typography } from "@ellucian/react-design-system/core";
-import { InfoModal } from "../../../components/InfoModal";
+import { Typography } from "@material-ui/core/Typography";
+import { InfoModal } from "../../components/InfoModal";
 
 /**
  * Props for the CourseInfoModal component

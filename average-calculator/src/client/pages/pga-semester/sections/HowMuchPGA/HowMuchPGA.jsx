@@ -1,5 +1,6 @@
 import React from "react";
-import { Snackbar, Button } from "@ellucian/react-design-system/core";
+import Button from '@material-ui/core/Button';
+import { Snackbar } from "@material-ui/core/Snackbar";
 import { useHowMuchPGA } from "./useHowMuchPGA";
 import { CoursesContainer } from "../../../common/components/CoursesContainer";
 import { PGASemesterCard } from "../../components/PGASemesterCard";

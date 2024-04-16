@@ -1,7 +1,7 @@
 import React from "react";
-import { Typography } from "@ellucian/react-design-system/core";
-import { Stack } from "../../../components/Stack";
-import { BaseCard } from "../../../components/BaseCard";
+import { Typography } from "@material-ui/core/Typography";
+import { Stack } from "../../components/Stack";
+import { BaseCard } from "../../components/BaseCard";
 import { GradeTextField } from "../../common/components/GradeTextField";
 
 export function PGASemesterCard({

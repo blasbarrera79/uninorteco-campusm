@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Snackbar } from "@react-design-system/core";
+import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
 import { SemesterCourseCard } from "../../components/SemesterCourseCard";
 import { useHowMuchSemester } from "./useHowMuch";
 import { HowMuchResultCard } from "../../components/HowMuchResultCard";

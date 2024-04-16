@@ -2,7 +2,6 @@ import React from "react";
 import { useFinalGradeCourse } from "./useFinalGrade";
 import { CoursesContainer } from "../../../common/components/CoursesContainer";
 import { PartialComponentCard } from "../../components/PartialComponentCard";
-import { Course } from "../../../../core/entities/course";
 import { FinalGradeResultCard } from "../../components/FinalGradeResultCard";
 
 /**

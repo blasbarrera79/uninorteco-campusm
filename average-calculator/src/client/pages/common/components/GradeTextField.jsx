@@ -1,5 +1,6 @@
 import React from "react";
-import { TextField, makeStyles } from "@ellucian/react-design-system/core";
+import { TextField } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() => ({
   root: {

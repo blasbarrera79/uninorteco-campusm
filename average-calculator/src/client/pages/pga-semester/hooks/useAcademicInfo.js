@@ -1,23 +1,44 @@
 import { useEffect, useState } from "react";
-import { usePageControl } from "@ellucian/experience-extension-utils";
-import { AppLogger } from "../../../core/config/logger";
-import { calculatorRepository } from "../../../core/repositories/repository-factory";
-import { RepositoryError } from "../../../core/common/errors";
+// import { calculatorRepository } from "../../../core/repositories/repository-factory";
+import { RepositoryError } from "../../../../common/errors";
 import { usePageFatalError } from "../../../hooks/usePageFatalError";
-
-const myLogger = AppLogger.getAppLogger().createContextLogger("academic-info-hook");
 
 export function useAcademicInfo() {
   const [academicInfo, setAcademicInfo] = useState(null);
-
-  const { setLoadingStatus } = usePageControl();
   const { setFatalError } = usePageFatalError();
 
   const loadAcademicInfo = async () => {
-    myLogger.info("fetching academic info");
     setLoadingStatus(true);
     try {
-      const currentAcademicInfo = await calculatorRepository.getAcademicInfo();
+      //   const currentAcademicInfo = await calculatorRepository.getAcademicInfo();
+      const currentAcademicInfo = {
+        courses: [
+          {
+            id: "1",
+            name: "Course 1",
+            credits: 3,
+            grade: 4.5,
+            period: "2021-2",
+          },
+          {
+            id: "2",
+            name: "Course 2",
+            credits: 4,
+            grade: 3.5,
+            period: "2021-2",
+          },
+          {
+            id: "3",
+            name: "Course 3",
+            credits: 2,
+            grade: 2.5,
+            period: "2021-2",
+          },
+        ],
+        totalCredits: 9,
+        totalGrade: 3.5,
+      };
+
       myLogger.info("academic info fetched", { currentAcademicInfo });
       setAcademicInfo(currentAcademicInfo);
     } catch (error) {

@@ -1,7 +1,6 @@
-import { withStyles } from "@ellucian/react-design-system/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React, { useEffect } from "react";
-import { usePageControl } from "@ellucian/experience-extension-utils";
 import { useParams } from "react-router-dom";
 import { TabRouter } from "./sections/TabRouter";
 import { useTabLayout } from "../../components/TabLayout/useTabLayout";
@@ -18,7 +17,6 @@ const styles = () => ({
 });
 
 const CourseDetailPage = ({ classes }) => {
-  const { setPageTitle } = usePageControl();
   const { courseId } = useParams();
   const { course } = useCourse({ courseId });
   const { onIndexChange, tabLabels, tabLayoutValue } = useTabLayout({

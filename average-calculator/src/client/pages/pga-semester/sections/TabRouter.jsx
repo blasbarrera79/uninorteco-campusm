@@ -1,9 +1,9 @@
 import React from "react";
-import { CircularProgress } from "@ellucian/react-design-system/core";
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { FinalPGA } from "./FinalPGA";
 import { HowMuchPGA } from "./HowMuchPGA";
 import { useAcademicInfo } from "../hooks/useAcademicInfo";
-import { Stack } from "../../../components/Stack";
+import { Stack } from "../../components/Stack";
 
 export function TabRouter({ index }) {
   const { academicInfo } = useAcademicInfo();

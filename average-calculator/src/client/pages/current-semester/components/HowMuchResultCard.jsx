@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Typography } from "@mui/material";
-import { Stack } from "../../../components/Stack";
+import Typography from '@material-ui/core/Typography';;
+import { Stack } from "../../components/Stack";
 import { SemestreInfoModal } from "./SemestreInfoModal";
-import { BaseCard } from "../../../components/BaseCard";
+import { BaseCard } from "../../components/BaseCard";
 import { GradeTextField } from "../../common/components/GradeTextField";
-import { ClickableTypography } from "../../../components/ClickableTypography";
+import { ClickableTypography } from "../../components/ClickableTypography";
 
 /**
  * Props for the HowMuchResultCard component.
