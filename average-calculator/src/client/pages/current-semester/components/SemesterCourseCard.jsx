@@ -1,15 +1,15 @@
 import React from "react";
 import Typography from '@material-ui/core/Typography';
-import { Link as MuiLink } from "@material-ui/core/Link";
+import { Link as MuiLink } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { Stack } from "../../components/Stack";
+import Stack from "../../components/Stack";
 import { CardLockButton } from "../../common/components/lockIconButtons";
-import { BaseCard } from "../../components/BaseCard";
+import BaseCard from "../../components/BaseCard";
 import { GradeTextField } from "../../common/components/GradeTextField";
 import {
   containOnlyValidGrades,
   getCourseParcelacionMessage,
-} from "../../../../domain-logic/utils";
+} from "../../../../domain-logic/course-utils";
 
 /**
  * Props for the ParcelacionTypography component.

@@ -1,6 +1,6 @@
 import React from "react";
-import { Typography } from "@material-ui/core/Typography";
-import { InfoModal } from "../../components/InfoModal";
+import { Typography } from "@material-ui/core";
+import InfoModal from "../../components/InfoModal";
 
 /**
  * Props for the CourseInfoModal component

@@ -1,30 +1,18 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import CurrentSemesterPage from "../pages/current-semester/CurrentSemesterPage";
 import CourseDetailPage from "../pages/course-detail/CourseDetailPage";
 import PGASemesterPage from "../pages/pga-semester/PGASemesterPage";
 
-export function AppRouter(props) {
-  const { pageInfo } = props;
+export default function Home(props) {
 
   return (
-    <Router basename={pageInfo.basePath}>
-      <Switch>
-        <Route path="/pga">
-          <PGASemesterPage {...props} />
-        </Route>
-        <Route path="/courses/:courseId">
-          <CourseDetailPage {...props} />
-        </Route>
-        <Route path="/">
-          <CurrentSemesterPage {...props} />
-        </Route>
-      </Switch>
+    <Router>
+      <Routes>
+        <Route path="/pga" element={<PGASemesterPage {...props} />} />
+        <Route path="/courses/:courseId" element={<CourseDetailPage {...props} />} />
+        <Route path="/aek/c/average-calculator" element={<CurrentSemesterPage {...props} />} />
+      </Routes>
     </Router>
   );
 }
-
-AppRouter.propTypes = {
-  pageInfo: PropTypes.object,
-};

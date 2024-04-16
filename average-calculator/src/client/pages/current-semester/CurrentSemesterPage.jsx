@@ -4,6 +4,7 @@ import { usePageToolbar } from "../../hooks/usePageToolbar";
 import { TabLayout } from "../../components/TabLayout";
 import { defaultFinalGradeHowMuchTabs } from "../common/utils";
 import { useTabLayout } from "../../components/TabLayout/useTabLayout";
+import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   page: {
@@ -32,8 +33,5 @@ const CurrentSemesterPage = (props) => {
   );
 };
 
-CurrentSemesterPage.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles)(CurrentSemesterPage);

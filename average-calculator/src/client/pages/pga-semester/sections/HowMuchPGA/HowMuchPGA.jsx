@@ -1,6 +1,6 @@
 import React from "react";
 import Button from '@material-ui/core/Button';
-import { Snackbar } from "@material-ui/core/Snackbar";
+import { Snackbar } from "@material-ui/core";
 import { useHowMuchPGA } from "./useHowMuchPGA";
 import { CoursesContainer } from "../../../common/components/CoursesContainer";
 import { PGASemesterCard } from "../../components/PGASemesterCard";

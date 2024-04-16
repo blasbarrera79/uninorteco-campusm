@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function usePageToolbar(
   { primaryCommands = [], menuCommands = [] } = {
@@ -6,7 +6,7 @@ export function usePageToolbar(
     menuCommands: [],
   }
 ) {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   setPageToolbar({
     primaryCommands: [
@@ -14,14 +14,14 @@ export function usePageToolbar(
         icon: "arrow-left",
         label: "Regresar a las asignaturas",
         callback: () => {
-          history.push("/");
+          navigate("/");
         },
       },
       {
         icon: "graduation",
         label: "PGA",
         callback: () => {
-          history.push("/pga");
+          navigate("/pga");
         },
       },
       ...primaryCommands,

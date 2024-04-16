@@ -34,7 +34,7 @@ function checkGradesAndWeightsLenght(grades, weights) {
  * @param weights the list of weights. weigths can be any number, but they must be positive
  * @returns the weighted average
  */
-function computeWeightedAverage(grades, weights) {
+export function computeWeightedAverage(grades, weights) {
   checkGradesAndWeightsLenght(grades, weights);
   checkGradesAndWeightsGt0(grades, weights);
 
@@ -59,7 +59,7 @@ function computeWeightedAverage(grades, weights) {
  * @param totalWeight the total weight of the components
  * @returns the weighted average
  */
-function computeWeightedAverageGivenTotalWeight(grades, weights, totalWeight) {
+export function computeWeightedAverageGivenTotalWeight(grades, weights, totalWeight) {
   checkGradesAndWeightsLenght(grades, weights);
 
   if (totalWeight <= 0) {
@@ -77,7 +77,7 @@ function computeWeightedAverageGivenTotalWeight(grades, weights, totalWeight) {
   return weightedSum / totalWeight;
 }
 
-function computeNeededGrade(
+export function computeNeededGrade(
   desiredGrade,
   currentGrade,
   remainingWeight,
@@ -138,7 +138,7 @@ function computeLostPoints(grades, weights) {
   return lostPoints;
 }
 
-function computeMaximumGrade(lockedGrades, lockedWeights, unlockedWeights) {
+export function computeMaximumGrade(lockedGrades, lockedWeights, unlockedWeights) {
   const unlockedGrades = Array(unlockedWeights.length).fill(5);
 
   const grades = [...lockedGrades, ...unlockedGrades];

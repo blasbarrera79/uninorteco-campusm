@@ -3,7 +3,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { FinalGrade } from "./FinalGrade";
 import { HowMuch } from "./HowMuch";
 import { useAcademicSemester } from "../hooks/useAcademicSemester";
-import { Stack } from "../../components/Stack";
+import Stack from "../../components/Stack";
 
 export function TabRouter({ index }) {
   const { academicSemester } = useAcademicSemester();

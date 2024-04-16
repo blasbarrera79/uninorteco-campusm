@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { calculatorFacade } from  "../../../../../domain-logic/facade";
 
-const myLogger = AppLogger.getAppLogger().createContextLogger("final-pga-hook");
-
 export function useFinalPGA({ academicInfo }) {
   const [semesterAverage, setSemesterAverage] = useState(academicInfo.currentSemesterAverage);
   const [finalPGA, setFinalPGA] = useState(0);

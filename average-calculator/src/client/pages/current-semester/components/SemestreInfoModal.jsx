@@ -1,6 +1,6 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
-import { InfoModal } from "../../components/InfoModal";
+import InfoModal from "../../components/InfoModal";
 
 export function SemestreInfoModal({ setOpen, open }) {
   return (

@@ -1,8 +1,8 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
-import { Stack } from "../../components/Stack";
+import Stack from "../../components/Stack";
 import { CardLockButton } from "../../common/components/lockIconButtons";
-import { BaseCard } from "../../components/BaseCard";
+import BaseCard from "../../components/BaseCard";
 import { GradeTextField } from "../../common/components/GradeTextField";
 
 /**

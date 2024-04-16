@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Typography from '@material-ui/core/Typography';;
-import { Stack } from "../../components/Stack";
+import Typography from "@material-ui/core/Typography";
+import Stack from "../../components/Stack";
 import { SemestreInfoModal } from "./SemestreInfoModal";
-import { BaseCard } from "../../components/BaseCard";
+import BaseCard from "../../components/BaseCard";
 import { GradeTextField } from "../../common/components/GradeTextField";
-import { ClickableTypography } from "../../components/ClickableTypography";
+import ClickableTypography from "../../components/ClickableTypography";
 
 /**
  * Props for the HowMuchResultCard component.
@@ -28,20 +28,34 @@ export function HowMuchResultCard(props) {
   return (
     <BaseCard>
       <Stack sx={{ flexGrow: 1 }}>
-        <Typography variant="h4" sx={{ mb: 1 }}>
+        <Typography
+          variant="h4"
+          sx={{ mb: 1 }}>
           {title}
         </Typography>
-        <Typography variant="body2" color="textSecondary" sx={{ mb: 3 }}>
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          sx={{ mb: 3 }}>
           {subtitle}
         </Typography>
-        <ClickableTypography message={helpMessage} onClick={() => setOpen(true)} />
+        <ClickableTypography
+          message={helpMessage}
+          onClick={() => setOpen(true)}
+        />
       </Stack>
       <Stack sx={{ flexDirection: "row" }}>
         <div style={{ width: 70 }}>
-          <GradeTextField value={value} onGradeChange={onGradeChange} />
+          <GradeTextField
+            value={value}
+            onGradeChange={onGradeChange}
+          />
         </div>
       </Stack>
-      <SemestreInfoModal open={open} setOpen={setOpen} />
+      <SemestreInfoModal
+        open={open}
+        setOpen={setOpen}
+      />
     </BaseCard>
   );
 }

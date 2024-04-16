@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { sortSemesterCoursesByCredits } from "../../../../domain-logic/utils";
+import { sortSemesterCoursesByCredits } from "../../../../domain-logic/course-utils";
 
 export function useSemesterCourses({ academicSemester }) {
   const [courses, setCourses] = useState([]);
