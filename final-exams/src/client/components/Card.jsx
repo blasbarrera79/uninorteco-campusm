@@ -1,6 +1,3 @@
-/* eslint-disable react/jsx-closing-bracket-location */
-/* eslint-disable linebreak-style */
-/* eslint-disable react/prop-types */
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";

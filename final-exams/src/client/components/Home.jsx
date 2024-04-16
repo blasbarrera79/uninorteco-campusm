@@ -1,6 +1,3 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable no-console */
-/* eslint-disable linebreak-style */
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { request } from "@ombiel/aek-lib";
