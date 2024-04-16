@@ -1,5 +1,3 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable linebreak-style */
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 // nimport { request } from "@ombiel/aek-lib";

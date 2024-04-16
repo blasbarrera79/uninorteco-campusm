@@ -1,6 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable linebreak-style */
-/* eslint-disable react/no-array-index-key */
 import React from "react";
 import {
   Table,
@@ -18,7 +15,6 @@ const useStyles = makeStyles({
 });
 
 const GradeTable = ({ items }) => {
-
   const classes = useStyles();
 
   return (
