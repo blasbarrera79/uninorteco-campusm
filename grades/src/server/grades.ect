@@ -12,13 +12,13 @@
 {# using create_service to define a service - often used for third-party vendor integrations #}
 {% if aek.action == "get-user" %}
   {% set service = aek.create_service("https://intunqa.uninorte.edu.co/sba-estudiantes/api/v1/notas-parciales") %}
+  {{ service.set_namespace("") }}
   {{ service.set_method("POST") }} {# Definir el método de solicitud como POST #}
   
   {# Configurar los parámetros de la solicitud usando aek.request #}
   {{ service.set_parameter("user", aek.request("user")) }}
   {{ service.set_parameter("nrc", aek.request("nrc")) }}
   {{ service.set_parameter("periodo", aek.request("periodo")) }}
-  
-  {{ aek.respond(service.json) }}
+  {{ aek.respond({"text": service.raw_response}) }}
 {% endif %}
 << end >>

@@ -1,17 +1,21 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable linebreak-style */
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-// nimport { request } from "@ombiel/aek-lib";
+import { request } from "@ombiel/aek-lib";
 import Container from "@material-ui/core/Container";
 import GradeCard from "./GradeCard";
-// for a server action located at `/src/server/dosomething.action.twig`
+import SelectComponent from "./SelectComponent";
 
 const useStyles = makeStyles({
   container: {
-    padding:'0',
+    padding: "0",
   },
 });
+
+const options = [
+  { value: "202310", label: "202310" },
+  { value: "202320", label: "202320" },
+  { value: "202330", label: "202330" },
+];
 
 export default function Screen() {
   const [subjectsGrades, setSubjectsGrades] = useState([]);
@@ -72,17 +76,30 @@ export default function Screen() {
     matricula();
   }, []);
 
-  /*  request.action("get-user")
-  .send({ user: "vergaradl", nrc: "2217", periodo: "202310" }) // Envía los parámetros al backend
-  .end((err, res) => {
-    console.log(err);
-    console.log(res);
-  });*/
+  request
+    .action("get-user")
+    .send({ user: "vergaradl", nrc: "2217", periodo: "202310" }) // Envía los parámetros al backend
+    .end((err, res) => {
+      console.log(err);
+      console.log(res);
+    });
+
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
 
   return (
     <Container className={classes.container}>
-      {subjectsGrades
-        && subjectsGrades.map((subjectGrade, index) => (
+      <SelectComponent
+        label="Periodo académico"
+        value={selectedOption}
+        onChange={handleChange}
+        options={options}
+      />
+      {subjectsGrades &&
+        subjectsGrades.map((subjectGrade, index) => (
           <GradeCard
             key={index}
             gradeName={subjectGrade.materia}

@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable linebreak-style */
 import React from "react";
 import { Card, CardContent } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -9,6 +7,7 @@ import GradeTable from "./GradeTable";
 const useStyles = makeStyles({
   CardContent: {
     borderRadius: '0px',
+    padding: "0",
     "&:last-child": {
       paddingBottom: "unset",
     },
