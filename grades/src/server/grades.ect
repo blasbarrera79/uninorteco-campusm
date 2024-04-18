@@ -9,17 +9,12 @@
 << extend "templates/master.ect" >>
 
 << block "init": >>
-
-{% set utils = aek.extension("CMAuthUtilities") %}
-{% set attrs = utils.getTokenAttributes() %}
-{% set username = attrs.username %}
-
 {# using create_service to define a service - often used for third-party vendor integrations #}
 {% if aek.action == "get-grades" %}
   {% set service = aek.create_service("https://intunqa.uninorte.edu.co/sba-estudiantes/api/v1/notas-parciales") %}
   {{ service.set_namespace("") }}
   {{ service.set_method("POST") }} {# Definir el método de solicitud como POST #}
-
+  
   {# Configurar los parámetros de la solicitud usando aek.request #}
   {# {{ service.set_request_body("user", aek.request("user")) }}
   {{ service.set_request_body("nrc", aek.request("nrc")) }}
@@ -30,8 +25,28 @@
 {% endif %}
 
 {% if aek.action == "get-registration" %}
-  {% set service = aek.create_service("https://intunqa.uninorte.edu.co/sba-estudiantes/api/v1/matricula/user/"~ username ~"/periodo/202310") %}
+  {% set service = aek.create_service("https://intunqa.uninorte.edu.co/sba-estudiantes/api/v1/matricula/user/vergaradl/periodo/202310") %}
   {{ service.set_method("GET") }}
   {{ aek.respond(service.json) }}
 {% endif %}
 << end >>
+
+
+{#% set utils = aek.extension("CMAuthUtilities") %}
+{% set attrs = utils.getTokenAttributes() %}
+{% set username = attrs.username %}
+
+{% if aek.action == "get-grades" %}
+  {% set service = aek.create_service("https://intunqa.uninorte.edu.co/sba-estudiantes/api/v1/notas-parciales") %}
+  {{ service.set_namespace("") }}
+  {{ service.set_method("POST") }}
+
+  {{ service.set_request_body(aek.request("requestBody")) }}
+  {{ aek.respond(service.json) }}
+{% endif %}
+
+{% if aek.action == "get-registration" %}
+  {% set service = aek.create_service("https://intunqa.uninorte.edu.co/sba-estudiantes/api/v1/matricula/user/"~ username ~"/periodo/202310") %}
+  {{ service.set_method("GET") }}
+  {{ aek.respond(service.json) }}
+{% endif %#}
