@@ -4,6 +4,7 @@ import Container from "@material-ui/core/Container";
 import GradeCard from "./GradeCard";
 import { getRegistration } from "../services/registrationService";
 import { getGrades } from "../services/gradeService";
+import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles({
   container: {
@@ -50,6 +51,7 @@ const Screen = () => {
           items={subjectGrade.items}
         />
       ))}
+      <Typography>{error}</Typography>
     </Container>
   );
 };
