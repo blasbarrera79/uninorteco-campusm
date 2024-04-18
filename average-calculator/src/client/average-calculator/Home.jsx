@@ -11,7 +11,7 @@ export default function Home(props) {
       <Routes>
         <Route path="/pga" element={<PGASemesterPage {...props} />} />
         <Route path="/courses/:courseId" element={<CourseDetailPage {...props} />} />
-        <Route path="/aek/c/average-calculator" element={<CurrentSemesterPage {...props} />} />
+        <Route path="/aek/c/average-calculator" element={<CurrentSemesterPage />} />
       </Routes>
     </Router>
   );

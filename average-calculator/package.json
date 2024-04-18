@@ -20,6 +20,7 @@
     "@ombiel/aek-asset-store": "^0.0.8",
     "@ombiel/aek-css": "1.x.x",
     "@ombiel/aek-lib": ">=1.4.0-0 <1.5.0",
+    "axios": "^1.6.8",
     "react": "^16.8.6",
     "react-dom": "^16.6.6",
     "react-router-dom": "^6.22.3"

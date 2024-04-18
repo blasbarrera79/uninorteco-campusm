@@ -7,7 +7,6 @@ import Stack from "../../components/Stack";
 
 export function TabRouter({ index }) {
   const { academicInfo } = useAcademicInfo();
-
   // Not rendering the tab content until the academic info is loaded
   // is a small optimization
   if (academicInfo !== null) {

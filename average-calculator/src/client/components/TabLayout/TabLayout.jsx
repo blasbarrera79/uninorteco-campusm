@@ -4,7 +4,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Paper from "@material-ui/core/Paper";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   tabLayout: {
     maxWidth: "1000px",
     width: "100%",
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
   },
-}));
+});
 
 export function TabLayout({ onIndexChange, index, tabs, children }) {
   const classes = useStyles();
@@ -22,7 +22,7 @@ export function TabLayout({ onIndexChange, index, tabs, children }) {
   const handleTabChange = (event, newIndex) => {
     onIndexChange(newIndex);
   };
-
+  
   return (
     <Paper className={classes.tabLayout}>
       <Tabs
@@ -30,10 +30,13 @@ export function TabLayout({ onIndexChange, index, tabs, children }) {
         indicatorColor="primary"
         textColor="primary"
         onChange={handleTabChange}
-        aria-label="tab-layout"
-      >
+        aria-label="tab-layout">
         {tabs.map((tab, tabIndex) => (
-          <Tab key={tab} label={tab} value={tabIndex} />
+          <Tab
+            key={tab}
+            label={tab}
+            value={tabIndex}
+          />
         ))}
       </Tabs>
       <div className={classes.tabContent}>{children}</div>

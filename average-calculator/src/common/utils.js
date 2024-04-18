@@ -1,5 +1,3 @@
-const { APP_ENV_VARS } = require("../config/app-env-vars");
-
 function slugify(text) {
   return text
     .toString()

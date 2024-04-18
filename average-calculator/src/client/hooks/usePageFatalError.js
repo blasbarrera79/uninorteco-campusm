@@ -19,23 +19,9 @@ export function usePageFatalError() {
       userMessage = userMessageOption;
     }
 
-    const finalMuiErrorOptions = {
-      ...DEFAULT_MUI_OPTIONS,
-      ...muiErrorOptions,
-    };
-
     if (error) {
-      myLogger.error(error.message, {
-        errorMessage: error.message,
-        errorCode: error.errorCode,
-        errorLevel: error.level,
-      });
+      console.error(userMessage);
     }
-
-    setErrorMessage({
-      textMessage: userMessage,
-      ...finalMuiErrorOptions,
-    });
   };
 
   return {

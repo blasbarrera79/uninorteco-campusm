@@ -10,7 +10,6 @@ export function CoursesContainer({ children, sxProps, classes }) {
         gap: 2,
         ...sxProps,
       }}
-      className={classes.root}
     >
       {children}
     </Box>

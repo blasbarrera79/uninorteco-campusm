@@ -95,6 +95,11 @@ export function getSemesterCourseCharacteristics(semesterCourse, components) {
  * @returns {boolean} Whether the course contains only valid grades.
  */
 export function containOnlyValidGrades(course) {
+  // If characteristics is undefined, consider the course to contain only valid grades
+  if (!course.characteristics) {
+    return true;
+  }
+  
   return !course.characteristics.has("contain-invalid-grade");
 }
 
@@ -104,7 +109,12 @@ export function containOnlyValidGrades(course) {
  * @returns {string} The parcelacion message of the course.
  */
 export function getCourseParcelacionMessage(course) {
-  const { characteristics } = course;
+  let { characteristics } = course;
+
+  if (!characteristics) {
+    // If characteristics is undefined, initialize it as an empty Set
+    characteristics = new Set();
+  }
 
   if (
     characteristics.has("contain-invalid-grade") &&

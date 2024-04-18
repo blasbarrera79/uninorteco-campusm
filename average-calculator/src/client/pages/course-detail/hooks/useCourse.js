@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-// import { calculatorRepository } from "../../../core/repositories/repository-factory";
+import { calculatorRepository } from "../../../../repositories/repository-factory";
 import { ErrorCode, RepositoryError } from "../../../../common/errors";
 import { usePageFatalError } from "../../../hooks/usePageFatalError";
 
@@ -26,7 +26,7 @@ export function useCourse({ courseId }) {
   const loadCourse = async () => {
     setLoadingStatus(true);
     try {
-      // const currentCourse = await calculatorRepository.getCourse(courseId);
+      const currentCourse = await calculatorRepository.getCourse(courseId);
       setCourse(currentCourse);
     } catch (error) {
       if (error instanceof RepositoryError) {
