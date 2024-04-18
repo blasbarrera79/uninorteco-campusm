@@ -9,12 +9,15 @@
 << extend "templates/master.ect" >>
 
 << block "init": >>
-{# using create_service to define a service - often used for third-party vendor integrations #}
-{% if aek.action == "get-user" %}
 
-  {% set get_service = aek.create_service("https://intunqa.uninorte.edu.co/sba-estudiantes/api/v1/horario-final/dpuchej") %}
-  {{ get_service.set_method("GET") }}
-  {{ aek.respond(get_service.json) }}
+{% set utils = aek.extension("CMAuthUtilities") %}
+  {% set attrs = utils.getTokenAttributes() %}
+  {% set username = attrs.username %}
+  
+  {% if aek.action == "get-user" %}
+    {% set service = aek.create_service("https://intunqa.uninorte.edu.co/sba-estudiantes/api/v1/horario-final/" ~ username) %}
+    {{ service.set_method("GET") }}
+    {{ aek.respond(service.json) }}
+  {% endif %}
 
-{% endif %}
 << end >>

@@ -13,7 +13,7 @@ export default function Home() {
   const [exams, setExams] = React.useState([]);
   const classes = useStyles();
 
-  console.log("useEffect");
+  console.log("useEffect with cmauth");
   request.action("get-user").end((e, res) => {
     console.log("error", e);
     console.log("res", res.body.resultado);
