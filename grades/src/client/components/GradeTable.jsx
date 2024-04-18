@@ -11,6 +11,10 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles({
   GradeCell: {
     textAlign: "end",
+    fontSize: "1em",
+  },
+  TableFontSize: {
+    fontSize: "1em",
   },
 });
 
@@ -23,7 +27,7 @@ const GradeTable = ({ items }) => {
         {items.length > 0 ? (
           items.map((item, index) => (
             <TableRow key={index}>
-              <TableCell>{item.name}</TableCell>
+              <TableCell className={classes.TableFontSize}>{item.name}</TableCell>
               <TableCell className={classes.GradeCell}>{item.value}</TableCell>
             </TableRow>
           ))

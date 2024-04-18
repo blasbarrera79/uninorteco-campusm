@@ -7,6 +7,7 @@ import GradeTable from "./GradeTable";
 const useStyles = makeStyles({
   CardContent: {
     borderRadius: '0px',
+    padding: "0",
     "&:last-child": {
       paddingBottom: "unset",
     },
