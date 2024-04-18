@@ -20,7 +20,7 @@ export default function Home() {
 
   return (
     <Container className={classes.container}>
-      {exams ? (
+      {exams==[] ? (
         exams.map((exam, index) => {
           return (
             <SimpleCard
