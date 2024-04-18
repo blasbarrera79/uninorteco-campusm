@@ -21,6 +21,7 @@ const Screen = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log('prueba fetch data cm-auth')
         const registration = await getRegistration();
         const promises = registration.map(async (element) => {
           const grades = await getGrades(element.SFRSTCR_CRN);
