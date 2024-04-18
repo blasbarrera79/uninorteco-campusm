@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { request } from "@ombiel/aek-lib";
 import Container from "@material-ui/core/Container";
 import SimpleCard from "./Card";
+import Typography from "@material-ui/core/Typography";
 // for a server action located at `/src/server/dosomething.action.twig`
 
 const useStyles = makeStyles({
@@ -13,26 +14,27 @@ export default function Home() {
   const [exams, setExams] = React.useState([]);
   const classes = useStyles();
 
-  console.log("useEffect with cmauth");
   request.action("get-user").end((e, res) => {
-    console.log("error", e);
-    console.log("res", res.body.resultado);
     setExams(res.body.resultado);
   });
 
   return (
     <Container className={classes.container}>
-      {exams.map((exam, index) => {
-        return (
-          <SimpleCard
-            key={index}
-            title={exam.DESCRIPCION}
-            hour={exam.HORA}
-            teacher={exam.PROFESOR}
-            place={exam.LUGAR}
-          />
-        );
-      })}
+      {exams ? (
+        exams.map((exam, index) => {
+          return (
+            <SimpleCard
+              key={index}
+              title={exam.DESCRIPCION}
+              hour={exam.HORA}
+              teacher={exam.PROFESOR}
+              place={exam.LUGAR}
+            />
+          );
+        })
+      ) : (
+        <Typography>No tienes examenes finales disponibles</Typography>
+      )}
     </Container>
   );
 }
