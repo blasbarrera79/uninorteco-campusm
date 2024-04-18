@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import GradeCard from "./GradeCard";
+import SelectComponent from "./SelectComponent";
 import { getRegistration } from "../services/registrationService";
 import { getGrades } from "../services/gradeService";
 import { Typography } from "@material-ui/core";
@@ -23,6 +24,7 @@ const Screen = () => {
         const registration = await getRegistration();
         const promises = registration.map(async (element) => {
           const grades = await getGrades(element.SFRSTCR_CRN);
+          console.log(grades);
           return {
             materia: element.SSBSECT_CRSE_TITLE,
             items: grades.map((item) => ({

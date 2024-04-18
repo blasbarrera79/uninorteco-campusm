@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   inputLabel: {
     marginLeft: "2em",
   },
-  nativeSelect:{
+  nativeSelect: {
     fontSize: "1.3em",
     "& option": {
       textAlign: "center",
@@ -27,9 +27,13 @@ export default function SelectComponent({ label, value, onChange, options }) {
 
   return (
     <FormControl className={classes.formControl}>
-      <InputLabel className={classes.inputLabel} id="select-label">{label}</InputLabel>
+      <InputLabel
+        className={classes.inputLabel}
+        id="select-label">
+        {label}
+      </InputLabel>
       <NativeSelect
-      className={classes.nativeSelect}
+        className={classes.nativeSelect}
         value={value}
         onChange={onChange}
         inputProps={{
@@ -38,11 +42,11 @@ export default function SelectComponent({ label, value, onChange, options }) {
         }}>
         <option
           aria-label="None"
-          value=""
+          value="Null"
         />
-        {options.map((option) => (
+        {options.map((option, index) => (
           <option
-            key={option.value}
+            key={index}
             value={option.value}>
             {option.label}
           </option>
