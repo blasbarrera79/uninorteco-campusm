@@ -7,7 +7,8 @@ const useStyles = makeStyles({
   endText: { textAlign: "end" },
   card: {
     marginBottom: "1rem",
-    background: "lightgray",
+    background: "#7EC0EE",
+    color: "white",
   },
   cardContent: {
     marginTop: "-1rem",
