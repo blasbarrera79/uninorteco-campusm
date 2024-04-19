@@ -20,12 +20,13 @@ export default function Home() {
 
   return (
     <Container className={classes.container}>
-      {exams==[] ? (
+      {exams!=[] ? (
         exams.map((exam, index) => {
           return (
             <SimpleCard
               key={index}
               title={exam.DESCRIPCION}
+              date={exam.FECHA}
               hour={exam.HORA}
               teacher={exam.PROFESOR}
               place={exam.LUGAR}

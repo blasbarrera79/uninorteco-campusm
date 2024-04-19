@@ -12,13 +12,16 @@ const useStyles = makeStyles({
   },
 });
 
-const CardContentComponent = ({ title, hour, teacher, place }) => {
+const CardContentComponent = ({ title, date, hour, teacher, place }) => {
   const classes = useStyles();
 
   return (
     <CardContent>
       <Typography variant="h5" component="h2">
         {title}
+      </Typography>
+      <Typography className={classes.title} color="textSecondary" gutterBottom>
+        {date}
       </Typography>
       <Typography className={classes.title} color="textSecondary" gutterBottom>
         {hour}
