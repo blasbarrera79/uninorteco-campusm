@@ -1,39 +1,38 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
+import React from "react"
+import { makeStyles } from "@material-ui/core/styles"
+import { Card, CardHeader, CardContent, Typography } from "@material-ui/core"
 
 const useStyles = makeStyles({
-  title: {
-    fontSize: 14,
+  centerButton: { alignSelf: "center" },
+  endText: { textAlign: "end" },
+  card: {
+    marginBottom: "1rem",
+    background: "lightgray",
   },
-  pos: {
-    marginBottom: 12,
+  cardContent: {
+    marginTop: "-1rem",
   },
-});
+})
 
-const CardContentComponent = ({ title, date, hour, teacher, place }) => {
-  const classes = useStyles();
+const CardContentComponent = ({ title, hour, teacher, classRoom }) => {
+  const classes = useStyles()
 
   return (
-    <CardContent>
-      <Typography variant="h5" component="h2">
-        {title}
-      </Typography>
-      <Typography className={classes.title} color="textSecondary" gutterBottom>
-        {date}
-      </Typography>
-      <Typography className={classes.title} color="textSecondary" gutterBottom>
-        {hour}
-      </Typography>
-      <Typography className={classes.pos} color="textSecondary">
-        {teacher}
-      </Typography>
-      <Typography variant="body2" component="p">
-        {place}
-      </Typography>
-    </CardContent>
-  );
-};
+    <Card className={classes.card}>
+      <CardHeader title={title} />
+      <CardContent className={classes.cardContent}>
+        <Typography>
+          <strong>Hora:</strong> {hour}
+        </Typography>
+        <Typography>
+          <strong>Profesor:</strong> {teacher}
+        </Typography>
+        <Typography>
+          <strong>Lugar:</strong> {classRoom}
+        </Typography>
+      </CardContent>
+    </Card>
+  )
+}
 
-export default CardContentComponent;
+export default CardContentComponent

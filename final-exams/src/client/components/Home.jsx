@@ -1,41 +1,71 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { request } from "@ombiel/aek-lib";
-import Container from "@material-ui/core/Container";
-import SimpleCard from "./Card";
-import Typography from "@material-ui/core/Typography";
-// for a server action located at `/src/server/dosomething.action.twig`
+import React, {useState,useEffect} from "react"
+import { makeStyles } from "@material-ui/core/styles"
+import Container from "@material-ui/core/Container"
+import SimpleCard from "./Card"
+import Typography from "@material-ui/core/Typography"
+import FinalExamService from "../logic-domain/final-exams-domain"
+import { DateTimeService } from "../logic-domain/date-services"
+import HeaderComponent from "./HeaderComponent"
+
 
 const useStyles = makeStyles({
   container: {},
-});
+})
 
 export default function Home() {
-  const [exams, setExams] = React.useState([]);
-  const classes = useStyles();
+  const classes = useStyles()
+  const [dato, setDato] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
-  request.action("get-user").end((e, res) => {
-    setExams(res.body.resultado);
-  });
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const examService = new FinalExamService()
+        const groupedExams = await examService.getGroupExamByDate()
+        setDato(groupedExams)
+        setLoading(false)
+      } catch (errorApi) {
+        setError(errorApi)
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  if (loading) {
+    return <p>Cargando...</p>
+  }
+
+  if (error) {
+    return <p>Hubo un error: {error.message}</p>
+  }
 
   return (
     <Container className={classes.container}>
-      {exams!=[] ? (
-        exams.map((exam, index) => {
-          return (
-            <SimpleCard
-              key={index}
-              title={exam.DESCRIPCION}
-              date={exam.FECHA}
-              hour={exam.HORA}
-              teacher={exam.PROFESOR}
-              place={exam.LUGAR}
+      {Object.keys(dato).map((fecha) => {
+        const { day, month, year, dayName } = DateTimeService.formatDate(fecha)
+        return (
+          <div key={fecha}>
+            <HeaderComponent
+              day={day}
+              month={month}
+              year={year}
+              dayName={dayName}
             />
-          );
-        })
-      ) : (
-        <Typography>No tienes examenes finales disponibles</Typography>
-      )}
+            {dato[fecha].map((item,index) => (
+              <SimpleCard
+                key={index}
+                title={item.DESCRIPCION}
+                hour={item.HORA}
+                teacher={item.PROFESOR}
+                classRoom={item.LUGAR}
+              />
+            ))}
+          </div>
+        )
+      })}
     </Container>
-  );
+  )
 }
