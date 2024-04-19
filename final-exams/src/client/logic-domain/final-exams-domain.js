@@ -11,19 +11,25 @@ class FinalExamService {
   async initializeFinalExamResponse() {
     try {
       if (!this.examsLoaded) {
-        this.finalExamResponse = await request
-          .action("get-user")
-          .end((e, res) => {
+        const { error, body } = await new Promise((resolve, reject) => {
+          request.action("get-user").end((e, res) => {
             if (e) {
-              console.error(e)
-              return
+              reject(new Error(e.message));
+              return;
             }
-            return res.body
-          })
-        this.examsLoaded = true
+            resolve({ error: null, body: res });
+          });
+        });
+  
+        if (error) {
+          throw new Error("Unsuccessful HTTP response: " + error.message);
+        }
+  
+        this.finalExamResponse = body;
+        this.examsLoaded = true;
       }
     } catch (error) {
-      console.error("Error initializing finalExamResponse:", error)
+      console.error("Error initializing finalExamResponse:", error);
     }
   }
 
