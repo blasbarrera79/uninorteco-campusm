@@ -25,7 +25,8 @@
 {% endif %}
 
 {% if aek.action == "get-registration" %}
-  {% set service = aek.create_service("https://intunqa.uninorte.edu.co/sba-estudiantes/api/v1/matricula/user/vergaradl/periodo/202310") %}
+  {% set term = aek.request("term") %}
+  {% set service = aek.create_service("https://intunqa.uninorte.edu.co/sba-estudiantes/api/v1/matricula/user/vergaradl/periodo/" ~ term) %}
   {{ service.set_method("GET") }}
   {{ aek.respond(service.json) }}
 {% endif %}
