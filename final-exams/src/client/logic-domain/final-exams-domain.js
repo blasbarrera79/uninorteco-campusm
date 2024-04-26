@@ -20,15 +20,16 @@ class FinalExamService {
             resolve({ error: null, body: res });
           });
         });
-  
+
         if (error) {
           throw new Error(`Error fetching exams: ${error}`);
         }
-  
+
         this.finalExamResponse = body;
         this.examsLoaded = true;
       }
-    } catch (error) {
+    }
+    catch (error) {
       throw new Error(`Error fetching exams: ${error}`);
     }
   }
@@ -63,9 +64,9 @@ class FinalExamService {
         examsByDate[date].push(item)
       })
       return ExamSortingService.sortExamsByHour(examsByDate)
-    } catch (error) {
-      console.error("Error fetching exams:", error)
-      return null
+    }
+    catch (error) {
+      throw new Error(`Error grouping exams by date: ${error}`)
     }
   }
 
@@ -86,9 +87,11 @@ class FinalExamService {
           if (DateTimeService.compareTimes(exam.HORA, currentTime) > 0) {
             return exam
           }
-        } else if (DateTimeService.dateCompare(exam.FECHA, currentDate) > 0) {
+        }
+        else if (DateTimeService.dateCompare(exam.FECHA, currentDate) > 0) {
           return exam
         }
+        return null
       })
     })
 
