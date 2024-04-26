@@ -1,0 +1,47 @@
+<<
+@configure
+  connected:true
+  scripts:[
+    "necesitas-ayuda"
+  ]
+>>
+
+<< extend "templates/master.ect" >>
+
+
+<< block "init": >>
+{% set utils = aek.extension("CMAuthUtilities") %}
+{% set attrs = utils.getTokenAttributes() %}
+{% set username = attrs.username %}
+
+{% if aek.action == "send-email" %}
+  {% set email = aek.create_email() %}
+  {# set to whichever email the client desires #}
+  {{ email.to("yonyh@uninorte.edu.co", "lgalviz@uninorte.edu.co", "cmartinez@uninorte.edu.co") }}
+  {# the email can be sent from the client side, but the campusm_user_email utility below might be more convenient #}
+  {# please note that the default "from" email is "campusm_do_not_reply@ombiel.com" #}
+  {{ email.subject("Registro de Ayuda") }}
+  {# you can set content directly, but it is often easier to pull information from the client side #}
+  {{ email.html(aek.request("emailContents")) }}
+  {# if the content is empty, we insert an empty string - this causes email.send to return an error #}
+  {% if aek.request("emailContents")|length == 0 %}
+    {{ email.html("") }}
+  {% endif %}
+
+  {{ email.send() }}
+
+  {% if email.error_info %}
+    {{ aek.respond({ "error":"true", "desc":email.error_info }) }}
+  {% else %}
+    {{ aek.respond({ "error":"false", "desc":"Sent successfully!" }) }}
+  {% endif %}
+
+{% endif %}
+
+{% if aek.action == "get-user" %}
+  {{ aek.respond({ "username":username }) }}
+{% endif %}
+
+
+
+<< end >>
