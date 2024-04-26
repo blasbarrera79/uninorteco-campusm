@@ -25,11 +25,7 @@ class ExamSortingService {
       const exams = examsByDate[fecha];
 
       // Sort exams by hour
-      exams.sort(
-        (examA, examB) =>
-          parseInt(examA.HORA.replace(":", ""), 10) -
-          parseInt(examB.HORA.replace(":", ""), 10)
-      );
+      exams.sort((examA, examB) => parseInt(examA.HORA.replace(":", ""), 10) - parseInt(examB.HORA.replace(":", ""), 10));
       sortedExamsObj[fecha] = exams;
     });
 

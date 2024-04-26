@@ -22,14 +22,14 @@ class FinalExamService {
         });
   
         if (error) {
-          throw new Error("Unsuccessful HTTP response: " + error.message);
+          throw new Error(`Error fetching exams: ${error}`);
         }
   
         this.finalExamResponse = body;
         this.examsLoaded = true;
       }
     } catch (error) {
-      console.error("Error initializing finalExamResponse:", error);
+      throw new Error(`Error fetching exams: ${error}`);
     }
   }
 
@@ -79,20 +79,18 @@ class FinalExamService {
     const currentDate = DateTimeService.getCurrentDate()
     const currentTime = DateTimeService.getCurrentTime()
 
-    for (const date in groupedExams) {
-      if (Object.prototype.hasOwnProperty.call(groupedExams, date)) {
-        const exams = groupedExams[date]
-        for (const exam of exams) {
-          if (DateTimeService.dateCompare(exam.FECHA, currentDate) === 0) {
-            if (DateTimeService.compareTimes(exam.HORA, currentTime) > 0) {
-              return exam
-            }
-          } else if (DateTimeService.dateCompare(exam.FECHA, currentDate) > 0) {
+    Object.keys(groupedExams).forEach((date) => {
+      const exams = groupedExams[date]
+      exams.forEach((exam) => {
+        if (DateTimeService.dateCompare(exam.FECHA, currentDate) === 0) {
+          if (DateTimeService.compareTimes(exam.HORA, currentTime) > 0) {
             return exam
           }
+        } else if (DateTimeService.dateCompare(exam.FECHA, currentDate) > 0) {
+          return exam
         }
-      }
-    }
+      })
+    })
 
     return null
   }

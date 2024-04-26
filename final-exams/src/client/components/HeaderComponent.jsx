@@ -1,4 +1,5 @@
 import React from "react"
+import PropTypes from "prop-types"
 import { Typography, Divider } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
@@ -7,11 +8,11 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "spaceBetween",
     alignItems: "center",
-    fontSize: "24px" /* Tamaño del número del día */,
+    fontSize: "24px",
   },
 
   numeroDia: {
-    fontSize: "36px" /* Tamaño del número del día grande */,
+    fontSize: "36px",
   },
 
   mesAno: {
@@ -20,11 +21,11 @@ const useStyles = makeStyles({
   },
 
   dayName: {
-    fontSize: "18px" /* Tamaño del mes */,
+    fontSize: "18px",
   },
 
   dia: {
-    fontSize: "18px" /* Tamaño del año */,
+    fontSize: "18px",
   },
 
   dividerMarginTop: {
@@ -33,7 +34,7 @@ const useStyles = makeStyles({
 })
 
 const HeaderComponent = (props) => {
-  const { day, month, year, dayName } = props
+  const { day, month, year, dayName } = props;
   const classes = useStyles()
 
   return (
@@ -53,5 +54,11 @@ const HeaderComponent = (props) => {
     </>
   )
 }
+HeaderComponent.propTypes = {
+  day: PropTypes.number.isRequired,
+  month: PropTypes.string.isRequired,
+  year: PropTypes.number.isRequired,
+  dayName: PropTypes.string.isRequired,
+};
 
 export default HeaderComponent

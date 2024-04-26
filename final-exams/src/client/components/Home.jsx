@@ -2,7 +2,6 @@ import React, {useState,useEffect} from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
 import SimpleCard from "./Card"
-import Typography from "@material-ui/core/Typography"
 import FinalExamService from "../logic-domain/final-exams-domain"
 import { DateTimeService } from "../logic-domain/date-services"
 import HeaderComponent from "./HeaderComponent"
@@ -54,9 +53,9 @@ export default function Home() {
               year={year}
               dayName={dayName}
             />
-            {dato[fecha].map((item,index) => (
+            {dato[fecha].map((item) => (
               <SimpleCard
-                key={index}
+                key={item.DESCRIPCION}
                 title={item.DESCRIPCION}
                 hour={item.HORA}
                 teacher={item.PROFESOR}

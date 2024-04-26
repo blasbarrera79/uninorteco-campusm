@@ -1,4 +1,5 @@
 import React from "react"
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles"
 import { Card, CardHeader, CardContent, Typography } from "@material-ui/core"
 
@@ -14,6 +15,7 @@ const useStyles = makeStyles({
     marginTop: "-1rem",
   },
 })
+
 
 const CardContentComponent = ({ title, hour, teacher, classRoom }) => {
   const classes = useStyles()
@@ -34,6 +36,13 @@ const CardContentComponent = ({ title, hour, teacher, classRoom }) => {
       </CardContent>
     </Card>
   )
+}
+
+CardContentComponent.propTypes = {
+  title: PropTypes.string.isRequired,
+  hour: PropTypes.string.isRequired,
+  teacher: PropTypes.string.isRequired,
+  classRoom: PropTypes.string.isRequired,
 }
 
 export default CardContentComponent
