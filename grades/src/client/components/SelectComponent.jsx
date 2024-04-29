@@ -42,16 +42,12 @@ export default function SelectComponent({ label, value, onChange, options }) {
           id: "select-native",
         }}
       >
-        <option
-          aria-label="None"
-          value="Null"
-        />
         {options.map((option) => (
           <option
-            key={option.value}
-            value={option.value}
+            key={option.PERIODO}
+            value={option.PERIODO}
           >
-            {option.label}
+            {option.DESCRIPTION}
           </option>
         ))}
       </NativeSelect>
