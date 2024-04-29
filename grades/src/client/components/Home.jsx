@@ -22,12 +22,12 @@ const useStyles = makeStyles({
 });
 
 const Screen = () => {
+  const classes = useStyles();
   const [subjectsGrades, setSubjectsGrades] = useState([]);
-  const [selectedTerm, setSelectedTerm] = useState([]);
+  const [selectedTerm, setSelectedTerm] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [terms, setTerms] = useState([]);
   const [user, setUser] = useState('');
-  const classes = useStyles();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,9 +35,8 @@ const Screen = () => {
       try {
         const termsResponse = await getTerm();
         setTerms(termsResponse);
-        setSelectedTerm(termsResponse[0].PERIODO);
+        setSelectedTerm(termsResponse[0]?.PERIODO || '');
         const userResponse = await getUser();
-        console.log('userResponse',userResponse);
         setUser(userResponse);
         setIsLoading(false);
       } catch (err) {
@@ -52,18 +51,12 @@ const Screen = () => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        console.log('selectedTerm',selectedTerm);
         const registration = await getRegistration(selectedTerm);
-        console.log('registration',registration);
         const promises = registration.map(async (element) => {
-          console.log(user,element.SFRSTCR_CRN, selectedTerm)
-          const grades = await getGrades(user,element.SFRSTCR_CRN, selectedTerm);
+          const grades = await getGrades(user, element.SFRSTCR_CRN, selectedTerm);
           return {
             materia: element.SSBSECT_CRSE_TITLE,
-            items: grades.map((item) => ({
-              name: item.SHRGCOM_NAME,
-              value: item.NOTA,
-            })),
+            items: grades.map(({ SHRGCOM_NAME, NOTAA }) => ({ name: SHRGCOM_NAME, value: NOTAA })),
           };
         });
 
@@ -75,7 +68,9 @@ const Screen = () => {
       }
     };
 
-    fetchData();
+    if (selectedTerm && user) {
+      fetchData();
+    }
   }, [selectedTerm, user]);
 
   const handleSelectChange = (event) => {
