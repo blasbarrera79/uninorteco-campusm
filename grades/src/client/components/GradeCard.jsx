@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardContent } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 import GradeHeader from "./CardHeader";
 import GradeTable from "./GradeTable";
 
@@ -25,6 +26,11 @@ const GradeCard = ({ gradeName, items }) => {
       </CardContent>
     </Card>
   );
+};
+
+GradeCard.propTypes = {
+  gradeName: PropTypes.string.isRequired,
+  items: PropTypes.array.isRequired,
 };
 
 export default GradeCard;

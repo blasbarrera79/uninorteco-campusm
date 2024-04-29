@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles({
   GradeCell: {
@@ -25,8 +26,8 @@ const GradeTable = ({ items }) => {
     <Table>
       <TableBody>
         {items.length > 0 ? (
-          items.map((item, index) => (
-            <TableRow key={index}>
+          items.map((item) => (
+            <TableRow key={item.name}>
               <TableCell className={classes.TableFontSize}>{item.name}</TableCell>
               <TableCell className={classes.GradeCell}>{item.value}</TableCell>
             </TableRow>
@@ -41,6 +42,10 @@ const GradeTable = ({ items }) => {
       </TableBody>
     </Table>
   );
+};
+
+GradeTable.propTypes = {
+  items: PropTypes.array.isRequired,
 };
 
 export default GradeTable;

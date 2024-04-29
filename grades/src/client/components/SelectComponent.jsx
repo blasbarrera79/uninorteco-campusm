@@ -3,10 +3,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import NativeSelect from "@material-ui/core/NativeSelect";
+import PropTypes from "prop-types";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   formControl: {
-    margin: theme.spacing(1),
     minWidth: 120,
     width: "100%",
     margin: "0",
@@ -29,7 +29,8 @@ export default function SelectComponent({ label, value, onChange, options }) {
     <FormControl className={classes.formControl}>
       <InputLabel
         className={classes.inputLabel}
-        id="select-label">
+        id="select-label"
+      >
         {label}
       </InputLabel>
       <NativeSelect
@@ -39,15 +40,17 @@ export default function SelectComponent({ label, value, onChange, options }) {
         inputProps={{
           name: "select",
           id: "select-native",
-        }}>
+        }}
+      >
         <option
           aria-label="None"
           value="Null"
         />
-        {options.map((option, index) => (
+        {options.map((option) => (
           <option
-            key={index}
-            value={option.value}>
+            key={option.value}
+            value={option.value}
+          >
             {option.label}
           </option>
         ))}
@@ -55,3 +58,10 @@ export default function SelectComponent({ label, value, onChange, options }) {
     </FormControl>
   );
 }
+
+SelectComponent.propTypes = {
+  label: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  options: PropTypes.array.isRequired,
+};
