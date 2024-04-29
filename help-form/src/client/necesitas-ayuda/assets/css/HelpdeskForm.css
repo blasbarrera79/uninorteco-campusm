@@ -13,20 +13,38 @@
 }
 
 fieldset {
-  margin-bottom: 20px;
+  width: auto;
   border: none;
 }
 
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
+fieldset select {
+  -webkit-text-size-adjust: 100%;
+  margin: 0;
+  cursor: pointer;
+  font-weight: normal;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  display: inline-block;
+  padding: 4px 6px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #555555;
+  vertical-align: middle;
+  border-radius: 4px;
+  line-height: 30px;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 38px !important;
 }
+
+
 
 input[type="text"],
 input[type="number"],
 textarea {
-  width: calc(100% - 20px);
+  width: calc(100%);
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
@@ -34,7 +52,7 @@ textarea {
 }
 
 button {
-  width: calc(100% - 20px);
+  width: calc(100%);
   padding: 10px;
   border: none;
   border-radius: 5px;
@@ -47,8 +65,13 @@ button:hover {
   background-color: #000;
 }
 
+label {
+  font-weight: bold;
+}
+
+
 .categorias-container {
-  width: calc(100% - 20px);
+  width: 100%;
   border: 3px solid #000;
   border-radius: 5px;
   padding: 10px;

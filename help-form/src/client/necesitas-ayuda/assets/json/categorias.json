@@ -1,0 +1,52 @@
+{
+    "categorias": {
+      "Servicios TIC": [
+        "Sistemas de información",
+        "Cursos",
+        "Pagina web o Portales uninorte",
+        "Software en sala de usuario",
+        "Navegación",
+        "Correo electrónico",
+        "Carné",
+        "Otro"
+      ],
+      "Equipo de computo y telefonía": [
+        "Computador / Monitor",
+        "Línea telefónica / Teléfono",
+        "Conexión a internet",
+        "Sistema operativo",
+        "Impresora",
+        "MS Office",
+        "Otro"
+      ],
+      "Planta física, muebles y equipos": [
+        "Aire acondicionado",
+        "Infraestructura / Obra civil",
+        "Eléctrico / Electrónico",
+        "Mobiliario / Carpintería",
+        "Cerrajería",
+        "Plomería",
+        "Otro"
+      ],
+      "Servicios generales": [
+        "Traslado",
+        "Aseo",
+        "Apoyo a eventos",
+        "Otro"
+      ],
+      "Salones": [
+        "Video Beam",
+        "Audio / Sonido",
+        "Computador / Clave de acceso",
+        "Aire acondicionado",
+        "Iluminación",
+        "Cortina / Black out",
+        "Mobiliario",
+        "Otro"
+      ],
+      "Otro": [
+        "Especificar"
+      ]
+    }
+}
+  

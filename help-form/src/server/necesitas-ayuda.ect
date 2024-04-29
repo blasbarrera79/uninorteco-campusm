@@ -17,7 +17,8 @@
 {% if aek.action == "send-email" %}
   {% set email = aek.create_email() %}
   {# set to whichever email the client desires #}
-  {{ email.to("yonyh@uninorte.edu.co", "lgalviz@uninorte.edu.co", "cmartinez@uninorte.edu.co") }}
+  {{ email.to("cmartinez@uninorte.edu.co", "yonyhome99@gmail.com") }}
+  {{ email.cc("yonyh@uninorte.edu.co", "lgalviz@uninorte.edu.co") }}
   {# the email can be sent from the client side, but the campusm_user_email utility below might be more convenient #}
   {# please note that the default "from" email is "campusm_do_not_reply@ombiel.com" #}
   {{ email.subject("Registro de Ayuda") }}

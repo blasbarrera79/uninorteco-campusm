@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import "./HelpdeskForm.css";
+import "../assets/css/HelpdeskForm.css";
 import { request } from "@ombiel/aek-lib";
+import categoriasData from '../assets/json/categorias.json'; // Importa el archivo JSON
 
 const HelpdeskForm = () => {
   const initialFormData = {
     ubicacion: '',
     descripcion: '',
     ext: '',
-    categorias: []
+    categorias: [],
+    categoriaPrincipal: '',
+    user: '' // Añade el campo para el usuario
   };
   const [formData, setFormData] = useState(initialFormData);
   const [isSending, setIsSending] = useState(false);
+  const [categoriasOptions, setCategoriasOptions] = useState({});
 
   useEffect(() => {
     // Función para obtener el nombre de usuario
@@ -26,23 +30,19 @@ const HelpdeskForm = () => {
 
     // Llamar a la función para obtener el nombre de usuario cuando se monta el componente
     getUser();
-  }, []); // El segundo argumento [] asegura que se llame solo una vez, equivalente a componentDidMount()
 
-  const categoriasOptions = [
-    { value: "Servicios TIC", label: "Servicios TIC" },
-    { value: "Sistemas de información", label: "Sistemas de información" },
-    { value: "Cursos", label: "Cursos" },
-    { value: "Pagina web o Portales uninorte", label: "Pagina web o Portales uninorte" },
-    { value: "Software en sala de usuario", label: "Software en sala de usuario" },
-    { value: "Navegación", label: "Navegación" },
-    { value: "Correo electrónico", label: "Correo electrónico" },
-    { value: "Carné", label: "Carné" },
-    { value: "Otro", label: "Otro" }
-  ];
+    // Carga las categorías del archivo JSON cuando se monta el componente
+    setCategoriasOptions(categoriasData.categorias);
+  }, []); // El segundo argumento [] asegura que se llame solo una vez, equivalente a componentDidMount()
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleCategoriaPrincipalChange = (event) => {
+    const { value } = event.target;
+    setFormData({ ...formData, categoriaPrincipal: value, categorias: [] });
   };
 
   const handleCategoriaChange = (event) => {
@@ -94,12 +94,20 @@ const HelpdeskForm = () => {
         <div className="row">
           <div className="col-md-12">
             <fieldset>
-              <label>Categorías</label>
+
+              <select name="categoriaPrincipal" value={formData.categoriaPrincipal} onChange={handleCategoriaPrincipalChange}>
+                <option value="">--Categoria--</option>
+                {Object.keys(categoriasOptions).map((option, index) => (
+                  <option key={index} value={option}>{option}</option>
+                ))}
+              </select>
+
+              <br />
               <div className="categorias-container">
-                {categoriasOptions.map((option, index) => (
+                {formData.categoriaPrincipal && categoriasOptions[formData.categoriaPrincipal].map((categoria, index) => (
                   <div key={index}>
-                    <input type="checkbox" name="categorias" value={option.value} checked={formData.categorias.includes(option.value)} onChange={handleCategoriaChange} />
-                    <span>{option.label}</span>
+                    <input type="checkbox" name="categorias" value={categoria} checked={formData.categorias.includes(categoria)} onChange={handleCategoriaChange} />
+                    <span>{categoria}</span>
                   </div>
                 ))}
               </div>
