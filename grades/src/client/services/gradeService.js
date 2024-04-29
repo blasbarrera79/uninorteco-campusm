@@ -1,11 +1,13 @@
 import { request } from "@ombiel/aek-lib";
 
-export const getGrades = (nrc) => {
+export const getGrades = (user,nrc,term) => {
   const requestBody = {
-    user: "vergaradl",
+    user: user,
     nrc: nrc,
-    periodo: "202310",
+    periodo: term,
   };
+
+  console.log('requestBody',requestBody)
 
   return new Promise((resolve, reject) => {
     request
@@ -15,6 +17,7 @@ export const getGrades = (nrc) => {
         if (err) {
           reject(err);
         } else {
+          console.log(res)
           resolve(res.body.resultado);
         }
       });
