@@ -27,7 +27,7 @@
   {% set term = aek.request("term") %}
   {% set service = aek.create_service("https://intunqa.uninorte.edu.co/sba-estudiantes/api/v1/matricula/user/" ~ usuariouninorte ~ "/periodo/" ~ term) %}
   {{ service.set_method("GET") }}
-  {{ aek.respond({"response": service.json, "username": usuariouninorte, "periodo": term) }}
+  {{ aek.respond(service.json) }}
 {% endif %}
 
 
@@ -37,4 +37,7 @@
   {{ aek.respond(service.json) }}
 {% endif %}
 
+{% if aek.action == "get-user" %}
+  {{ aek.respond({"username":usuariouninorte}) }}
+{% endif %}
 << end >>
