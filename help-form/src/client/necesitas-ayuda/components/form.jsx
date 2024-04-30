@@ -59,7 +59,7 @@ const HelpdeskForm = () => {
       setIsSending(true);
       const { user } = formData; // Obtener el nombre de usuario del estado del formulario
       const emailContents = `
-        <p>Se ha generado un nuevo caso de ayuda con la siguiente información:</p>
+        <h1>Se ha generado un nuevo caso de ayuda con la siguiente información:</h1>
         <ul>
           <li><strong>Usuario:</strong> ${user}</li>
           <li><strong>Ubicación:</strong> ${formData.ubicacion}</li>

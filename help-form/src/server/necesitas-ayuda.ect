@@ -13,12 +13,21 @@
 {% set utils = aek.extension("CMAuthUtilities") %}
 {% set attrs = utils.getTokenAttributes() %}
 {% set username = attrs.username %}
+{% set usuariouninorte = attrs.extraAttrs.usuariouninorte %}
+
+{% if aek.action == "get-roles" %}
+  {% set service = aek.create_service("https://intunqa.uninorte.edu.co/sba-roles/api/v1/roles/" ~ usuariouninorte) %}
+  
+  {{ service.set_method("GET") }}
+  {{ aek.respond(service.json) }}
+{% endif %}
 
 {% if aek.action == "send-email" %}
   {% set email = aek.create_email() %}
   {# set to whichever email the client desires #}
-  {{ email.to("cmartinez@uninorte.edu.co", "yonyhome99@gmail.com") }}
-  {{ email.cc("yonyh@uninorte.edu.co", "lgalviz@uninorte.edu.co") }}
+  {{ email.to("lgalviz@uninorte.edu.co") }}
+  {{ email.to("cmartinez@uninorte.edu.co") }}
+  {{ email.to("yonyh@uninorte.edu.co") }}
   {# the email can be sent from the client side, but the campusm_user_email utility below might be more convenient #}
   {# please note that the default "from" email is "campusm_do_not_reply@ombiel.com" #}
   {{ email.subject("Registro de Ayuda") }}
