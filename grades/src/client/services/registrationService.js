@@ -1,14 +1,15 @@
 import { request } from "@ombiel/aek-lib"
 
-export const getRegistration = (TERM) => {
+export const getRegistration = (TERM, USER) => {
   return new Promise((resolve, reject) => {
     request
       .action("get-registration")
-      .send({ term: TERM })
+      .send({ term: TERM , user: USER})
       .end((err, res) => {
         if (err) {
           reject(err)
         } else {
+          console.log(res)
           resolve(res.body.resultado)
         }
       })

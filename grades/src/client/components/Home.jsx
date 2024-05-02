@@ -33,25 +33,41 @@ const Screen = () => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const termsResponse = await getTerm();
-        setTerms(termsResponse);
-        setSelectedTerm(termsResponse[0]?.PERIODO || '');
         const userResponse = await getUser();
-        setUser(userResponse);
+        const username = userResponse.split('@')[0];
+        setUser(username);
         setIsLoading(false);
       } catch (err) {
         setIsLoading(false);
       }
     };
-
+  
     fetchData();
   }, []);
+  
+  useEffect(() => {
+    const fetchTerms = async () => {
+      if (user) {
+        setIsLoading(true);
+        try {
+          const termsResponse = await getTerm(user);
+          setTerms(termsResponse);
+          setSelectedTerm(termsResponse[0]?.PERIODO || '');
+          setIsLoading(false);
+        } catch (err) {
+          setIsLoading(false);
+        }
+      }
+    };
+  
+    fetchTerms();
+  }, [user]);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const registration = await getRegistration(selectedTerm);
+        const registration = await getRegistration(selectedTerm, user);
         const promises = registration.map(async (element) => {
           const grades = await getGrades(user, element.SFRSTCR_CRN, selectedTerm);
           return {

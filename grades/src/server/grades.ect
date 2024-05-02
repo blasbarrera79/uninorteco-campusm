@@ -12,7 +12,7 @@
 {% set utils = aek.extension("CMAuthUtilities") %}
 {% set attrs = utils.getTokenAttributes() %}
 {% set usuariouninorte = attrs.extraAttrs.usuariouninorte %}
-
+{% set username = attrs.username %}
 
 {# using create_service to define a service - often used for third-party vendor integrations #}
 {% if aek.action == "get-grades" %}
@@ -25,19 +25,21 @@
 
 {% if aek.action == "get-registration" %}
   {% set term = aek.request("term") %}
-  {% set service = aek.create_service("https://intunqa.uninorte.edu.co/sba-estudiantes/api/v1/matricula/user/" ~ usuariouninorte ~ "/periodo/" ~ term) %}
+  {% set user = aek.request("user") %}
+  {% set service = aek.create_service("https://intunqa.uninorte.edu.co/sba-estudiantes/api/v1/matricula/user/" ~ user ~ "/periodo/" ~ term) %}
   {{ service.set_method("GET") }}
   {{ aek.respond(service.json) }}
 {% endif %}
 
 
 {% if aek.action == "get-terms" %}
-  {% set service = aek.create_service("https://intunqa.uninorte.edu.co/sba-estudiantes/api/v1/estudiante/userBanner/" ~ usuariouninorte ~ "/periodo") %}
+  {% set user = aek.request("user") %}
+  {% set service = aek.create_service("https://intunqa.uninorte.edu.co/sba-estudiantes/api/v1/estudiante/userBanner/" ~ user ~ "/periodo") %}
   {{ service.set_method("GET") }}
   {{ aek.respond(service.json) }}
 {% endif %}
 
 {% if aek.action == "get-user" %}
-  {{ aek.respond({"username":usuariouninorte}) }}
+  {{ aek.respond({"username":username}) }}
 {% endif %}
 << end >>
