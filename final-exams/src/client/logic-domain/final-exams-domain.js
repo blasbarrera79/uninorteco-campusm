@@ -3,16 +3,18 @@ import { DateTimeService } from "./date-services"
 import { ExamSortingService } from "./sort-services"
 
 class FinalExamService {
-  constructor() {
+  constructor(user) {
     this.finalExamResponse = null
     this.examsLoaded = false
+    this.USER = user
   }
 
   async initializeFinalExamResponse() {
     try {
+      console.log('this.USER',this.USER)
       if (!this.examsLoaded) {
         const { error, body } = await new Promise((resolve, reject) => {
-          request.action("get-user").end((e, res) => {
+          request.action("get-exams").send({ user: this.USER}).end((e, res) => {
             if (e) {
               reject(new Error(e.message));
               return;
@@ -28,8 +30,7 @@ class FinalExamService {
         this.finalExamResponse = body;
         this.examsLoaded = true;
       }
-    }
-    catch (error) {
+    } catch (error) {
       throw new Error(`Error fetching exams: ${error}`);
     }
   }
@@ -64,8 +65,7 @@ class FinalExamService {
         examsByDate[date].push(item)
       })
       return ExamSortingService.sortExamsByHour(examsByDate)
-    }
-    catch (error) {
+    } catch (error) {
       throw new Error(`Error grouping exams by date: ${error}`)
     }
   }
@@ -87,8 +87,7 @@ class FinalExamService {
           if (DateTimeService.compareTimes(exam.HORA, currentTime) > 0) {
             return exam
           }
-        }
-        else if (DateTimeService.dateCompare(exam.FECHA, currentDate) > 0) {
+        } else if (DateTimeService.dateCompare(exam.FECHA, currentDate) > 0) {
           return exam
         }
         return null

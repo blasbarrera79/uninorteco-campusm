@@ -11,13 +11,18 @@
 << block "init": >>
 
 {% set utils = aek.extension("CMAuthUtilities") %}
-  {% set attrs = utils.getTokenAttributes() %}
-  {% set usuariouninorte = attrs.extraAttrs.usuariouninorte %}
-  
-  {% if aek.action == "get-user" %}
-    {% set service = aek.create_service("https://intunqa.uninorte.edu.co/sba-estudiantes/api/v1/horario-final/" ~ usuariouninorte) %}
-    {{ service.set_method("GET") }}
-    {{ aek.respond(service.json) }}
-  {% endif %}
+{% set attrs = utils.getTokenAttributes() %}
+{% set usuariouninorte = attrs.extraAttrs.usuariouninorte %}
+{% set username = attrs.username %}
 
+{% if aek.action == "get-exams" %}
+  {% set user = aek.request("user") %}
+  {% set service = aek.create_service("https://intunqa.uninorte.edu.co/sba-estudiantes/api/v1/horario-final/" ~ user) %}
+  {{ service.set_method("GET") }}
+  {{ aek.respond(service.json) }}
+{% endif %}
+
+{% if aek.action == "get-user" %}
+  {{ aek.respond({"username":username}) }}
+{% endif %}
 << end >>

@@ -5,6 +5,7 @@ import SimpleCard from "./Card"
 import FinalExamService from "../logic-domain/final-exams-domain"
 import { DateTimeService } from "../logic-domain/date-services"
 import HeaderComponent from "./HeaderComponent"
+import { fetchUserData } from "../logic-domain/user-service";
 
 
 const useStyles = makeStyles({
@@ -16,13 +17,28 @@ export default function Home() {
   const [dato, setDato] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [user, setUser] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const username = await fetchUserData();
+        setUser(username);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+  
+    fetchData();
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const examService = new FinalExamService()
+        const examService = new FinalExamService(user)
         const groupedExams = await examService.getGroupExamByDate()
         setDato(groupedExams)
+        setError(null)
         setLoading(false)
       } catch (errorApi) {
         setError(errorApi)
@@ -31,7 +47,7 @@ export default function Home() {
     }
 
     fetchData()
-  }, [])
+  }, [user])
 
   if (loading) {
     return <p>Cargando...</p>
