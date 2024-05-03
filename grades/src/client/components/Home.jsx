@@ -4,10 +4,7 @@ import { CircularProgress } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import GradeCard from "./GradeCard";
 import SelectComponent from "./SelectComponent";
-import { getRegistration } from "../services/registrationService";
-import { getGrades } from "../services/gradeService";
-import { getTerm } from "../services/termService";
-import { getUser } from "../services/userService";
+import { fetchUserData, fetchUserTerms, fetchUserGrades } from "../utils/apiUtils";
 
 const useStyles = makeStyles({
   container: {
@@ -33,8 +30,7 @@ const Screen = () => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const userResponse = await getUser();
-        const username = userResponse.split('@')[0];
+        const username = await fetchUserData();
         setUser(username);
         setIsLoading(false);
       } catch (err) {
@@ -50,7 +46,7 @@ const Screen = () => {
       if (user) {
         setIsLoading(true);
         try {
-          const termsResponse = await getTerm(user);
+          const termsResponse = await fetchUserTerms(user);
           setTerms(termsResponse);
           setSelectedTerm(termsResponse[0]?.PERIODO || '');
           setIsLoading(false);
@@ -67,16 +63,7 @@ const Screen = () => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const registration = await getRegistration(selectedTerm, user);
-        const promises = registration.map(async (element) => {
-          const grades = await getGrades(user, element.SFRSTCR_CRN, selectedTerm);
-          return {
-            materia: element.SSBSECT_CRSE_TITLE,
-            items: grades.map(({ SHRGCOM_NAME, NOTAA }) => ({ name: SHRGCOM_NAME, value: NOTAA })),
-          };
-        });
-
-        const subjectsGradesResponse = await Promise.all(promises);
+        const subjectsGradesResponse = await fetchUserGrades(selectedTerm, user);
         setSubjectsGrades(subjectsGradesResponse);
         setIsLoading(false);
       } catch (err) {
