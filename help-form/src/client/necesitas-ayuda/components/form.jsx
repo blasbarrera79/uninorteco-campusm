@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import "../assets/css/HelpdeskForm.css";
 import { request } from "@ombiel/aek-lib";
 import categoriasData from '../assets/json/categorias.json'; // Importa el archivo JSON
+import SelectComponent from './SelectComponent';
 
 const HelpdeskForm = () => {
   const initialFormData = {
@@ -94,15 +95,7 @@ const HelpdeskForm = () => {
         <div className="row">
           <div className="col-md-12">
             <fieldset>
-
-              <select name="categoriaPrincipal" value={formData.categoriaPrincipal} onChange={handleCategoriaPrincipalChange}>
-                <option value="">--Categoria--</option>
-                {Object.keys(categoriasOptions).map((option, index) => (
-                  <option key={index} value={option}>{option}</option>
-                ))}
-              </select>
-
-              <br />
+              <SelectComponent options={Object.keys(categoriasOptions)} value={formData.categoriaPrincipal} handleChange={handleCategoriaPrincipalChange} />
               <div className="categorias-container">
                 {formData.categoriaPrincipal && categoriasOptions[formData.categoriaPrincipal].map((categoria, index) => (
                   <div key={index}>
