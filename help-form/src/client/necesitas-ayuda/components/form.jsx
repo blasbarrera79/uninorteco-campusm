@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import "../assets/css/HelpdeskForm.css";
+// import "../assets/css/HelpdeskForm.css";
 import { request } from "@ombiel/aek-lib";
 import categoriasData from '../assets/json/categorias.json'; // Importa el archivo JSON
 import SelectComponent from './SelectComponent';
+import CheckboxList from './CheckboxList';
+import InputComponent from './InputComponent';
+import TextAreaComponent from './TextAreaComponent';
+import ButtonComponent from './ButtonComponent';
 
 const HelpdeskForm = () => {
   const initialFormData = {
@@ -96,21 +100,30 @@ const HelpdeskForm = () => {
           <div className="col-md-12">
             <fieldset>
               <SelectComponent options={Object.keys(categoriasOptions)} value={formData.categoriaPrincipal} handleChange={handleCategoriaPrincipalChange} />
-              <div className="categorias-container">
-                {formData.categoriaPrincipal && categoriasOptions[formData.categoriaPrincipal].map((categoria, index) => (
-                  <div key={index}>
-                    <input type="checkbox" name="categorias" value={categoria} checked={formData.categorias.includes(categoria)} onChange={handleCategoriaChange} />
-                    <span>{categoria}</span>
-                  </div>
-                ))}
-              </div>
-              <label>Ubicación</label>
-              <input type="text" name="ubicacion" value={formData.ubicacion} onChange={handleInputChange} placeholder="Bloque-piso-salón/oficina" />
-              <label>Descripción</label>
-              <textarea name="descripcion" value={formData.descripcion} onChange={handleInputChange} rows="5"></textarea>
-              <label>Extensión o Teléfono</label>
-              <input type="number" name="ext" value={formData.ext} onChange={handleInputChange} placeholder="Extensión o Teléfono" />
-              <button type="submit" disabled={isSending}>{isSending ? "Enviando..." : "Enviar"}</button>
+              <CheckboxList formData={formData} categoriasOptions={categoriasOptions} handleCategoriaChange={handleCategoriaChange} />
+              <InputComponent 
+                label="Ubicación" 
+                name="ubicacion"
+                value={formData.ubicacion}
+                onChange={handleInputChange}
+                placeholder="Bloque-piso-salón/oficina" 
+              />
+              <TextAreaComponent
+                label="Descripción"
+                name="descripcion"
+                value={formData.descripcion}
+                onChange={handleInputChange}
+                placeholder="Descripción del problema"
+              />
+              <InputComponent
+                label="Extensión o Teléfono"
+                name="ext"
+                value={formData.ext}
+                onChange={handleInputChange}
+                type="number"
+                placeholder="Extensión o Teléfono"
+              />
+              <ButtonComponent text={isSending ? "Enviando..." : "Enviar"} disabled={isSending} />
             </fieldset>
           </div>
         </div>
