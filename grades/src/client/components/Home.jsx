@@ -32,7 +32,6 @@ const Screen = () => {
       try {
         const username = await fetchUserData();
         setUser(username);
-        setIsLoading(false);
       } catch (err) {
         setIsLoading(false);
       }
@@ -49,7 +48,6 @@ const Screen = () => {
           const termsResponse = await fetchUserTerms(user);
           setTerms(termsResponse);
           setSelectedTerm(termsResponse[0]?.PERIODO || '');
-          setIsLoading(false);
         } catch (err) {
           setIsLoading(false);
         }

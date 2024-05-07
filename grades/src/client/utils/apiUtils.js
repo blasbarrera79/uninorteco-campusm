@@ -31,7 +31,7 @@ export async function fetchUserGrades(selectedTerm, user) {
       const grades = await getGrades(user, element.SFRSTCR_CRN, selectedTerm);
       return {
         materia: element.SSBSECT_CRSE_TITLE,
-        items: grades.map(({ SHRGCOM_NAME, NOTAA }) => ({ name: SHRGCOM_NAME, value: NOTAA })),
+        items: grades.map(({ SHRGCOM_NAME,SHRGCOM_WEIGHT, NOTAA }) => ({ name: SHRGCOM_NAME, peso: SHRGCOM_WEIGHT, value: NOTAA })),
       };
     });
 
