@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
       content: '""',
       position: 'absolute',
       top: 0,
-      width: '4px',
+      width: '8px',
       height: '100%',
       borderTopLeftRadius: '4px',
       borderBottomLeftRadius: '4px',
@@ -36,6 +36,9 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(1), // Espacio entre el icono y el texto
   },
+  number: {
+    marginRight: theme.spacing(1), // Espacio entre el número y el icono
+  },
 }));
 
 const SalaUsuarioItem = ({ sala, isRight }) => {
@@ -43,7 +46,7 @@ const SalaUsuarioItem = ({ sala, isRight }) => {
 
   return (
     <Card variant="outlined" className={`${classes.card} ${isRight ? classes.rightBorder : ''}`}>
-      <CardActionArea>
+      <CardActionArea href="https://uninorte-sandbox.campusm.exlibrisgroup.com/campusm/home#map/1000026249/m/1000003123/t/roadmap/c/all/p/1000003123-1000003371-1000018477" target="_blank" rel="noopener noreferrer">
         <CardContent>
           <Typography variant="h5" component="h2">
             {sala.nombre}
@@ -51,10 +54,10 @@ const SalaUsuarioItem = ({ sala, isRight }) => {
           <Typography variant="body2" color="textSecondary" gutterBottom>
             Bloque: {sala.bloque}, Piso: {sala.piso}
           </Typography>
-          <Grid container justifyContent='flex-end'>
+          <Grid container justifyContent='flex-end' spacing={2} >
             <Grid item className={classes.iconContainer}>
               <LaptopIcon className={classes.icon} />
-              <Typography variant="body2" component="span">
+              <Typography variant="body2" component="span" className='number'>
                 {sala.equiposPrestamoDisponibles}
               </Typography>
             </Grid>
@@ -73,5 +76,3 @@ const SalaUsuarioItem = ({ sala, isRight }) => {
 };
 
 export default SalaUsuarioItem;
-
-

@@ -26,7 +26,7 @@ const SalaUsuarioList = () => {
   };
 
   return (
-    <Container style={{ backgroundColor: '#e0e0e0', padding: '20px' }}>
+    <Container style={{ backgroundColor: '#e0e0e0', padding: '20px', height: "100%"}}>
       <Grid container spacing={2}>
         {salasUsuario.map((sala, index) => (
           <Grid item xs={6} key={sala.id}>
