@@ -17,9 +17,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CardComponent(props) {
+export default function CardComponent({ title, grade, credit, parcelacion = true, text }) {
   const classes = useStyles();
-  const { title, grade, credit } = props;
 
   return (
     <Paper className={classes.paper}>
@@ -29,15 +28,24 @@ export default function CardComponent(props) {
             <Typography gutterBottom variant="h5">
               {title}
             </Typography>
-            <Typography variant="body2" color="textSecondary">
-              {`${credit} creditos`}
-            </Typography>
+            {credit && (
+              <Grid item>
+                <Typography variant="body2">Creditos: {credit}</Typography>
+              </Grid>
+            )}
           </Grid>
-          <Grid item>
-            <Typography variant="body2" style={{ cursor: 'pointer' }}>
-              Ver parcelacion
-            </Typography>
-          </Grid>
+          {parcelacion && (
+            <Grid item>
+              <Typography variant="body2" style={{ cursor: 'pointer' }}>
+                Ver parcelacion
+              </Typography>
+            </Grid>
+          )}
+          {text && (
+            <Grid item>
+              <Typography variant="body2">{text}</Typography>
+            </Grid>
+          )}
         </Grid>
         <Grid item className={classes.grade}>
           <TextField value={grade} />
@@ -50,6 +58,8 @@ export default function CardComponent(props) {
 CardComponent.propTypes = {
   title: PropTypes.string.isRequired,
   grade: PropTypes.string.isRequired,
-  credit: PropTypes.number.isRequired,
+  credit: PropTypes.number,
+  parcelacion: PropTypes.bool,
+  text: PropTypes.string,
 };
 
