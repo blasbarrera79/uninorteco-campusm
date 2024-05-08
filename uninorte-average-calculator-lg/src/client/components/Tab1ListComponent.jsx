@@ -39,5 +39,3 @@ Tab1ListComponent.propTypes = {
 };
 
 export default Tab1ListComponent;
-
-
