@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import TabsComponent from './TabsComponent';
 import Tab1ListComponent from './Tab1ListComponent';
 import Tab2ListComponent from './Tab2ListComponent';
@@ -7,8 +8,23 @@ import ItemDetailComponent from './ItemDetailComponent';
 import OtherViewComponent from './OtherViewComponent';
 // import NotFoundComponent from './NotFoundComponent';
 
+const useStyles = makeStyles({
+  root: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1000,
+    backgroundColor: '#fff',
+  },
+  content: {
+    paddingTop: 64,
+  },
+});
+
 const Home = () => {
 
+  const classes = useStyles();
 
   const object = [
     {
@@ -55,14 +71,18 @@ const Home = () => {
 
   return (
     <Router>
-      <TabsComponent />
-      <Routes>
-        <Route exact path="/" element={<Tab1ListComponent materias={object} />} />
-        <Route path="/tab2" element={<Tab2ListComponent />} />
-        <Route path="/item/:id" element={<ItemDetailComponent />} />
-        <Route path="/otherview" element={<OtherViewComponent />} />
-        {/* <Route element={<NotFoundComponent />} /> */}
-      </Routes>
+      <div className={classes.root}>
+        <TabsComponent />
+      </div>
+      <div className={classes.content}>
+        <Routes>
+          <Route exact path="/" element={<Tab1ListComponent materias={object} />} />
+          <Route path="/tab2" element={<Tab2ListComponent />} />
+          <Route path="/item/:id" element={<ItemDetailComponent />} />
+          <Route path="/otherview" element={<OtherViewComponent />} />
+          {/* <Route element={<NotFoundComponent />} /> */}
+        </Routes>
+      </div>
     </Router>
   );
 };
