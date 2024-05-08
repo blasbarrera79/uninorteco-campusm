@@ -35,7 +35,7 @@ function Tab1ListComponent(props) {
       ))}
       <Container className={classes.container}>
         <CardComponent title="Promedio semestral" credit={17} parcelacion={false} grade="4.5" />
-        <CardComponent title="Promedio semestral" parcelacion={false} grade="4.5" text="Promediado con este semestre" />
+        <CardComponent title="Promedio acumulado" parcelacion={false} grade="4.5" text="Promediado con este semestre" />
       </Container>
     </Container>
   );
