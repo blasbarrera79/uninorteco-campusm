@@ -2,5 +2,5 @@ homepage:
   menu:
     replace:
 
-      - desc: Calculadora Promedio V2
+      - desc: Average Calculator
         screenName: average-calculator
