@@ -12,7 +12,10 @@ const useStyles = makeStyles({
   },
   card: {
     width: '100%',
-  },  
+  },
+  container: {
+    paddingTop: 20,
+  },
 });
 
 function Tab1ListComponent(props) {
@@ -30,6 +33,10 @@ function Tab1ListComponent(props) {
           grade={item.NOTAA}
         />
       ))}
+      <Container className={classes.container}>
+        <CardComponent title="Promedio semestral" credit={17} parcelacion={false} grade="4.5" />
+        <CardComponent title="Promedio semestral" parcelacion={false} grade="4.5" text="Promediado con este semestre" />
+      </Container>
     </Container>
   );
 }
