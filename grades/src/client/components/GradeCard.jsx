@@ -28,7 +28,7 @@ const GradeCard = ({ gradeName, items }) => {
       finalGrade += parcialGrade;
     });
     console.log('GradeCard2',finalGrade);
-    setNotaFinal(finalGrade.toFixed(2).toString());
+    setNotaFinal(finalGrade.toFixed(1).toString());
   }, [items]);
   
   console.log('typeof notaFinal',typeof notaFinal)

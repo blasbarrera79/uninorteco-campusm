@@ -81,7 +81,6 @@ const Screen = () => {
   return (
     <Container className={classes.container}>
       <SelectComponent
-        label="Selecciona una opción"
         value={selectedTerm}
         onChange={handleSelectChange}
         options={terms}
