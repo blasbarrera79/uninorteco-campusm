@@ -27,7 +27,7 @@ const SalaUsuarioList = () => {
         {salasUsuario.map((sala, index) => (
           <Grid item xs={6} key={index}>
             <SalaUsuarioItem sala={sala} isRight={index % 2 !== 0} />
-            <Divider />
+            
           </Grid>
         ))}
       </Grid>

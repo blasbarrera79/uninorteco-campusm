@@ -46,7 +46,7 @@ const SalaUsuarioItem = ({ sala, isRight }) => {
 
   return (
     <Card variant="outlined" className={`${classes.card} ${isRight ? classes.rightBorder : ''}`}>
-      <CardActionArea href="campusm://uniloc?mapCode=1000003123&locCode=1000003371" target="_blank" rel="noopener noreferrer">
+      <CardActionArea href={sala.enlace} target="_blank" rel="noopener noreferrer">
         <CardContent>
           <Typography variant="h5" component="h2">
             {sala.nombre}
