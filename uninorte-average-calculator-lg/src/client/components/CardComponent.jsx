@@ -9,11 +9,18 @@ import TextField from '@material-ui/core/TextField';
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
-    marginBottom: theme.spacing(2),
+    borderRadius: 0,
+    boxShadow: 'none',
   },
   grade: {
     alignSelf: 'center',
     width: '4em',
+  },
+  gradeInput: {
+    textAlignLast: 'center',
+  },
+  text: {
+    maxWidth: '80%',
   },
 }));
 
@@ -23,9 +30,9 @@ export default function CardComponent({ title, grade, credit, parcelacion = true
   return (
     <Paper className={classes.paper}>
       <Grid item xs={12} sm container>
-        <Grid item xs container direction="column" spacing={2}>
+        <Grid item xs container direction="column" spacing={1}>
           <Grid item xs>
-            <Typography gutterBottom variant="h5">
+            <Typography gutterBottom variant="h6">
               {title}
             </Typography>
             {credit && (
@@ -42,13 +49,13 @@ export default function CardComponent({ title, grade, credit, parcelacion = true
             </Grid>
           )}
           {text && (
-            <Grid item>
+            <Grid className={classes.text} item>
               <Typography variant="body2">{text}</Typography>
             </Grid>
           )}
         </Grid>
         <Grid item className={classes.grade}>
-          <TextField value={grade} />
+          <TextField className={classes.gradeInput} value={grade} />
         </Grid>
       </Grid>
     </Paper>
