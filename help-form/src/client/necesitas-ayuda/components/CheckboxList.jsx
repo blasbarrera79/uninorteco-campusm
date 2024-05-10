@@ -27,14 +27,14 @@ const CheckboxList = ({ formData, categoriasOptions, handleCategoriaChange }) =>
       {formData.categoriaPrincipal && categoriasOptions[formData.categoriaPrincipal].map((categoria) => (
         <ListItem className={classes.listItem} key={categoria}>
           <ListItemIcon>
-            <Checkbox
-              edge="start"
-              checked={formData.categorias.includes(categoria)}
-              tabIndex={-1}
-              disableRipple
-              inputProps={{ 'aria-labelledby': categoria }}
-              onChange={(e) => handleCategoriaChange(e, categoria)}
-            />
+          <Checkbox
+            edge="start"
+            checked={formData.categorias.includes(categoria)}
+            tabIndex={-1}
+            disableRipple
+            inputProps={{ 'aria-labelledby': categoria }}
+            onChange={() => handleCategoriaChange(categoria)}
+          />
           </ListItemIcon>
           <ListItemText primary={categoria} />
         </ListItem>

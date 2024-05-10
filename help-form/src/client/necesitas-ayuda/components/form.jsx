@@ -1,44 +1,51 @@
 import React, { useState, useEffect } from 'react';
-// import "../assets/css/HelpdeskForm.css";
 import { request } from "@ombiel/aek-lib";
-import categoriasData from '../assets/json/categorias.json'; // Importa el archivo JSON
+import categoriasData from '../assets/json/categorias.json';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 import SelectComponent from './SelectComponent';
 import CheckboxList from './CheckboxList';
 import InputComponent from './InputComponent';
 import TextAreaComponent from './TextAreaComponent';
 import ButtonComponent from './ButtonComponent';
 
+const useStyles = makeStyles((theme) => ({
+  container: {
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
+  },
+}));
+
 const HelpdeskForm = () => {
+  const classes = useStyles();
+
   const initialFormData = {
     ubicacion: '',
     descripcion: '',
     ext: '',
     categorias: [],
     categoriaPrincipal: '',
-    user: '' // Añade el campo para el usuario
+    user: ''
   };
   const [formData, setFormData] = useState(initialFormData);
   const [isSending, setIsSending] = useState(false);
   const [categoriasOptions, setCategoriasOptions] = useState({});
 
   useEffect(() => {
-    // Función para obtener el nombre de usuario
     const getUser = () => {
       request.action("get-user").end((err, res) => {
         if (res && res.body) {
           const user = res.body.username;
-          // Actualizar el estado con el nombre de usuario obtenido
           setFormData(prevState => ({ ...prevState, user }));
         }
       });
     };
 
-    // Llamar a la función para obtener el nombre de usuario cuando se monta el componente
     getUser();
 
-    // Carga las categorías del archivo JSON cuando se monta el componente
     setCategoriasOptions(categoriasData.categorias);
-  }, []); // El segundo argumento [] asegura que se llame solo una vez, equivalente a componentDidMount()
+  }, []);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -50,11 +57,10 @@ const HelpdeskForm = () => {
     setFormData({ ...formData, categoriaPrincipal: value, categorias: [] });
   };
 
-  const handleCategoriaChange = (event) => {
-    const { value, checked } = event.target;
-    const updatedCategorias = checked
-      ? [...formData.categorias, value]
-      : formData.categorias.filter(categoria => categoria !== value);
+  const handleCategoriaChange = (categoria) => {
+    const updatedCategorias = formData.categorias.includes(categoria)
+      ? formData.categorias.filter(c => c !== categoria)
+      : [...formData.categorias, categoria];
     setFormData({ ...formData, categorias: updatedCategorias });
   };
 
@@ -62,7 +68,7 @@ const HelpdeskForm = () => {
     event.preventDefault();
     if (validateForm()) {
       setIsSending(true);
-      const { user } = formData; // Obtener el nombre de usuario del estado del formulario
+      const { user } = formData;
       const emailContents = `
         <h1>Se ha generado un nuevo caso de ayuda con la siguiente información:</h1>
         <ul>
@@ -95,41 +101,40 @@ const HelpdeskForm = () => {
 
   return (
     <form id="formHelpdesk" onSubmit={handleSubmit} encType="multipart/form-data">
-      <div className="container">
-        <div className="row">
-          <div className="col-md-12">
-            <fieldset>
-              <SelectComponent options={Object.keys(categoriasOptions)} value={formData.categoriaPrincipal} handleChange={handleCategoriaPrincipalChange} />
-              <CheckboxList formData={formData} categoriasOptions={categoriasOptions} handleCategoriaChange={handleCategoriaChange} />
-              <InputComponent 
-                label="Ubicación" 
-                name="ubicacion"
-                value={formData.ubicacion}
-                onChange={handleInputChange}
-                placeholder="Bloque-piso-salón/oficina" 
-              />
-              <TextAreaComponent
-                label="Descripción"
-                name="descripcion"
-                value={formData.descripcion}
-                onChange={handleInputChange}
-                placeholder="Descripción del problema"
-              />
-              <InputComponent
-                label="Extensión o Teléfono"
-                name="ext"
-                value={formData.ext}
-                onChange={handleInputChange}
-                type="number"
-                placeholder="Extensión o Teléfono"
-              />
-              <ButtonComponent text={isSending ? "Enviando..." : "Enviar"} disabled={isSending} />
-            </fieldset>
-          </div>
-        </div>
-      </div>
+      <Container maxWidth="lg" className={classes.container}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <SelectComponent options={Object.keys(categoriasOptions)} value={formData.categoriaPrincipal} handleChange={handleCategoriaPrincipalChange} />
+            <CheckboxList formData={formData} categoriasOptions={categoriasOptions} handleCategoriaChange={handleCategoriaChange} />
+            <InputComponent 
+              label="Ubicación" 
+              name="ubicacion"
+              value={formData.ubicacion}
+              onChange={handleInputChange}
+              placeholder="Bloque-piso-salón/oficina" 
+            />
+            <TextAreaComponent
+              label="Descripción"
+              name="descripcion"
+              value={formData.descripcion}
+              onChange={handleInputChange}
+              placeholder="Descripción del problema"
+            />
+            <InputComponent
+              label="Extensión o Teléfono"
+              name="ext"
+              value={formData.ext}
+              onChange={handleInputChange}
+              type="number"
+              placeholder="Extensión o Teléfono"
+            />
+            <ButtonComponent text={isSending ? "Enviando..." : "Enviar"} disabled={isSending} />
+          </Grid>
+        </Grid>
+      </Container>
     </form>
   );
 };
 
 export default HelpdeskForm;
+
