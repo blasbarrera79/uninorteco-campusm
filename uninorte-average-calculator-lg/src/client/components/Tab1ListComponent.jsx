@@ -2,21 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Container } from '@ombiel/aek-lib';
 import { makeStyles } from '@material-ui/core';
+import Divider from '@material-ui/core/Divider';
 import CardComponent from './CardComponent';
+import ButtonComponent from './ButtonComponent';
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme)=> ({
   root: {
     width: '100%',
-    padding: 10,
+    padding: theme.spacing(1),
   },
   card: {
     width: '100%',
   },
   container: {
-    paddingTop: 20,
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
   },
-});
+}));
 
 function Tab1ListComponent(props) {
 
@@ -33,10 +36,12 @@ function Tab1ListComponent(props) {
           grade={item.NOTAA}
         />
       ))}
+      <Divider />
       <Container className={classes.container}>
         <CardComponent title="Promedio semestral" credit={17} parcelacion={false} grade="4.5" />
         <CardComponent title="Promedio acumulado" parcelacion={false} grade="4.5" text="Promediado con este semestre" />
       </Container>
+      <ButtonComponent text="Mas sobre acumulado - semestral" />
     </Container>
   );
 }
