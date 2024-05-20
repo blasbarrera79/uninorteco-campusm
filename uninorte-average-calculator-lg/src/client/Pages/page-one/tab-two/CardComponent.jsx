@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import LockIcon from '@material-ui/icons/Lock';
+import { validateGrade } from '../../../my-domain-logic/utils';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CardComponent({ title, grade, credit, parcelacion = true, text, edit = false, partial, updateQualifications }) {
+export default function CardComponent({ title, grade, credit, parcelacion = true, text, edit = false, partial, updateQualifications,updateLock }) {
   const classes = useStyles();
   const [editGrade, setEditGrade] = useState('');
   const [previousGrade, setPreviousGrade] = useState(grade);
@@ -43,16 +44,10 @@ export default function CardComponent({ title, grade, credit, parcelacion = true
 
   const handleGradeChange = (event) => {
     if (!isLocked) {
-      let newValue = event.target.value.trim();
-      if (newValue === '') {
-        newValue = '0';
-      }
-      if (/^-?\d*(\.\d{0,2})?$/.test(newValue) && newValue >= 0 && newValue <= 5) {
+      const newValue = event.target.value;
+      const validatedGrade = validateGrade(newValue);
 
-        if (newValue.endsWith('.00')) {
-          newValue = newValue.replace('.00', '');
-        }
-
+      if (validatedGrade !== null) {
         setEditGrade(newValue);
         updateQualifications(parseFloat(newValue));
         if (newValue !== previousGrade.toString()) {
@@ -64,6 +59,7 @@ export default function CardComponent({ title, grade, credit, parcelacion = true
 
   const toggleLock = () => {
     setIsLocked(!isLocked);
+    updateLock(!isLocked);
   };
 
   return (
@@ -127,4 +123,5 @@ CardComponent.propTypes = {
   edit: PropTypes.bool,
   partial: PropTypes.array,
   updateQualifications: PropTypes.func,
+  updateLock: PropTypes.func,
 };

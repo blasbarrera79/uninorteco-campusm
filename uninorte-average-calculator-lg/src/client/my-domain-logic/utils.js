@@ -45,3 +45,17 @@ export function calculateCurrentAverage(subjects) {
   )
   return totalWeightedSum / totalCredits
 }
+
+export function validateGrade(newValue) {
+  newValue = newValue.trim()
+  if (newValue === "") {
+    newValue = "0"
+  }
+  if (/^-?\d*(\.\d{0,2})?$/.test(newValue) && newValue >= 0 && newValue <= 5) {
+    if (newValue.endsWith(".00")) {
+      newValue = newValue.replace(".00", "")
+    }
+    return parseFloat(newValue)
+  }
+  return null // Indica que la validación falló
+}
