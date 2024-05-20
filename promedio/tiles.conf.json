@@ -1,0 +1,7 @@
+{
+  "tileComponents": {
+    "PromedioTile": {
+      "script": "bundle.js"
+    }
+  }
+}
