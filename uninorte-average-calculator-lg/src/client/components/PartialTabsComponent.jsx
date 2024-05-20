@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function TabsComponent() {
+function PartialTabsComponent() {
   const [oldValue, setOldValue] = useState(null);
   const [value, setValue] = useState(0);
   const navigate = useNavigate();
@@ -28,9 +28,9 @@ function TabsComponent() {
   useEffect(() => {
     if (oldValue === value) return;
     if (value === 0) {
-      navigate('/');
+      navigate('/partial');
     } else if (value === 1) {
-      navigate('/tab2');
+      navigate('/partial2');
     }
 
     setOldValue(value);
@@ -49,10 +49,10 @@ function TabsComponent() {
         indicator: classes.tabIndicator,
       }}
     >
-      <Tab className={classes.tab} label="Mi nota final es" />
-      <Tab className={classes.tab} label="Cuanto necesito" />
+      <Tab className={classes.tab} label="Partial Page 1" />
+      <Tab className={classes.tab} label="Partial Page 2" />
     </Tabs>
   );
 }
 
-export default TabsComponent;
+export default PartialTabsComponent;

@@ -1,12 +1,15 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import TabsComponent from './TabsComponent';
-import Tab1ListComponent from './Tab1ListComponent';
-import Tab2ListComponent from './Tab2ListComponent';
+import Tab1ListComponent from '../Pages/page-one/Tab1ListComponent';
+import Tab2ListComponent from '../Pages/page-one/tab-two/Tab2ListComponent';
 import ItemDetailComponent from './ItemDetailComponent';
 import OtherViewComponent from './OtherViewComponent';
 // import NotFoundComponent from './NotFoundComponent';
+import PartialPageComponent from './PartialPageComponent';
+import PartialPageComponent2 from './PartialPageComponent2';
+import PartialTabsComponent from './PartialTabsComponent';
 
 const useStyles = makeStyles({
   root: {
@@ -21,66 +24,170 @@ const useStyles = makeStyles({
     paddingTop: 64,
   },
 });
+function DynamicTabsComponent() {
+  const location = useLocation();
+
+  // Determina qué componente de pestañas mostrar según la ruta actual
+  const renderTabsComponent = () => {
+    if (location.pathname === '/partial' || location.pathname === '/partial2') {
+      return <PartialTabsComponent />;
+    }
+    return <TabsComponent />;
+  };
+
+  return (
+    <div>
+      {renderTabsComponent()}
+    </div>
+  );
+}
+
 
 const Home = () => {
-
   const classes = useStyles();
 
-  const object = [
+  const subjects = [
     {
-      SHRMRKS_CRN: "5470",
-      SHRGCOM_SEQ_NO: 1,
-      SHRGCOM_NAME: "TALLER 1ER",
-      SHRGCOM_DESCRIPTION: "Talleres 1ra sesión",
-      SHRGCOM_WEIGHT: 25,
-      NOTA: 5,
-      NOTAA: "5.0",
-      CREDITOS: 3
+      SFRSTCR_CRN: "5469",
+      SSBSECT_CRSE_TITLE: "TEC EMERGENT PARA DESA DE SOFT",
+      SFRSTCR_CREDIT_HR: 3,
+      PUNTOS: 23.9,
+      CREDITOS: 5,
+      "(SELECTSHRTTRM_ASTD_CODE_END_OF_TERMESTADOFROMSHRTTRMWHERESHRTTRM_PIDM=SPRIDEN_PIDMANDSHRTTRM_TERM_CODE=SFRSTCR_TERM_CODE)": "ED",
+      parciales: [],
+      NOTAA: 0
     },
     {
-      SHRMRKS_CRN: "5470",
-      SHRGCOM_SEQ_NO: 2,
-      SHRGCOM_NAME: "TALLER 2DA",
-      SHRGCOM_DESCRIPTION: "Talleres 2da sesión",
-      SHRGCOM_WEIGHT: 25,
-      NOTA: 4.5,
-      NOTAA: "4.5",
-      CREDITOS: 3
+      SFRSTCR_CRN: "5470",
+      SSBSECT_CRSE_TITLE: "PROC DE SOFTWARE Y PRAC AGILES",
+      SFRSTCR_CREDIT_HR: 3,
+      PUNTOS: 23.9,
+      CREDITOS: 5,
+      "(SELECTSHRTTRM_ASTD_CODE_END_OF_TERMESTADOFROMSHRTTRMWHERESHRTTRM_PIDM=SPRIDEN_PIDMANDSHRTTRM_TERM_CODE=SFRSTCR_TERM_CODE)": "ED",
+      parciales: [
+        {
+          SHRMRKS_CRN: "5470",
+          SHRGCOM_SEQ_NO: 1,
+          SHRGCOM_NAME: "TALLER 1ER",
+          SHRGCOM_DESCRIPTION: "Talleres 1ra sesión",
+          SHRGCOM_WEIGHT: 25,
+          NOTA: 5,
+          NOTAA: "5.0"
+        },
+        {
+          SHRMRKS_CRN: "5470",
+          SHRGCOM_SEQ_NO: 2,
+          SHRGCOM_NAME: "TALLER 2DA",
+          SHRGCOM_DESCRIPTION: "Talleres 2da sesión",
+          SHRGCOM_WEIGHT: 25,
+          NOTA: 4.5,
+          NOTAA: "4.5"
+        },
+        {
+          SHRMRKS_CRN: "5470",
+          SHRGCOM_SEQ_NO: 3,
+          SHRGCOM_NAME: "TALLER 3ER",
+          SHRGCOM_DESCRIPTION: "Talleres 3ra sesión",
+          SHRGCOM_WEIGHT: 25,
+          NOTA: 4.6,
+          NOTAA: "4.6"
+        },
+        {
+          SHRMRKS_CRN: "5470",
+          SHRGCOM_SEQ_NO: 4,
+          SHRGCOM_NAME: "TALLER 4TA",
+          SHRGCOM_DESCRIPTION: "Taller 4ta sesión",
+          SHRGCOM_WEIGHT: 25,
+          NOTA: 4.5,
+          NOTAA: "4.5"
+        }
+      ],
+      NOTAA: 4.65
     },
     {
-      SHRMRKS_CRN: "5470",
-      SHRGCOM_SEQ_NO: 3,
-      SHRGCOM_NAME: "TALLER 3ER",
-      SHRGCOM_DESCRIPTION: "Talleres 3ra sesión",
-      SHRGCOM_WEIGHT: 25,
-      NOTA: 4.6,
-      NOTAA: "4.6",
-      CREDITOS: 4
+      SFRSTCR_CRN: "5471",
+      SSBSECT_CRSE_TITLE: "TOPICOS ESPECIALES I",
+      SFRSTCR_CREDIT_HR: 3,
+      PUNTOS: 23.9,
+      CREDITOS: 5,
+      "(SELECTSHRTTRM_ASTD_CODE_END_OF_TERMESTADOFROMSHRTTRMWHERESHRTTRM_PIDM=SPRIDEN_PIDMANDSHRTTRM_TERM_CODE=SFRSTCR_TERM_CODE)": "ED",
+      parciales: [],
+      NOTAA: 0
     },
     {
-      SHRMRKS_CRN: "5470",
-      SHRGCOM_SEQ_NO: 4,
-      SHRGCOM_NAME: "TALLER 4TA",
-      SHRGCOM_DESCRIPTION: "Taller 4ta sesión",
-      SHRGCOM_WEIGHT: 25,
-      NOTA: 4.5,
-      NOTAA: "4.5",
-      CREDITOS: 5
+      SFRSTCR_CRN: "5473",
+      SSBSECT_CRSE_TITLE: "VALIDACION Y VERIFICACION SOFT",
+      SFRSTCR_CREDIT_HR: 2,
+      PUNTOS: 23.9,
+      CREDITOS: 5,
+      "(SELECTSHRTTRM_ASTD_CODE_END_OF_TERMESTADOFROMSHRTTRMWHERESHRTTRM_PIDM=SPRIDEN_PIDMANDSHRTTRM_TERM_CODE=SFRSTCR_TERM_CODE)": "ED",
+      parciales: [],
+      NOTAA: 0
+    },
+    {
+      SFRSTCR_CRN: "5474",
+      SSBSECT_CRSE_TITLE: "CALIDAD DEL SOFTWARE",
+      SFRSTCR_CREDIT_HR: 2,
+      PUNTOS: 23.9,
+      CREDITOS: 5,
+      "(SELECTSHRTTRM_ASTD_CODE_END_OF_TERMESTADOFROMSHRTTRMWHERESHRTTRM_PIDM=SPRIDEN_PIDMANDSHRTTRM_TERM_CODE=SFRSTCR_TERM_CODE)": "ED",
+      parciales: [],
+      NOTAA: 0
+    },
+    {
+      SFRSTCR_CRN: "5475",
+      SSBSECT_CRSE_TITLE: "INTRODUC A LA ING DEL SOFTWARE",
+      SFRSTCR_CREDIT_HR: 2,
+      PUNTOS: 23.9,
+      CREDITOS: 5,
+      "(SELECTSHRTTRM_ASTD_CODE_END_OF_TERMESTADOFROMSHRTTRMWHERESHRTTRM_PIDM=SPRIDEN_PIDMANDSHRTTRM_TERM_CODE=SFRSTCR_TERM_CODE)": "ED",
+      parciales: [
+        {
+          SHRMRKS_CRN: "5475",
+          SHRGCOM_SEQ_NO: 1,
+          SHRGCOM_NAME: "TAREAS/QUI",
+          SHRGCOM_DESCRIPTION: "Tareas y Quices de comprobación de lectura",
+          SHRGCOM_WEIGHT: 30,
+          NOTA: 5,
+          NOTAA: "5.0"
+        },
+        {
+          SHRMRKS_CRN: "5475",
+          SHRGCOM_SEQ_NO: 2,
+          SHRGCOM_NAME: "TALLERES",
+          SHRGCOM_DESCRIPTION: "Talleres",
+          SHRGCOM_WEIGHT: 50,
+          NOTA: 5,
+          NOTAA: "5.0"
+        },
+        {
+          SHRMRKS_CRN: "5475",
+          SHRGCOM_SEQ_NO: 3,
+          SHRGCOM_NAME: "PRESENTACI",
+          SHRGCOM_DESCRIPTION: "Presentación Grupal",
+          SHRGCOM_WEIGHT: 20,
+          NOTA: 4.6,
+          NOTAA: "4.6"
+        }
+      ],
+      NOTAA: 4.92
     }
   ];
 
   return (
     <Router>
       <div className={classes.root}>
-        <TabsComponent />
+        {/* Utiliza el componente de pestañas dinámico */}
+        <DynamicTabsComponent />
       </div>
       <div className={classes.content}>
         <Routes>
-          <Route exact path="/" element={<Tab1ListComponent materias={object} />} />
-          <Route path="/tab2" element={<Tab2ListComponent />} />
+          <Route path="/" element={<Tab1ListComponent materias={subjects} />} />
+          <Route path="/tab2" element={<Tab2ListComponent materias={subjects} />} />
           <Route path="/item/:id" element={<ItemDetailComponent />} />
           <Route path="/otherview" element={<OtherViewComponent />} />
-          {/* <Route element={<NotFoundComponent />} /> */}
+          <Route path="/partial" element={<PartialPageComponent />} />
+          <Route path="/partial2" element={<PartialPageComponent2 />} />
         </Routes>
       </div>
     </Router>
