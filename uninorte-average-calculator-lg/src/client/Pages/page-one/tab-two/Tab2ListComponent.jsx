@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { Container } from '@ombiel/aek-lib';
 import { makeStyles } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 import CardComponent from './CardComponent';
 import ButtonComponent from '../../../components/ButtonComponent';
-import { calculateSemesterAverage, calculateNewSemesterAverage, creditsWithGrades, calculateCurrentAverage } from '../../../my-domain-logic/utils';
+import { calculateSemesterAverage, calculateNewSemesterAverage, creditsWithGrades, calculateCurrentAverage , calculateNeededGrades } from '../../../my-domain-logic/utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,6 +35,9 @@ function Tab2ListComponent(props) {
 
   const [currentPSA, setCurrentPSA] = useState(calculateSemesterAverage(initialGrades));
   const [gradesWithQualifications, setGradesWithQualifications] = useState(initialGrades);
+  const [errorMessage, setErrorMessage] = useState(''); // Estado para el mensaje de error
+  const [openSnackbar, setOpenSnackbar] = useState(false); // Estado para controlar el Snackbar
+
 
   const updateQualifications = (targetGrade, newGrade) => {
     setGradesWithQualifications((prevGrades) => {
@@ -65,15 +70,22 @@ function Tab2ListComponent(props) {
 
   const updateAverage = (newGrade) => {
     setGradesWithQualifications((prevGrades) => {
-      const updatedGrades = prevGrades.map(subject => {
-        if (!subject.isLocked) {
-          return { ...subject, NOTAA: newGrade, isModified: true };
-        }
-        return subject;
-      });
-      return updatedGrades;
+      
+      try {
+        return calculateNeededGrades(prevGrades, newGrade);
+     
+      } catch (error) {
+        setErrorMessage(error.message);
+        setOpenSnackbar(true); 
+        return prevGrades;
+      }
+
     });
   }
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+  };
 
   return (
     <Container className={classes.root}>
@@ -83,16 +95,21 @@ function Tab2ListComponent(props) {
           title={item.SSBSECT_CRSE_TITLE}
           credit={item.CREDITOS}
           grade={item.NOTAA}
-          updateLock={(lock)=> handleIsLocked(item, lock)}          
+          updateLock={(lock)=> handleIsLocked(item, lock)}
           edit
           updateQualifications={(newGrade) => updateQualifications(item, newGrade)}
         />
       ))}
       <Divider />
       <Container className={classes.container}>
-        <CardComponent title="Promedio acumulado" parcelacion={false} grade={currentPSA.toFixed(2)} text="Las asignaturas no bloqueadas serán modificadas para obtener un promedio semestral de:" edit updateQualifications={(newGrade)=> updateAverage(newGrade)} />
+        <CardComponent title="Promedio acumulado" parcelacion={false} canLock={false} grade={currentPSA.toFixed(2)} text="Las asignaturas no bloqueadas serán modificadas para obtener un promedio semestral de:" edit updateQualifications={(newGrade)=> updateAverage(newGrade)} />
       </Container>
       <ButtonComponent text="Mas sobre acumulado - semestral" />
+      <Snackbar open={openSnackbar} autoHideDuration={5000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity="error">
+          {errorMessage}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 }

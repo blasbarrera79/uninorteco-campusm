@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CardComponent({ title, grade, credit, parcelacion = true, text, edit = false, partial, updateQualifications,updateLock }) {
+export default function CardComponent({ title, grade, credit, parcelacion = true, text, edit = false, partial, updateQualifications,updateLock, canLock = true }) {
   const classes = useStyles();
   const [editGrade, setEditGrade] = useState('');
   const [previousGrade, setPreviousGrade] = useState(grade);
@@ -104,9 +104,13 @@ export default function CardComponent({ title, grade, credit, parcelacion = true
                 onChange={handleGradeChange} 
                 disabled={isLocked}
               />
-              <IconButton onClick={toggleLock}>
-                {isLocked ? <LockIcon /> : <LockOpenIcon />}
-              </IconButton>
+              {canLock ? (
+                <IconButton onClick={toggleLock}>
+                  {isLocked ? <LockIcon /> : <LockOpenIcon />}
+                </IconButton>
+              ) : null
+              }
+    
             </>
           ) : (
             <Typography className={classes.gradeInput} variant="body1">{grade}</Typography>

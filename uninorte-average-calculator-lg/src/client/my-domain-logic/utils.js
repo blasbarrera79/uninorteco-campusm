@@ -60,3 +60,38 @@ export function validateGrade(newValue) {
   }
   return null
 }
+
+export function calculateNeededGrades(subjects, desiredAverage) {
+  let totalCredits = 0
+  let lockedGradeSum = 0
+  let unlockedCredits = 0
+
+  subjects.forEach((subject) => {
+    if (subject.isLocked) {
+      lockedGradeSum += subject.NOTAA * subject.CREDITOS
+    } else {
+      unlockedCredits += subject.CREDITOS
+    }
+    totalCredits += subject.CREDITOS
+  })
+
+  const requiredGradeSum = desiredAverage * totalCredits - lockedGradeSum
+
+  if (requiredGradeSum / unlockedCredits > 5.0) {
+    throw new Error("La nota necesaria es mayor a 5.0")
+  }
+
+  if (requiredGradeSum / unlockedCredits < 0.0) {
+    throw new Error("La nota necesaria es menor a 0.0")
+  }
+
+  const neededGrades = subjects.map((subject) => {
+    if (subject.isLocked) {
+      return subject
+    }
+    const neededGrade = (requiredGradeSum / unlockedCredits).toFixed(2)
+    return { ...subject, NOTAA: neededGrade }
+  })
+
+  return neededGrades
+}
