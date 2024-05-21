@@ -53,6 +53,9 @@ export default function CardComponent({ title, grade, credit, parcelacion = true
         if (newValue !== previousGrade.toString()) {
           setPreviousGrade(newValue);
         }
+      } else if (newValue === "") {
+        setEditGrade(0);
+        updateQualifications(0);
       }
     }
   };

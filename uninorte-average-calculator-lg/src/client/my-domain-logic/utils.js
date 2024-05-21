@@ -49,13 +49,14 @@ export function calculateCurrentAverage(subjects) {
 export function validateGrade(newValue) {
   newValue = newValue.trim()
   if (newValue === "") {
-    newValue = "0"
+    return null
   }
   if (/^-?\d*(\.\d{0,2})?$/.test(newValue) && newValue >= 0 && newValue <= 5) {
     if (newValue.endsWith(".00")) {
       newValue = newValue.replace(".00", "")
     }
-    return parseFloat(newValue)
+    const parsedValue = parseFloat(newValue)
+    return Number.isNaN(parsedValue) ? null : parsedValue
   }
-  return null // Indica que la validación falló
+  return null
 }
