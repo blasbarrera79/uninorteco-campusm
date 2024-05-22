@@ -1,0 +1,7 @@
+{
+  "tileComponents": {
+    "OtrosServiciosTile": {
+      "script": "bundle.js"
+    }
+  }
+}
