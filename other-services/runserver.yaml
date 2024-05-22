@@ -1,0 +1,6 @@
+homepage:
+  menu:
+    replace:
+
+      - desc: Otros Servicios
+        screenName: otros-servicios
