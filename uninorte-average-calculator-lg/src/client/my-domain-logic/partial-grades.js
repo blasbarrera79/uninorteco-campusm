@@ -5,7 +5,7 @@
 
 export function calculateCurrentGradeAverage(subject) {
   const totalWeightedSum = subject.reduce(
-    (acc, partial) => acc + partial.NOTA * (partial.SHRGCOM_WEIGHT / 100),
+    (acc, partial) => acc + partial.NOTAA * (partial.SHRGCOM_WEIGHT / 100),
     0
   )
   return totalWeightedSum

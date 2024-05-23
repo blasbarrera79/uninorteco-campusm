@@ -39,7 +39,7 @@ export function calculateCurrentAverage(subjects) {
     (acc, subject) => acc + subject.NOTAA * subject.CREDITOS,
     0
   )
-  const totalCredits = modifiedSubjects.reduce(
+  const totalCredits = subjects.reduce(
     (acc, subject) => acc + subject.CREDITOS,
     0
   )

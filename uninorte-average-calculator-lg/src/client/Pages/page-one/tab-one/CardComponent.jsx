@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CardComponent({ title, grade, credit, text , partial }) {
+export default function CardComponent({ title, grade, credit, text , partial, parcelation = true}) {
 
   const classes = useStyles();
   console.log("partial ",partial);
@@ -52,15 +52,18 @@ export default function CardComponent({ title, grade, credit, text , partial }) 
               </Grid>
             )}
           </Grid>
-          <Grid item>
-            <Typography
-              variant="body2"
-              style={{ cursor: 'pointer' }}
-              onClick={handleParcelacionClick}
-            >
-              Ver parcelacion
-            </Typography>
-          </Grid>
+          {parcelation && (
+            <Grid item>
+              <Typography
+                variant="body2"
+                style={{ cursor: 'pointer' }}
+                onClick={handleParcelacionClick}
+              >
+                Ver parcelacion
+              </Typography>
+            </Grid>
+          )
+          }
           {text && (
             <Grid className={classes.text} item>
               <Typography variant="body2">{text}</Typography>
@@ -82,4 +85,5 @@ CardComponent.propTypes = {
   credit: PropTypes.number,
   text: PropTypes.string,
   partial: PropTypes.array,
+  parcelation: PropTypes.bool,
 };

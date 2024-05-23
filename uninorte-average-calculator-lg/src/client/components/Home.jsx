@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useState,useEffect} from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import TabsComponent from './TabsComponent';
 import Tab1ListComponent from '../Pages/page-one/tab-one/Tab1ListComponent';
 import Tab2ListComponent from '../Pages/page-one/tab-two/Tab2ListComponent';
 import PartialPageComponent from '../Pages/page-two/PartialPageComponent';
+import { fetchUserData, fetchUserTerms, fetchUserGrades } from "../utils/apiUtils";
+
 const useStyles = makeStyles({
   root: {
     position: 'fixed',
@@ -21,134 +23,53 @@ const useStyles = makeStyles({
 
 const Home = () => {
   const classes = useStyles();
+  const [subjectsGrades, setSubjectsGrades] = useState([]);
+  const [selectedTerm, setSelectedTerm] = useState('');
+  const [user, setUser] = useState('');
 
-  const subjects = [
-    {
-      SFRSTCR_CRN: "5469",
-      SSBSECT_CRSE_TITLE: "TEC EMERGENT PARA DESA DE SOFT",
-      SFRSTCR_CREDIT_HR: 3,
-      PUNTOS: 23.9,
-      CREDITOS: 5,
-      "(SELECTSHRTTRM_ASTD_CODE_END_OF_TERMESTADOFROMSHRTTRMWHERESHRTTRM_PIDM=SPRIDEN_PIDMANDSHRTTRM_TERM_CODE=SFRSTCR_TERM_CODE)": "ED",
-      parciales: [],
-      NOTAA: 0
-    },
-    {
-      SFRSTCR_CRN: "5470",
-      SSBSECT_CRSE_TITLE: "PROC DE SOFTWARE Y PRAC AGILES",
-      SFRSTCR_CREDIT_HR: 3,
-      PUNTOS: 23.9,
-      CREDITOS: 5,
-      "(SELECTSHRTTRM_ASTD_CODE_END_OF_TERMESTADOFROMSHRTTRMWHERESHRTTRM_PIDM=SPRIDEN_PIDMANDSHRTTRM_TERM_CODE=SFRSTCR_TERM_CODE)": "ED",
-      parciales: [
-        {
-          SHRMRKS_CRN: "5470",
-          SHRGCOM_SEQ_NO: 1,
-          SHRGCOM_NAME: "TALLER 1ER",
-          SHRGCOM_DESCRIPTION: "Talleres 1ra sesión",
-          SHRGCOM_WEIGHT: 25,
-          NOTA: 5,
-          NOTAA: "5.0"
-        },
-        {
-          SHRMRKS_CRN: "5470",
-          SHRGCOM_SEQ_NO: 2,
-          SHRGCOM_NAME: "TALLER 2DA",
-          SHRGCOM_DESCRIPTION: "Talleres 2da sesión",
-          SHRGCOM_WEIGHT: 25,
-          NOTA: 4.5,
-          NOTAA: "4.5"
-        },
-        {
-          SHRMRKS_CRN: "5470",
-          SHRGCOM_SEQ_NO: 3,
-          SHRGCOM_NAME: "TALLER 3ER",
-          SHRGCOM_DESCRIPTION: "Talleres 3ra sesión",
-          SHRGCOM_WEIGHT: 25,
-          NOTA: 4.6,
-          NOTAA: "4.6"
-        },
-        {
-          SHRMRKS_CRN: "5470",
-          SHRGCOM_SEQ_NO: 4,
-          SHRGCOM_NAME: "TALLER 4TA",
-          SHRGCOM_DESCRIPTION: "Taller 4ta sesión",
-          SHRGCOM_WEIGHT: 25,
-          NOTA: 4.5,
-          NOTAA: "4.5"
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const username = await fetchUserData();
+        setUser(username);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+  
+    fetchData();
+  }, []);
+  
+  useEffect(() => {
+    const fetchTerms = async () => {
+      if (user) {
+        try {
+          const termsResponse = await fetchUserTerms(user);
+          setSelectedTerm(termsResponse[0]?.PERIODO || '');
+        } catch (err) {
+          console.error(err);
         }
-      ],
-      NOTAA: 4.65
-    },
-    {
-      SFRSTCR_CRN: "5471",
-      SSBSECT_CRSE_TITLE: "TOPICOS ESPECIALES I",
-      SFRSTCR_CREDIT_HR: 3,
-      PUNTOS: 23.9,
-      CREDITOS: 5,
-      "(SELECTSHRTTRM_ASTD_CODE_END_OF_TERMESTADOFROMSHRTTRMWHERESHRTTRM_PIDM=SPRIDEN_PIDMANDSHRTTRM_TERM_CODE=SFRSTCR_TERM_CODE)": "ED",
-      parciales: [],
-      NOTAA: 0
-    },
-    {
-      SFRSTCR_CRN: "5473",
-      SSBSECT_CRSE_TITLE: "VALIDACION Y VERIFICACION SOFT",
-      SFRSTCR_CREDIT_HR: 2,
-      PUNTOS: 23.9,
-      CREDITOS: 5,
-      "(SELECTSHRTTRM_ASTD_CODE_END_OF_TERMESTADOFROMSHRTTRMWHERESHRTTRM_PIDM=SPRIDEN_PIDMANDSHRTTRM_TERM_CODE=SFRSTCR_TERM_CODE)": "ED",
-      parciales: [],
-      NOTAA: 0
-    },
-    {
-      SFRSTCR_CRN: "5474",
-      SSBSECT_CRSE_TITLE: "CALIDAD DEL SOFTWARE",
-      SFRSTCR_CREDIT_HR: 2,
-      PUNTOS: 23.9,
-      CREDITOS: 5,
-      "(SELECTSHRTTRM_ASTD_CODE_END_OF_TERMESTADOFROMSHRTTRMWHERESHRTTRM_PIDM=SPRIDEN_PIDMANDSHRTTRM_TERM_CODE=SFRSTCR_TERM_CODE)": "ED",
-      parciales: [],
-      NOTAA: 0
-    },
-    {
-      SFRSTCR_CRN: "5475",
-      SSBSECT_CRSE_TITLE: "INTRODUC A LA ING DEL SOFTWARE",
-      SFRSTCR_CREDIT_HR: 2,
-      PUNTOS: 23.9,
-      CREDITOS: 5,
-      "(SELECTSHRTTRM_ASTD_CODE_END_OF_TERMESTADOFROMSHRTTRMWHERESHRTTRM_PIDM=SPRIDEN_PIDMANDSHRTTRM_TERM_CODE=SFRSTCR_TERM_CODE)": "ED",
-      parciales: [
-        {
-          SHRMRKS_CRN: "5475",
-          SHRGCOM_SEQ_NO: 1,
-          SHRGCOM_NAME: "TAREAS/QUI",
-          SHRGCOM_DESCRIPTION: "Tareas y Quices de comprobación de lectura",
-          SHRGCOM_WEIGHT: 30,
-          NOTA: 5,
-          NOTAA: "5.0"
-        },
-        {
-          SHRMRKS_CRN: "5475",
-          SHRGCOM_SEQ_NO: 2,
-          SHRGCOM_NAME: "TALLERES",
-          SHRGCOM_DESCRIPTION: "Talleres",
-          SHRGCOM_WEIGHT: 50,
-          NOTA: 5,
-          NOTAA: "5.0"
-        },
-        {
-          SHRMRKS_CRN: "5475",
-          SHRGCOM_SEQ_NO: 3,
-          SHRGCOM_NAME: "PRESENTACI",
-          SHRGCOM_DESCRIPTION: "Presentación Grupal",
-          SHRGCOM_WEIGHT: 20,
-          NOTA: 4.6,
-          NOTAA: "4.6"
-        }
-      ],
-      NOTAA: 4.92
+      }
+    };
+  
+    fetchTerms();
+  }, [user]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const subjectsGradesResponse = await fetchUserGrades(selectedTerm, user);
+        console.log('myResultopl', subjectsGradesResponse)
+        setSubjectsGrades(subjectsGradesResponse);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    if (selectedTerm && user) {
+      fetchData();
     }
-  ];
+  }, [selectedTerm, user]);
 
   return (
     <Router>
@@ -157,8 +78,8 @@ const Home = () => {
       </div>
       <div className={classes.content}>
         <Routes>
-          <Route path="/" element={<Tab1ListComponent materias={subjects} />} />
-          <Route path="/tab2" element={<Tab2ListComponent materias={subjects} />} />
+          <Route path="/" element={<Tab1ListComponent materias={subjectsGrades} />} />
+          <Route path="/tab2" element={<Tab2ListComponent materias={subjectsGrades} />} />
           <Route path="/partial" element={<PartialPageComponent />} />
         </Routes>
       </div>

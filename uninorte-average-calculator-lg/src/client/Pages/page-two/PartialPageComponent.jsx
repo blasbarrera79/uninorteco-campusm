@@ -122,7 +122,7 @@ function PartialPageComponent() {
       ))}
       <Divider />
       <Container className={classes.container}>
-        <CardComponent title="Promedio acumulado" parcelacion={false} grade={currentPSA.toFixed(2)} edit canLock={false} text="Las asignaturas no bloqueadas serán modificadas para obtener un promedio semestral de:" updateQualifications={(newGrade)=> updateAverage(newGrade)} />
+        <CardComponent title="Promedio acumulado" grade={currentPSA.toFixed(2)} canLock={false} text="Las asignaturas no bloqueadas serán modificadas para obtener un promedio semestral de:" updateQualifications={(newGrade)=> updateAverage(newGrade)} />
       </Container>
       <ButtonComponent text="Mas sobre acumulado - semestral" />
       <Snackbar open={openSnackbar} autoHideDuration={5000} onClose={handleCloseSnackbar}>

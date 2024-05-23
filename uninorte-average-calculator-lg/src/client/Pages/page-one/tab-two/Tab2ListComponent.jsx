@@ -7,7 +7,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import CardComponent from './CardComponent';
 import ButtonComponent from '../../../components/ButtonComponent';
-import { calculateSemesterAverage, calculateNewSemesterAverage, creditsWithGrades, calculateCurrentAverage , calculateNeededGrades } from '../../../my-domain-logic/utils';
+import { calculateSemesterAverage, calculateNewSemesterAverage, creditsWithGrades, calculateCurrentAverage , calculateNeededGrades } from '../../../my-domain-logic/semester-grades';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,7 +47,6 @@ function Tab2ListComponent(props) {
         }
         return materia;
       });
-
       const currentAverage = calculateCurrentAverage(updatedGrades);
       const updatedCredits = creditsWithGrades(updatedGrades);
       setCurrentPSA(calculateNewSemesterAverage(currentAverage, updatedCredits, newGrade, targetGrade.CREDITOS));
@@ -92,7 +91,7 @@ function Tab2ListComponent(props) {
           title={item.SSBSECT_CRSE_TITLE}
           credit={item.CREDITOS}
           grade={item.NOTAA}
-          partial={item.parciales}
+          partial={item.items}
           updateLock={(lock)=> handleIsLocked(item, lock)}
           edit
           updateQualifications={(newGrade) => updateQualifications(item, newGrade)}
@@ -100,7 +99,7 @@ function Tab2ListComponent(props) {
       ))}
       <Divider />
       <Container className={classes.container}>
-        <CardComponent title="Promedio acumulado" parcelacion={false} canLock={false} grade={currentPSA.toFixed(2)} text="Las asignaturas no bloqueadas serán modificadas para obtener un promedio semestral de:" edit updateQualifications={(newGrade)=> updateAverage(newGrade)} />
+        <CardComponent title="Promedio acumulado" parcelacion={false} canLock={false} grade={currentPSA.toFixed(2)} text="Las asignaturas no bloqueadas serán modificadas para obtener un promedio semestral de:" edit updateQualifications={(newGrade)=> updateAverage(newGrade)} parcelation={false} />
       </Container>
       <ButtonComponent text="Mas sobre acumulado - semestral" />
       <Snackbar open={openSnackbar} autoHideDuration={5000} onClose={handleCloseSnackbar}>

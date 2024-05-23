@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import LockIcon from '@material-ui/icons/Lock';
-import { validateGrade } from '../../../my-domain-logic/utils';
+import { validateGrade } from '../../../my-domain-logic/semester-grades';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CardComponent({ title, grade, credit, text, edit = false, partial, updateQualifications,updateLock, canLock = true }) {
+export default function CardComponent({ title, grade, credit, text, edit = false, partial, updateQualifications,updateLock, canLock = true , parcelation = true }) {
   const classes = useStyles();
   const [editGrade, setEditGrade] = useState('');
   const [previousGrade, setPreviousGrade] = useState(grade);
@@ -86,15 +86,19 @@ export default function CardComponent({ title, grade, credit, text, edit = false
               </Grid>
             )}
           </Grid>
-          <Grid item>
-            <Typography
-              variant="body2"
-              style={{ cursor: 'pointer' }}
-              onClick={handleParcelacionClick}
-            >
-              Ver parcelacion
-            </Typography>
-          </Grid>
+          {
+            parcelation && (
+              <Grid item>
+                <Typography
+                  variant="body2"
+                  style={{ cursor: 'pointer' }}
+                  onClick={handleParcelacionClick}
+                >
+                  Ver parcelacion
+                </Typography>
+              </Grid>
+            )
+          }
           {text && (
             <Grid className={classes.text} item>
               <Typography variant="body2">{text}</Typography>
@@ -137,4 +141,5 @@ CardComponent.propTypes = {
   updateQualifications: PropTypes.func,
   updateLock: PropTypes.func,
   canLock: PropTypes.bool,
+  parcelation: PropTypes.bool,
 };

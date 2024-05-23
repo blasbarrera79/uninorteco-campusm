@@ -8,7 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import LockIcon from '@material-ui/icons/Lock';
 import TextField from '@material-ui/core/TextField';
-import { validateGrade } from '../../my-domain-logic/utils';
+import { validateGrade } from '../../my-domain-logic/semester-grades';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -113,4 +113,5 @@ CardComponent.propTypes = {
   weigth: PropTypes.number,
   updateQualifications: PropTypes.func.isRequired,
   updateLock: PropTypes.func,
+  canLock: PropTypes.bool,
 };

@@ -34,6 +34,9 @@ function Tab1ListComponent(props) {
 
   const classes = useStyles();
   const { materias } = props;
+  if (materias.length === 0) {
+    return null;
+  }
   const PGA = (materias[0].PUNTOS / materias[0].CREDITOS).toFixed(2);
   const PSA = semesterAverage(materias).toFixed(2);
   console.log(materias);
@@ -46,13 +49,13 @@ function Tab1ListComponent(props) {
           credit={item.CREDITOS}
           grade={item.NOTAA}
           disabled
-          partial={item.parciales}
+          partial={item.items}
         />
       )) : null}
       <Divider />
       <Container className={classes.container}>
-        <CardComponent title="Promedio semestral" credit={17} parcelacion={false} grade={PSA} />
-        <CardComponent title="Promedio acumulado" parcelacion={false} grade={PGA} text="Promediado con este semestre" />
+        <CardComponent title="Promedio semestral" credit={17} parcelation={false} grade={PSA} />
+        <CardComponent title="Promedio acumulado" parcelation={false} grade={PGA} text="Promediado con este semestre" />
       </Container>
       <ButtonComponent text="Mas sobre acumulado - semestral" />
     </Container>
