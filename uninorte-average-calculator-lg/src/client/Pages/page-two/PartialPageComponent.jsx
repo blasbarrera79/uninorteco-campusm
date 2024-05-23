@@ -1,11 +1,11 @@
 import React, {useState,useEffect} from 'react';
 import { Container } from '@ombiel/aek-lib';
-import { makeStyles } from '@material-ui/core';
+import { Typography, makeStyles } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import { useLocation } from 'react-router-dom';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
-import CardComponent from '../page-one/tab-two/CardComponent';
+import CardComponent from './CardComponent';
 import ButtonComponent from '../../components/ButtonComponent';
 import { calculateNeededGradesWithWeights,calculateCurrentGradeAverage,calculateNewGradeAverage } from '../../my-domain-logic/partial-grades';
 
@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme)=> ({
   container: {
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
+  },
+  title: {
+    textAlign: 'center',
   },
 }));
 
@@ -104,14 +107,15 @@ function PartialPageComponent() {
 
   return (
     <Container className={classes.root}>
+      <Typography variant="h5" className={classes.title}>
+        Calificaciones parciales
+      </Typography>
       {gradesWithQualifications.map((item) => (
         <CardComponent
           key={item.SHRGCOM_NAME}
           title={item.SHRGCOM_NAME}
-          credit={item.SHRGCOM_WEIGHT}
+          weigth={item.SHRGCOM_WEIGHT}
           grade={item.NOTAA}
-          parcelacion={false}
-          edit
           updateLock={(lock)=> handleIsLocked(item, lock)}
           updateQualifications={(newGrade) => updateQualifications(item, newGrade)}
         />
