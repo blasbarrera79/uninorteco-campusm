@@ -1,16 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import TabsComponent from './TabsComponent';
-import Tab1ListComponent from '../Pages/page-one/Tab1ListComponent';
+import Tab1ListComponent from '../Pages/page-one/tab-one/Tab1ListComponent';
 import Tab2ListComponent from '../Pages/page-one/tab-two/Tab2ListComponent';
-import ItemDetailComponent from './ItemDetailComponent';
-import OtherViewComponent from './OtherViewComponent';
-// import NotFoundComponent from './NotFoundComponent';
-import PartialPageComponent from './PartialPageComponent';
-import PartialPageComponent2 from './PartialPageComponent2';
-import PartialTabsComponent from './PartialTabsComponent';
-
+import PartialPageComponent from '../Pages/page-two/PartialPageComponent';
 const useStyles = makeStyles({
   root: {
     position: 'fixed',
@@ -24,24 +18,6 @@ const useStyles = makeStyles({
     paddingTop: 64,
   },
 });
-function DynamicTabsComponent() {
-  const location = useLocation();
-
-  // Determina qué componente de pestañas mostrar según la ruta actual
-  const renderTabsComponent = () => {
-    if (location.pathname === '/partial' || location.pathname === '/partial2') {
-      return <PartialTabsComponent />;
-    }
-    return <TabsComponent />;
-  };
-
-  return (
-    <div>
-      {renderTabsComponent()}
-    </div>
-  );
-}
-
 
 const Home = () => {
   const classes = useStyles();
@@ -177,17 +153,13 @@ const Home = () => {
   return (
     <Router>
       <div className={classes.root}>
-        {/* Utiliza el componente de pestañas dinámico */}
-        <DynamicTabsComponent />
+        <TabsComponent />;
       </div>
       <div className={classes.content}>
         <Routes>
           <Route path="/" element={<Tab1ListComponent materias={subjects} />} />
           <Route path="/tab2" element={<Tab2ListComponent materias={subjects} />} />
-          <Route path="/item/:id" element={<ItemDetailComponent />} />
-          <Route path="/otherview" element={<OtherViewComponent />} />
           <Route path="/partial" element={<PartialPageComponent />} />
-          <Route path="/partial2" element={<PartialPageComponent2 />} />
         </Routes>
       </div>
     </Router>

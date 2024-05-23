@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Container } from '@ombiel/aek-lib';
 import { makeStyles } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
-import CardComponent from '../../components/CardComponent';
-import ButtonComponent from '../../components/ButtonComponent';
+import CardComponent from './CardComponent';
+import ButtonComponent from '../../../components/ButtonComponent';
 
 
 const useStyles = makeStyles((theme)=> ({

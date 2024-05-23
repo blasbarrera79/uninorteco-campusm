@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import { Link } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom'; 
 import IconButton from '@material-ui/core/IconButton';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import LockIcon from '@material-ui/icons/Lock';
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CardComponent({ title, grade, credit, parcelacion = true, text, edit = false, partial, updateQualifications,updateLock, canLock = true }) {
+export default function CardComponent({ title, grade, credit, text, edit = false, partial, updateQualifications,updateLock, canLock = true }) {
   const classes = useStyles();
   const [editGrade, setEditGrade] = useState('');
   const [previousGrade, setPreviousGrade] = useState(grade);
@@ -65,6 +65,13 @@ export default function CardComponent({ title, grade, credit, parcelacion = true
     updateLock(!isLocked);
   };
 
+
+  const navigate = useNavigate();
+
+  const handleParcelacionClick = () => {
+    navigate('/partial', { state: { datos: partial } });
+  };
+
   return (
     <Paper className={classes.paper}>
       <Grid item xs={12} sm container>
@@ -79,15 +86,15 @@ export default function CardComponent({ title, grade, credit, parcelacion = true
               </Grid>
             )}
           </Grid>
-          {parcelacion && (
-            <Grid item>
-              <Link to={{ pathname: "/partial" , state: { datos: partial } }} style={{ textDecoration: 'none', color: 'inherit' }}>
-                <Typography variant="body2" style={{ cursor: 'pointer' }}>
-                  Ver parcelacion
-                </Typography>
-              </Link>       
-            </Grid>
-          )}
+          <Grid item>
+            <Typography
+              variant="body2"
+              style={{ cursor: 'pointer' }}
+              onClick={handleParcelacionClick}
+            >
+              Ver parcelacion
+            </Typography>
+          </Grid>
           {text && (
             <Grid className={classes.text} item>
               <Typography variant="body2">{text}</Typography>
@@ -110,7 +117,6 @@ export default function CardComponent({ title, grade, credit, parcelacion = true
                 </IconButton>
               ) : null
               }
-    
             </>
           ) : (
             <Typography className={classes.gradeInput} variant="body1">{grade}</Typography>
@@ -125,10 +131,10 @@ CardComponent.propTypes = {
   title: PropTypes.string.isRequired,
   grade: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   credit: PropTypes.number,
-  parcelacion: PropTypes.bool,
   text: PropTypes.string,
   edit: PropTypes.bool,
   partial: PropTypes.array,
   updateQualifications: PropTypes.func,
   updateLock: PropTypes.func,
+  canLock: PropTypes.bool,
 };

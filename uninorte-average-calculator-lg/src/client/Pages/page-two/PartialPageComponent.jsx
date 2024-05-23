@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, {useState,useEffect} from 'react';
 import { Container } from '@ombiel/aek-lib';
 import { makeStyles } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
+import { useLocation } from 'react-router-dom';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
-import CardComponent from './CardComponent';
-import ButtonComponent from '../../../components/ButtonComponent';
-import { calculateSemesterAverage, calculateNewSemesterAverage, creditsWithGrades, calculateCurrentAverage , calculateNeededGrades } from '../../../my-domain-logic/utils';
+import CardComponent from '../page-one/tab-two/CardComponent';
+import ButtonComponent from '../../components/ButtonComponent';
+import { calculateNeededGradesWithWeights,calculateCurrentGradeAverage,calculateNewGradeAverage } from '../../my-domain-logic/partial-grades';
 
-const useStyles = makeStyles((theme) => ({
+
+const useStyles = makeStyles((theme)=> ({
   root: {
     width: '100%',
     padding: theme.spacing(1),
@@ -23,34 +24,51 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Tab2ListComponent(props) {
+function PartialPageComponent() {
+
   const classes = useStyles();
-  const { materias } = props;
+  const location = useLocation();
 
-  const initialGrades = materias.map(materia => ({
-    ...materia,
-    isModified: materia.NOTAA > 0,
-    isLocked: false,
-  }));
-
-  const [currentPSA, setCurrentPSA] = useState(calculateSemesterAverage(initialGrades));
-  const [gradesWithQualifications, setGradesWithQualifications] = useState(initialGrades);
+  const [partialGrades, setPartialGrades] = useState([]);
   const [errorMessage, setErrorMessage] = useState(''); // Estado para el mensaje de error
   const [openSnackbar, setOpenSnackbar] = useState(false); // Estado para controlar el Snackbar
+  const [currentPSA, setCurrentPSA] = useState([]);
+  const [gradesWithQualifications, setGradesWithQualifications] = useState([]);
+
+  useEffect(() => {
+    if (location.state?.datos) {
+      setPartialGrades(location.state.datos);
+      const initialGrades = location.state.datos.map(grade => ({
+        ...grade,
+        isModified: grade.NOTAA > 0,
+        isLocked: false,
+      }));
+      setGradesWithQualifications(initialGrades);
+      setCurrentPSA(calculateCurrentGradeAverage(initialGrades));
+    }
+  }, [location.state]);
+
+
+
+  if (partialGrades.length === 0) {
+    return <div>No hay datos disponibles.</div>;
+  }
+
+  console.log("datos ",partialGrades);
+
+  console.log("gradesWithQualifications ",gradesWithQualifications);
+  console.log("currentPSA ",currentPSA);
 
 
   const updateQualifications = (targetGrade, newGrade) => {
     setGradesWithQualifications((prevGrades) => {
       const updatedGrades = prevGrades.map(materia => {
-        if (materia.SSBSECT_CRSE_TITLE === targetGrade.SSBSECT_CRSE_TITLE) {
+        if (materia.SHRGCOM_NAME === targetGrade.SHRGCOM_NAME) {
           return { ...materia, NOTAA: newGrade, isModified: true };
         }
         return materia;
       });
-
-      const currentAverage = calculateCurrentAverage(updatedGrades);
-      const updatedCredits = creditsWithGrades(updatedGrades);
-      setCurrentPSA(calculateNewSemesterAverage(currentAverage, updatedCredits, newGrade, targetGrade.CREDITOS));
+      setCurrentPSA(calculateNewGradeAverage(updatedGrades));
       return updatedGrades;
     });
   };
@@ -58,7 +76,7 @@ function Tab2ListComponent(props) {
   const handleIsLocked = (targetGrade) => {
     setGradesWithQualifications((prevGrades) => {
       const updatedGrades = prevGrades.map(subject => {
-        if (subject.SSBSECT_CRSE_TITLE === targetGrade.SSBSECT_CRSE_TITLE) {
+        if (subject.SHRGCOM_NAME === targetGrade.SHRGCOM_NAME) {
           return { ...subject, isLocked: !subject.isLocked };
         }
         return subject;
@@ -67,14 +85,14 @@ function Tab2ListComponent(props) {
       return updatedGrades;
     });
   }
-
+  
   const updateAverage = (newGrade) => {
     setGradesWithQualifications((prevGrades) => {
       try {
-        return calculateNeededGrades(prevGrades, newGrade);
+        return calculateNeededGradesWithWeights(prevGrades, newGrade);
       } catch (error) {
         setErrorMessage(error.message);
-        setOpenSnackbar(true); 
+        setOpenSnackbar(true);
         return prevGrades;
       }
     });
@@ -88,19 +106,19 @@ function Tab2ListComponent(props) {
     <Container className={classes.root}>
       {gradesWithQualifications.map((item) => (
         <CardComponent
-          key={item.SSBSECT_CRSE_TITLE}
-          title={item.SSBSECT_CRSE_TITLE}
-          credit={item.CREDITOS}
+          key={item.SHRGCOM_NAME}
+          title={item.SHRGCOM_NAME}
+          credit={item.SHRGCOM_WEIGHT}
           grade={item.NOTAA}
-          partial={item.parciales}
-          updateLock={(lock)=> handleIsLocked(item, lock)}
+          parcelacion={false}
           edit
+          updateLock={(lock)=> handleIsLocked(item, lock)}
           updateQualifications={(newGrade) => updateQualifications(item, newGrade)}
         />
       ))}
       <Divider />
       <Container className={classes.container}>
-        <CardComponent title="Promedio acumulado" parcelacion={false} canLock={false} grade={currentPSA.toFixed(2)} text="Las asignaturas no bloqueadas serán modificadas para obtener un promedio semestral de:" edit updateQualifications={(newGrade)=> updateAverage(newGrade)} />
+        <CardComponent title="Promedio acumulado" parcelacion={false} grade={currentPSA.toFixed(2)} edit canLock={false} text="Las asignaturas no bloqueadas serán modificadas para obtener un promedio semestral de:" updateQualifications={(newGrade)=> updateAverage(newGrade)} />
       </Container>
       <ButtonComponent text="Mas sobre acumulado - semestral" />
       <Snackbar open={openSnackbar} autoHideDuration={5000} onClose={handleCloseSnackbar}>
@@ -112,8 +130,7 @@ function Tab2ListComponent(props) {
   );
 }
 
-Tab2ListComponent.propTypes = {
-  materias: PropTypes.array.isRequired,
+PartialPageComponent.propTypes = {
 };
 
-export default Tab2ListComponent;
+export default PartialPageComponent;
