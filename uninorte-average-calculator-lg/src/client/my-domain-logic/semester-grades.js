@@ -1,15 +1,26 @@
 // utils.js
 
 export function calculateSemesterAverage(subjects) {
-  const totalWeightedSum = subjects.reduce(
-    (acc, subject) => acc + subject.NOTAA * subject.CREDITOS,
+  // Filtrar materias con NOTAA válidos (excluyendo 'AP' y 'RP')
+  const validSubjects = subjects.filter((subject) => {
+    const grade = parseFloat(subject.NOTAA)
+    return !Number.isNaN(grade) && Number.isFinite(grade)
+  })
+
+  // Calcular la suma ponderada total
+  const totalWeightedSum = validSubjects.reduce(
+    (acc, subject) => acc + parseFloat(subject.NOTAA) * subject.CREDITOS,
     0
   )
-  const totalCredits = subjects.reduce(
+
+  // Calcular el total de créditos
+  const totalCredits = validSubjects.reduce(
     (acc, subject) => acc + subject.CREDITOS,
     0
   )
-  return totalWeightedSum / totalCredits
+
+  // Retornar el promedio ponderado
+  return totalCredits > 0 ? totalWeightedSum / totalCredits : 0
 }
 
 export function calculateNewSemesterAverage(

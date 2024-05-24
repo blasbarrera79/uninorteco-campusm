@@ -9,6 +9,7 @@ import LockOpenIcon from '@material-ui/icons/LockOpen';
 import LockIcon from '@material-ui/icons/Lock';
 import TextField from '@material-ui/core/TextField';
 import { validateGrade } from '../../my-domain-logic/semester-grades';
+import { validateGradeType } from '../../utils/validations';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,7 +40,8 @@ export default function CardComponent({ title, grade, weigth, text,updateQualifi
   const [isLocked, setIsLocked] = useState(false);
 
   useEffect(() => {
-    setEditGrade(grade.toString()); // Convertir el grade a string al iniciar
+    const gradeContent = validateGradeType(grade);
+    setEditGrade(gradeContent.toString()); // Convertir el grade a string al iniciar
   }, [grade]);
 
   const handleGradeChange = (event) => {

@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { useNavigate } from 'react-router-dom';
+import { validateGradeType } from '../../../utils/validations';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,6 +38,12 @@ export default function CardComponent({ title, grade, credit, text , partial, pa
   const handleParcelacionClick = () => {
     navigate('/partial', { state: { datos: partial } });
   };
+
+  const gradeContent = validateGradeType(grade);
+
+  console.log("grade typeOf ",typeof grade);
+  console.log("grade ",grade);
+  console.log("gradeContent ",gradeContent);
 
   return (
     <Paper className={classes.paper}>
@@ -71,8 +78,10 @@ export default function CardComponent({ title, grade, credit, text , partial, pa
           )}
         </Grid>
         <Grid item className={classes.grade}>
-          {grade > 0
-            ? <Typography className={classes.gradeInput} variant="body1">{grade}</Typography> : <Typography className={classes.gradeInput} variant="body1">-</Typography> }
+          <Typography variant="body1" className={classes.gradeInput}>
+            {gradeContent}
+          </Typography>
+
         </Grid>
       </Grid>
     </Paper>

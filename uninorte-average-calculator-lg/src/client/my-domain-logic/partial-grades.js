@@ -4,6 +4,13 @@
  */
 
 export function calculateCurrentGradeAverage(subject) {
+  if (
+    subject.length === 1 &&
+    (subject[0].NOTAA === "AP" || subject[0].NOTAA === "RP")
+  ) {
+    return subject[0].NOTAA
+  }
+
   const totalWeightedSum = subject.reduce(
     (acc, partial) => acc + partial.NOTAA * (partial.SHRGCOM_WEIGHT / 100),
     0

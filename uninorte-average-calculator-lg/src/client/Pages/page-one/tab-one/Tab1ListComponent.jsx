@@ -22,12 +22,32 @@ const useStyles = makeStyles((theme)=> ({
 }));
 
 const semesterAverage = (materias) => {
-  return materias.reduce((acc, materia) => {
-    return acc + (materia.NOTAA * materia.CREDITOS);
-  }, 0) / materias.reduce((acc, materia) => {
+  // Filtrar materias con NOTAA válidos
+  const validMaterias = materias.filter(materia => {
+    const nota = parseFloat(materia.NOTAA);
+    return !Number.isNaN(nota) && Number.isFinite(nota);
+  });
+
+  // Calcular el total de puntos ponderados (NOTAA * CREDITOS)
+  const totalPonderado = validMaterias.reduce((acc, materia) => {
+    return acc + (parseFloat(materia.NOTAA) * materia.CREDITOS);
+  }, 0);
+
+  // Calcular el total de créditos
+  const totalCreditos = validMaterias.reduce((acc, materia) => {
     return acc + materia.CREDITOS;
   }, 0);
+
+  // Retornar el promedio ponderado
+  return totalCreditos > 0 ? totalPonderado / totalCreditos : 0;
 };
+
+
+const calculateSemesterCredits = (materias) => {
+  return materias.reduce((acc, materia) => {
+    return acc + materia.SFRSTCR_CREDIT_HR;
+  }, 0);
+}
 
 
 function Tab1ListComponent(props) {
@@ -37,6 +57,9 @@ function Tab1ListComponent(props) {
   if (materias.length === 0) {
     return null;
   }
+  console.log('materias',materias);
+  console.log('calculater',calculateSemesterCredits(materias));
+  const semesterCredits = calculateSemesterCredits(materias);
   const PGA = (materias[0].PUNTOS / materias[0].CREDITOS).toFixed(2);
   const PSA = semesterAverage(materias).toFixed(2);
   console.log(materias);
@@ -46,7 +69,7 @@ function Tab1ListComponent(props) {
         <CardComponent
           key={item.SSBSECT_CRSE_TITLE}
           title={item.SSBSECT_CRSE_TITLE}
-          credit={item.CREDITOS}
+          credit={item.SFRSTCR_CREDIT_HR}
           grade={item.NOTAA}
           disabled
           partial={item.items}
@@ -54,7 +77,7 @@ function Tab1ListComponent(props) {
       )) : null}
       <Divider />
       <Container className={classes.container}>
-        <CardComponent title="Promedio semestral" credit={17} parcelation={false} grade={PSA} />
+        <CardComponent title="Promedio semestral" credit={semesterCredits} parcelation={false} grade={PSA} />
         <CardComponent title="Promedio acumulado" parcelation={false} grade={PGA} text="Promediado con este semestre" />
       </Container>
       <ButtonComponent text="Mas sobre acumulado - semestral" />
