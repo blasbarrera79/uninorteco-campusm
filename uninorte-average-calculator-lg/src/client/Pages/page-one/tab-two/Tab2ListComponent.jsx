@@ -7,7 +7,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import CardComponent from './CardComponent';
 import ButtonComponent from '../../../components/ButtonComponent';
-import { calculateSemesterAverage, calculateNewSemesterAverage, creditsWithGrades, calculateCurrentAverage , calculateNeededGrades } from '../../../my-domain-logic/semester-grades';
+import { calculateSemesterAverage, calculateNewSemesterAverage, creditsWithGrades, calculateCurrentAverage , calculateNeededGrades } from '../../../utils/semester-grades';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -89,7 +89,7 @@ function Tab2ListComponent(props) {
         <CardComponent
           key={item.SSBSECT_CRSE_TITLE}
           title={item.SSBSECT_CRSE_TITLE}
-          credit={item.CREDITOS}
+          credit={item.SFRSTCR_CREDIT_HR}
           grade={item.NOTAA}
           partial={item.items}
           updateLock={(lock)=> handleIsLocked(item, lock)}
@@ -99,9 +99,9 @@ function Tab2ListComponent(props) {
       ))}
       <Divider />
       <Container className={classes.container}>
-        <CardComponent title="Promedio acumulado semestral" parcelacion={false} canLock={false} grade={currentPSA.toFixed(2)} text="Las asignaturas no bloqueadas serán modificadas para obtener un promedio semestral de:" edit updateQualifications={(newGrade)=> updateAverage(newGrade)} parcelation={false} />
+        <CardComponent title="Promedio acumulado semestral" parcelacion={false} canLock={false} grade={currentPSA.toFixed(2)} text="Las asignaturas no bloqueadas serán modificadas para obtener un promedio semestral de:" edit updateQualifications={(newGrade)=> updateAverage(newGrade)} />
       </Container>
-      <ButtonComponent text="Mas sobre acumulado - semestral" />
+      {/* <ButtonComponent text="Mas sobre acumulado - semestral" /> */}
       <Snackbar open={openSnackbar} autoHideDuration={5000} onClose={handleCloseSnackbar}>
         <Alert onClose={handleCloseSnackbar} severity="error">
           {errorMessage}

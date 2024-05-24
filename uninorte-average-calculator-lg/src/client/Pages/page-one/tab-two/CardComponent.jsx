@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import LockIcon from '@material-ui/icons/Lock';
-import { validateGrade } from '../../../my-domain-logic/semester-grades';
+import { validateGrade } from '../../../utils/semester-grades';
 import { validateGradeType } from '../../../utils/validations';
 
 const useStyles = makeStyles((theme) => ({
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CardComponent({ title, grade, credit, text, edit = false, partial, updateQualifications,updateLock, canLock = true , parcelation = true }) {
+export default function CardComponent({ title, grade, credit, text, edit = false, partial = [{}], updateQualifications,updateLock, canLock = true , parcelation = true }) {
   const classes = useStyles();
   const [editGrade, setEditGrade] = useState('');
   const [previousGrade, setPreviousGrade] = useState(grade);
@@ -74,6 +74,14 @@ export default function CardComponent({ title, grade, credit, text, edit = false
     navigate('/partial', { state: { datos: partial } });
   };
 
+
+  if (partial) {
+    if (partial.length <= 1) {
+      parcelation = false;
+    }
+  }
+
+
   return (
     <Paper className={classes.paper}>
       <Grid item xs={12} sm container>
@@ -82,7 +90,7 @@ export default function CardComponent({ title, grade, credit, text, edit = false
             <Typography gutterBottom variant="h6">
               {title}
             </Typography>
-            {credit && (
+            {credit > 0 && (
               <Grid item>
                 <Typography variant="body2">Creditos: {credit}</Typography>
               </Grid>

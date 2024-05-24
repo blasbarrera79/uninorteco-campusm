@@ -6,8 +6,10 @@
 export function calculateCurrentGradeAverage(subject) {
   if (
     subject.length === 1 &&
-    (subject[0].NOTAA === "AP" || subject[0].NOTAA === "RP")
+    (subject[0].NOTAA === "AP" || subject[0].NOTAA === "RP") &&
+    subject !== "---"
   ) {
+    // YONYH REVISAR ESTO
     return subject[0].NOTAA
   }
 

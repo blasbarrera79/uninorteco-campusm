@@ -3,7 +3,7 @@ import { getUser } from "../services/userService"
 import { getTerm } from "../services/termService"
 import { getRegistration } from "../services/registrationService"
 import { getGrades } from "../services/gradeService"
-import { calculateCurrentGradeAverage } from "../my-domain-logic/partial-grades"
+import { calculateCurrentGradeAverage } from "./partial-grades"
 
 export async function fetchUserData() {
   try {

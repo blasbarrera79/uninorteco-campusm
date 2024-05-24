@@ -8,7 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import LockIcon from '@material-ui/icons/Lock';
 import TextField from '@material-ui/core/TextField';
-import { validateGrade } from '../../my-domain-logic/semester-grades';
+import { validateGrade } from '../../utils/semester-grades';
 import { validateGradeType } from '../../utils/validations';
 
 const useStyles = makeStyles((theme) => ({
@@ -79,7 +79,7 @@ export default function CardComponent({ title, grade, weigth, text,updateQualifi
             </Typography>
             {weigth && (
               <Grid item>
-                <Typography variant="body2">Porcentaje: {weigth}</Typography>
+                <Typography variant="body2">Porcentaje: {weigth} %</Typography>
               </Grid>
             )}
           </Grid>

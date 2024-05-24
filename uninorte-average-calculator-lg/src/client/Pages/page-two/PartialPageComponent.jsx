@@ -6,8 +6,8 @@ import { useLocation } from 'react-router-dom';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import CardComponent from './CardComponent';
-import ButtonComponent from '../../components/ButtonComponent';
-import { calculateNeededGradesWithWeights,calculateCurrentGradeAverage,calculateNewGradeAverage } from '../../my-domain-logic/partial-grades';
+// import ButtonComponent from '../../components/ButtonComponent';
+import { calculateNeededGradesWithWeights,calculateCurrentGradeAverage,calculateNewGradeAverage } from '../../utils/partial-grades';
 
 
 const useStyles = makeStyles((theme)=> ({
@@ -124,7 +124,7 @@ function PartialPageComponent() {
       <Container className={classes.container}>
         <CardComponent title="Promedio acumulado" grade={currentPSA.toFixed(2)} canLock={false} text="Las asignaturas no bloqueadas serán modificadas para obtener un promedio semestral de:" updateQualifications={(newGrade)=> updateAverage(newGrade)} />
       </Container>
-      <ButtonComponent text="Mas sobre acumulado - semestral" />
+      {/* <ButtonComponent text="Mas sobre acumulado - semestral" /> */}
       <Snackbar open={openSnackbar} autoHideDuration={5000} onClose={handleCloseSnackbar}>
         <Alert onClose={handleCloseSnackbar} severity="error">
           {errorMessage}

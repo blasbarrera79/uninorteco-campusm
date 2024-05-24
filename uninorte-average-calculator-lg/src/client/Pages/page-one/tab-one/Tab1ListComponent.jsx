@@ -4,7 +4,8 @@ import { Container } from '@ombiel/aek-lib';
 import { makeStyles } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import CardComponent from './CardComponent';
-import ButtonComponent from '../../../components/ButtonComponent';
+// import ButtonComponent from '../../../components/ButtonComponent';
+import { calculateSemesterCredits, semesterAverage } from '../../../utils/validations';
 
 
 const useStyles = makeStyles((theme)=> ({
@@ -21,33 +22,7 @@ const useStyles = makeStyles((theme)=> ({
   },
 }));
 
-const semesterAverage = (materias) => {
-  // Filtrar materias con NOTAA válidos
-  const validMaterias = materias.filter(materia => {
-    const nota = parseFloat(materia.NOTAA);
-    return !Number.isNaN(nota) && Number.isFinite(nota);
-  });
 
-  // Calcular el total de puntos ponderados (NOTAA * CREDITOS)
-  const totalPonderado = validMaterias.reduce((acc, materia) => {
-    return acc + (parseFloat(materia.NOTAA) * materia.CREDITOS);
-  }, 0);
-
-  // Calcular el total de créditos
-  const totalCreditos = validMaterias.reduce((acc, materia) => {
-    return acc + materia.CREDITOS;
-  }, 0);
-
-  // Retornar el promedio ponderado
-  return totalCreditos > 0 ? totalPonderado / totalCreditos : 0;
-};
-
-
-const calculateSemesterCredits = (materias) => {
-  return materias.reduce((acc, materia) => {
-    return acc + materia.SFRSTCR_CREDIT_HR;
-  }, 0);
-}
 
 
 function Tab1ListComponent(props) {
@@ -80,7 +55,7 @@ function Tab1ListComponent(props) {
         <CardComponent title="Promedio semestral" credit={semesterCredits} parcelation={false} grade={PSA} />
         <CardComponent title="Promedio acumulado" parcelation={false} grade={PGA} text="Promediado con este semestre" />
       </Container>
-      <ButtonComponent text="Mas sobre acumulado - semestral" />
+      {/* <ButtonComponent text="Mas sobre acumulado - semestral" /> */}
     </Container>
   );
 }

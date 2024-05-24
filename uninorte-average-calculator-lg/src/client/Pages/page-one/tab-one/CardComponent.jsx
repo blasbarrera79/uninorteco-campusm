@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CardComponent({ title, grade, credit, text , partial, parcelation = true}) {
+export default function CardComponent({ title, grade, credit, text , partial = [{}], parcelation = true}) {
 
   const classes = useStyles();
   console.log("partial ",partial);
@@ -40,6 +40,13 @@ export default function CardComponent({ title, grade, credit, text , partial, pa
   };
 
   const gradeContent = validateGradeType(grade);
+  console.log('partial ',partial)
+  console.log('partial.length ',partial.length)
+  if (partial) {
+    if (partial.length <= 1) {
+      parcelation = false;
+    }
+  }
 
   console.log("grade typeOf ",typeof grade);
   console.log("grade ",grade);
@@ -53,7 +60,7 @@ export default function CardComponent({ title, grade, credit, text , partial, pa
             <Typography gutterBottom variant="h6">
               {title}
             </Typography>
-            {credit && (
+            {credit > 0 && (
               <Grid item>
                 <Typography variant="body2">Creditos: {credit}</Typography>
               </Grid>
