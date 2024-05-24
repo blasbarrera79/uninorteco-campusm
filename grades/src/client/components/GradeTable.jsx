@@ -10,12 +10,25 @@ import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
 const useStyles = makeStyles({
-  GradeCell: {
+  gradeCell: {
     textAlign: "end",
     fontSize: "1em",
   },
-  TableFontSize: {
+  tableFontSize: {
     fontSize: "1em",
+  },
+  tableRow: {
+    transition: "background-color 0.3s ease",
+    "&:nth-of-type(odd)": {
+      backgroundColor: "#f5f5f5",
+    },
+    "&:hover": {
+      backgroundColor: "#e0f7fa",
+    },
+  },
+  noGrades: {
+    textAlign: "center",
+    padding: "16px",
   },
 });
 
@@ -27,14 +40,14 @@ const GradeTable = ({ items }) => {
       <TableBody>
         {items.length > 0 ? (
           items.map((item) => (
-            <TableRow key={item.name}>
-              <TableCell className={classes.TableFontSize}>{item.name}</TableCell>
-              <TableCell className={classes.GradeCell}>{item.value}</TableCell>
+            <TableRow key={item.name} className={classes.tableRow}>
+              <TableCell className={classes.tableFontSize}>{item.name}</TableCell>
+              <TableCell className={classes.gradeCell}>{item.value}</TableCell>
             </TableRow>
           ))
         ) : (
           <TableRow>
-            <TableCell>
+            <TableCell colSpan={2} className={classes.noGrades}>
               <Typography>No hay calificaciones</Typography>
             </TableCell>
           </TableRow>

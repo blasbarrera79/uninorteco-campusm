@@ -7,9 +7,6 @@ import SelectComponent from "./SelectComponent";
 import { fetchUserData, fetchUserTerms, fetchUserGrades } from "../utils/apiUtils";
 
 const useStyles = makeStyles({
-  container: {
-    padding: "0",
-  },
   loaderContainer: {
     display: "flex",
     justifyContent: "center",
@@ -79,7 +76,7 @@ const Screen = () => {
   };
 
   return (
-    <Container className={classes.container}>
+    <Container>
       <SelectComponent
         value={selectedTerm}
         onChange={handleSelectChange}
@@ -95,6 +92,7 @@ const Screen = () => {
             key={subjectGrade.materia}
             gradeName={subjectGrade.materia}
             items={subjectGrade.items}
+            className={classes.container}
           />
         ))
       )}
