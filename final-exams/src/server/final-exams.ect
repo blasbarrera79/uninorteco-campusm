@@ -17,7 +17,7 @@
 
 {% if aek.action == "get-exams" %}
   {% set user = aek.request("user") %}
-  {% set service = aek.create_service("https://intunqa.uninorte.edu.co/sba-estudiantes/api/v1/horario-final/" ~ user) %}
+  {% set service = aek.create_service("https://intun.uninorte.edu.co/sba-estudiantes/api/v1/horario-final/" ~ user) %}
   {{ service.set_method("GET") }}
   {{ aek.respond(service.json) }}
 {% endif %}

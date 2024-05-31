@@ -49,7 +49,7 @@ class FinalExamService {
         return null
       }
       const allExams = this.finalExamResponse.body.resultado
-      if (allExams.length === 0) {
+      if (allExams.length == 0) {
         return null
       }
 
