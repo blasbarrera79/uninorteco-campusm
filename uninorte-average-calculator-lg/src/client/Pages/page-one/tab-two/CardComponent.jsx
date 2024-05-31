@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
   },
   gradeInput: {
     textAlign: 'center',
-    width: '4em',
     marginRight: theme.spacing(1),
   },
   iconButton: {

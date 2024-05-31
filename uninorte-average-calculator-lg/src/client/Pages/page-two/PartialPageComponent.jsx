@@ -112,7 +112,7 @@ function PartialPageComponent() {
       <Divider />
       <Container className={classes.container}>
         <CardComponent 
-          title="Promedio acumulado" 
+          title="Nota Final" 
           grade={currentPSA.toFixed(2)} 
           canLock={false} 
           text="Las asignaturas no bloqueadas serán modificadas para obtener un promedio semestral de:" 

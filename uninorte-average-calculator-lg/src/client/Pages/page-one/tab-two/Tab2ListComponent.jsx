@@ -6,7 +6,7 @@ import Divider from '@material-ui/core/Divider';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import CardComponent from './CardComponent';
-import { calculateSemesterAverage, calculateNewSemesterAverage, creditsWithGrades, calculateCurrentAverage, calculateNeededGrades } from '../../../utils/semester-grades';
+import { calculateSemesterAverage, calculateNeededGrades } from '../../../utils/semester-grades';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -104,9 +104,7 @@ function Tab2ListComponent(props) {
         />
       ))}
       <Divider />
-      <Container className={classes.container}>
-        <CardComponent weight={1} cardType="green" title="Promedio acumulado semestral" parcelacion={false} canLock={false} grade={currentPSA.toFixed(1)} text="Las asignaturas no bloqueadas serán modificadas para obtener un promedio semestral de:" edit updateQualifications={(newGrade) => updateAverage(newGrade)} />
-      </Container>
+      <CardComponent weight={1} cardType="green" title="Promedio Semestral" parcelacion={false} canLock={false} grade={currentPSA.toFixed(1)} text="Las asignaturas no bloqueadas serán modificadas para obtener un promedio semestral de:" edit updateQualifications={(newGrade) => updateAverage(newGrade)} />      
       <Snackbar open={openSnackbar} autoHideDuration={5000} onClose={handleCloseSnackbar}>
         <Alert onClose={handleCloseSnackbar} severity="error">
           {errorMessage}

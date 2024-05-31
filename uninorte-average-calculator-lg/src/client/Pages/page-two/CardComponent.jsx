@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
   },
   grade: {
     alignSelf: 'center',
-    width: '6em',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -31,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#000000', // black text color
   },
   text: {
-    maxWidth: '80%',
+    maxWidth: '60%',
     color: '#ffffff', // White text color
   },
   blueCard: {
@@ -47,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CardComponent({ title, grade, weight, text, updateQualifications, updateLock, canLock = true, cardType }) {
+export default function CardComponent({ title, grade, weight, text, updateQualifications, updateLock, canLock = true, cardType, gradeInputWidth }) {
   const classes = useStyles();
   const [editGrade, setEditGrade] = useState('');
   const [previousGrade, setPreviousGrade] = useState(grade);
@@ -104,11 +103,12 @@ export default function CardComponent({ title, grade, weight, text, updateQualif
         <Grid item className={classes.grade}>
           <TextField
             className={classes.gradeInput}
-            type="text"
+            style={{ width: gradeInputWidth }}
+            type="number"
             value={editGrade}
             onChange={handleGradeChange}
             disabled={isLocked}
-            inputProps={{ style: { color: '#000000' } }} // White text color in TextField
+            inputProps={{ style: { color: '#000000' } }} // Black text color in TextField
           />
           {canLock && (
             <IconButton onClick={toggleLock}>
@@ -129,5 +129,10 @@ CardComponent.propTypes = {
   updateQualifications: PropTypes.func.isRequired,
   updateLock: PropTypes.func,
   canLock: PropTypes.bool,
-  cardType: PropTypes.string, // new prop
+  cardType: PropTypes.string,
+  gradeInputWidth: PropTypes.string, // Add this prop type
+};
+
+CardComponent.defaultProps = {
+  gradeInputWidth: '6em', // Default value for the width
 };
