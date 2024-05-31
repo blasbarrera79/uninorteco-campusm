@@ -42,14 +42,15 @@ const Home = () => {
   
   useEffect(() => {
     const fetchTerms = async () => {
-      if (user) {
-        try {
+      try {
+        if (user) {
           const termsResponse = await fetchUserTerms(user);
           setSelectedTerm(termsResponse[0]?.PERIODO || '');
-        } catch (err) {
-          console.error(err);
         }
+      } catch (err) {
+        console.error(err);
       }
+      
     };
   
     fetchTerms();
@@ -59,7 +60,6 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const subjectsGradesResponse = await fetchUserGrades(selectedTerm, user);
-        console.log('myResultopl', subjectsGradesResponse)
         setSubjectsGrades(subjectsGradesResponse);
       } catch (err) {
         console.error(err);

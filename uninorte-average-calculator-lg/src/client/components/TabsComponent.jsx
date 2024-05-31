@@ -52,7 +52,7 @@ function TabsComponent() {
       <Tab className={classes.tab} label="Mi nota final es" />
       <Tab className={classes.tab} label="Cuanto necesito" />
     </Tabs>
-  );
+  )
 }
 
 export default TabsComponent;

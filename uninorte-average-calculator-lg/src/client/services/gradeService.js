@@ -7,8 +7,6 @@ export const getGrades = (user, nrc, term) => {
     periodo: term,
   }
 
-  console.log("requestBody", requestBody)
-
   return new Promise((resolve, reject) => {
     request
       .action("get-grades")
@@ -17,7 +15,6 @@ export const getGrades = (user, nrc, term) => {
         if (err) {
           reject(err)
         } else {
-          console.log(res)
           resolve(res.body.resultado)
         }
       })

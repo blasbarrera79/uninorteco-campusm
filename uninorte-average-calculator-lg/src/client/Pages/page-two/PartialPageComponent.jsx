@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container } from '@ombiel/aek-lib';
 import { Typography, makeStyles } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
@@ -6,11 +6,9 @@ import { useLocation } from 'react-router-dom';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import CardComponent from './CardComponent';
-// import ButtonComponent from '../../components/ButtonComponent';
-import { calculateNeededGradesWithWeights,calculateCurrentGradeAverage,calculateNewGradeAverage } from '../../utils/partial-grades';
+import { calculateNeededGradesWithWeights, calculateCurrentGradeAverage, calculateNewGradeAverage } from '../../utils/partial-grades';
 
-
-const useStyles = makeStyles((theme)=> ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     padding: theme.spacing(1),
@@ -28,20 +26,19 @@ const useStyles = makeStyles((theme)=> ({
 }));
 
 function PartialPageComponent() {
-
   const classes = useStyles();
   const location = useLocation();
 
   const [partialGrades, setPartialGrades] = useState([]);
-  const [errorMessage, setErrorMessage] = useState(''); // Estado para el mensaje de error
-  const [openSnackbar, setOpenSnackbar] = useState(false); // Estado para controlar el Snackbar
+  const [errorMessage, setErrorMessage] = useState('');
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const [currentPSA, setCurrentPSA] = useState([]);
   const [gradesWithQualifications, setGradesWithQualifications] = useState([]);
 
   useEffect(() => {
     if (location.state?.datos) {
       setPartialGrades(location.state.datos);
-      const initialGrades = location.state.datos.map(grade => ({
+      const initialGrades = location.state.datos.map((grade) => ({
         ...grade,
         isModified: grade.NOTAA > 0,
         isLocked: false,
@@ -51,21 +48,13 @@ function PartialPageComponent() {
     }
   }, [location.state]);
 
-
-
   if (partialGrades.length === 0) {
     return <div>No hay datos disponibles.</div>;
   }
 
-  console.log("datos ",partialGrades);
-
-  console.log("gradesWithQualifications ",gradesWithQualifications);
-  console.log("currentPSA ",currentPSA);
-
-
   const updateQualifications = (targetGrade, newGrade) => {
     setGradesWithQualifications((prevGrades) => {
-      const updatedGrades = prevGrades.map(materia => {
+      const updatedGrades = prevGrades.map((materia) => {
         if (materia.SHRGCOM_NAME === targetGrade.SHRGCOM_NAME) {
           return { ...materia, NOTAA: newGrade, isModified: true };
         }
@@ -78,17 +67,16 @@ function PartialPageComponent() {
 
   const handleIsLocked = (targetGrade) => {
     setGradesWithQualifications((prevGrades) => {
-      const updatedGrades = prevGrades.map(subject => {
+      const updatedGrades = prevGrades.map((subject) => {
         if (subject.SHRGCOM_NAME === targetGrade.SHRGCOM_NAME) {
           return { ...subject, isLocked: !subject.isLocked };
         }
         return subject;
       });
-      console.log(updatedGrades);
       return updatedGrades;
     });
-  }
-  
+  };
+
   const updateAverage = (newGrade) => {
     setGradesWithQualifications((prevGrades) => {
       try {
@@ -99,7 +87,7 @@ function PartialPageComponent() {
         return prevGrades;
       }
     });
-  }
+  };
 
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false);
@@ -114,17 +102,24 @@ function PartialPageComponent() {
         <CardComponent
           key={item.SHRGCOM_NAME}
           title={item.SHRGCOM_NAME}
-          weigth={item.SHRGCOM_WEIGHT}
+          weight={item.SHRGCOM_WEIGHT}
           grade={item.NOTAA}
-          updateLock={(lock)=> handleIsLocked(item, lock)}
+          updateLock={(lock) => handleIsLocked(item, lock)}
           updateQualifications={(newGrade) => updateQualifications(item, newGrade)}
+          cardType="blue"
         />
       ))}
       <Divider />
       <Container className={classes.container}>
-        <CardComponent title="Promedio acumulado" grade={currentPSA.toFixed(2)} canLock={false} text="Las asignaturas no bloqueadas serán modificadas para obtener un promedio semestral de:" updateQualifications={(newGrade)=> updateAverage(newGrade)} />
+        <CardComponent 
+          title="Promedio acumulado" 
+          grade={currentPSA.toFixed(2)} 
+          canLock={false} 
+          text="Las asignaturas no bloqueadas serán modificadas para obtener un promedio semestral de:" 
+          updateQualifications={(newGrade) => updateAverage(newGrade)} 
+          cardType="green" 
+        />
       </Container>
-      {/* <ButtonComponent text="Mas sobre acumulado - semestral" /> */}
       <Snackbar open={openSnackbar} autoHideDuration={5000} onClose={handleCloseSnackbar}>
         <Alert onClose={handleCloseSnackbar} severity="error">
           {errorMessage}
@@ -134,7 +129,6 @@ function PartialPageComponent() {
   );
 }
 
-PartialPageComponent.propTypes = {
-};
+PartialPageComponent.propTypes = {};
 
 export default PartialPageComponent;

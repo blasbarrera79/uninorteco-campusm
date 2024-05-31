@@ -9,9 +9,22 @@ import { validateGradeType } from '../../../utils/validations';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    padding: theme.spacing(2),
-    borderRadius: 0,
+    padding: 0,
+    borderRadius: 12,
     boxShadow: 'none',
+    marginBottom: theme.spacing(1),
+    borderRadius: 12, // Rounded border
+  },
+  header: {
+    padding: theme.spacing(2),
+    color: '#000000', // Black text color
+    borderRadius: '12px 12px 0 0', // Rounded top corners
+  },
+  content: {
+    padding: theme.spacing(2),
+    backgroundColor: '#f0f0f0', // Light grey background for the content
+    color: '#000000', // Black text color for the content
+    borderRadius: '0 0 12px 12px', // Rounded bottom corners
   },
   grade: {
     alignSelf: 'center',
@@ -23,16 +36,16 @@ const useStyles = makeStyles((theme) => ({
   gradeInput: {
     textAlignLast: 'center',
   },
-  text: {
-    maxWidth: '80%',
+  blueCard: {
+    backgroundColor: '#7ec1ee', // Light blue background
+  },
+  greenCard: {
+    backgroundColor: '#6FA1D2', // Light green background
   },
 }));
 
-export default function CardComponent({ title, grade, credit, text , partial = [{}], parcelation = true}) {
-
+export default function CardComponent({ title, grade, credit, text, partial = [{}], parcelation = true, cardType }) {
   const classes = useStyles();
-  console.log("partial ",partial);
-
   const navigate = useNavigate();
 
   const handleParcelacionClick = () => {
@@ -40,57 +53,55 @@ export default function CardComponent({ title, grade, credit, text , partial = [
   };
 
   const gradeContent = validateGradeType(grade);
-  console.log('partial ',partial)
-  console.log('partial.length ',partial.length)
+  const formattedGrade = typeof grade === 'number' ? grade.toFixed(1) : grade;
+
   if (partial) {
     if (partial.length <= 1) {
       parcelation = false;
     }
   }
 
-  console.log("grade typeOf ",typeof grade);
-  console.log("grade ",grade);
-  console.log("gradeContent ",gradeContent);
-
   return (
-    <Paper className={classes.paper}>
-      <Grid item xs={12} sm container>
-        <Grid item xs container direction="column" spacing={1}>
-          <Grid item xs>
-            <Typography gutterBottom variant="h6">
-              {title}
-            </Typography>
-            {credit > 0 && (
+    <Paper className={`${classes.paper} ${cardType === 'blue' ? classes.blueCard : cardType === 'green' ? classes.greenCard : ''}`}>
+      <div className={`${classes.header} ${cardType === 'blue' ? classes.blueCard : cardType === 'green' ? classes.greenCard : ''}`}>
+        <Typography gutterBottom variant="h6">
+          {title}
+        </Typography>
+      </div>
+      <div className={classes.content}>
+        <Grid item xs={12} sm container>
+          <Grid item xs container direction="column" spacing={1}>
+            <Grid item xs>
+              {credit > 0 && (
+                <Grid item>
+                  <Typography variant="body2">Creditos: {credit}</Typography>
+                </Grid>
+              )}
+            </Grid>
+            {parcelation && (
               <Grid item>
-                <Typography variant="body2">Creditos: {credit}</Typography>
+                <Typography
+                  variant="body2"
+                  style={{ cursor: 'pointer' }}
+                  onClick={handleParcelacionClick}
+                >
+                  Ver parcelacion
+                </Typography>
+              </Grid>
+            )}
+            {text && (
+              <Grid item>
+                <Typography variant="body2">{text}</Typography>
               </Grid>
             )}
           </Grid>
-          {parcelation && (
-            <Grid item>
-              <Typography
-                variant="body2"
-                style={{ cursor: 'pointer' }}
-                onClick={handleParcelacionClick}
-              >
-                Ver parcelacion
-              </Typography>
-            </Grid>
-          )
-          }
-          {text && (
-            <Grid className={classes.text} item>
-              <Typography variant="body2">{text}</Typography>
-            </Grid>
-          )}
+          <Grid item className={classes.grade}>
+            <Typography variant="body1" className={classes.gradeInput}>
+              {formattedGrade}
+            </Typography>
+          </Grid>
         </Grid>
-        <Grid item className={classes.grade}>
-          <Typography variant="body1" className={classes.gradeInput}>
-            {gradeContent}
-          </Typography>
-
-        </Grid>
-      </Grid>
+      </div>
     </Paper>
   );
 }
@@ -102,4 +113,5 @@ CardComponent.propTypes = {
   text: PropTypes.string,
   partial: PropTypes.array,
   parcelation: PropTypes.bool,
+  cardType: PropTypes.string, // new prop
 };

@@ -17,7 +17,6 @@ export async function fetchUserData() {
 
 export async function fetchUserTerms(user) {
   try {
-    console.log("user on fetchuserTERMS", user)
     const termsResponse = await getTerm(user)
     return termsResponse
   } catch (error) {
@@ -30,9 +29,8 @@ export async function fetchUserGrades(selectedTerm, user) {
     const registration = await getRegistration(selectedTerm, user)
     const promises = registration.map(async (element) => {
       const grades = await getGrades(user, element.SFRSTCR_CRN, selectedTerm)
-      console.log("grades", grades)
       const averageGrade = calculateCurrentGradeAverage(grades)
-      console.log("averageGrade", averageGrade)
+      
       return {
         ...element,
         NOTAA: averageGrade,

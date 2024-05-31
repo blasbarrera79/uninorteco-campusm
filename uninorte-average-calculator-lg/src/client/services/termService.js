@@ -9,7 +9,6 @@ export const getTerm = (USER) => {
         if (err) {
           reject(err)
         } else {
-          console.log(res)
           resolve(res.body.resultado)
         }
       })

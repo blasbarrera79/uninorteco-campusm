@@ -1,5 +1,6 @@
 <<
 @configure
+  connected:true
   scripts:[
     "average-calculator"
   ]
@@ -14,7 +15,7 @@
 
 {# using create_service to define a service - often used for third-party vendor integrations #}
 {% if aek.action == "get-grades" %}
-  {% set service = aek.create_service("https://intunqa.uninorte.edu.co/sba-estudiantes/api/v1/notas-parciales") %}
+  {% set service = aek.create_service("https://intun.uninorte.edu.co/sba-estudiantes/api/v1/notas-parciales") %}
   {{ service.set_namespace("") }}
   {{ service.set_method("POST") }}
   {{ service.set_request_body(aek.request("requestBody")) }}
@@ -24,7 +25,7 @@
 {% if aek.action == "get-registration" %}
   {% set term = aek.request("term") %}
   {% set user = aek.request("user") %}
-  {% set service = aek.create_service("https://intunqa.uninorte.edu.co/sba-estudiantes/api/v1/matricula/user/" ~ user ~ "/periodo/" ~ term) %}
+  {% set service = aek.create_service("https://intun.uninorte.edu.co/sba-estudiantes/api/v1/matricula/user/" ~ user ~ "/periodo/" ~ term) %}
   {{ service.set_method("GET") }}
   {{ aek.respond(service.json) }}
 {% endif %}
@@ -32,7 +33,7 @@
 
 {% if aek.action == "get-terms" %}
   {% set user = aek.request("user") %}
-  {% set service = aek.create_service("https://intunqa.uninorte.edu.co/sba-estudiantes/api/v1/estudiante/userBanner/" ~ user ~ "/periodo") %}
+  {% set service = aek.create_service("https://intun.uninorte.edu.co/sba-estudiantes/api/v1/estudiante/userBanner/" ~ user ~ "/periodo") %}
   {{ service.set_method("GET") }}
   {{ aek.respond(service.json) }}
 {% endif %}

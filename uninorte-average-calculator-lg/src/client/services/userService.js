@@ -6,7 +6,6 @@ export const getUser = () => {
       if (err) {
         reject(err)
       } else {
-        console.log(res)
         resolve(res.body.username)
       }
     })

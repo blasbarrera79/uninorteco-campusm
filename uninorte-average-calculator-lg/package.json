@@ -1,6 +1,6 @@
 {
   "name": "@ombiel/uninorte-average-calculator-lg",
-  "version": " 1.0.55",
+  "version": " 1.1.12",
   "repository": "-",
   "license": "UNLICENSED",
   "scripts": {
@@ -21,6 +21,9 @@
     "@ombiel/aek-asset-store": "^0.0.8",
     "@ombiel/aek-css": "1.x.x",
     "@ombiel/aek-lib": ">=1.4.0-0 <1.5.0",
+    "cz": "^1.8.2",
+    "git": "^0.1.5",
+    "git-cz": "^4.9.0",
     "react": "^16.8.6",
     "react-dom": "^16.6.6",
     "react-router-dom": "^6.23.0"

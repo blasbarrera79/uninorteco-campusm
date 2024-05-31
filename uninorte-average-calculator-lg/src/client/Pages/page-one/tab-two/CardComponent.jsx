@@ -1,39 +1,59 @@
-import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import { useNavigate } from 'react-router-dom'; 
 import IconButton from '@material-ui/core/IconButton';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import LockIcon from '@material-ui/icons/Lock';
+import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { validateGrade } from '../../../utils/semester-grades';
 import { validateGradeType } from '../../../utils/validations';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
-    borderRadius: 0,
+    borderRadius: 20,
     boxShadow: 'none',
+    marginBottom: theme.spacing(1),
+    minHeight: '80px', // Reduced height
   },
-  grade: {
-    alignSelf: 'center',
-    width: '6em',
+  gradeContainer: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
   },
   gradeInput: {
-    textAlignLast: 'center',
+    textAlign: 'center',
+    width: '4em',
+    marginRight: theme.spacing(1),
+  },
+  iconButton: {
+    padding: 5,
+    color: '#000000', // black icon color
   },
   text: {
-    maxWidth: '80%',
+    textAlign: 'left', // Align text to the left
+    color: '#ffffff', // White text color
+  },
+  blueCard: {
+    backgroundColor: '#6FA1D2', // Light blue background
+    color: '#ffffff', // White text color
+  },
+  greenCard: {
+    backgroundColor: '#e0f7fa', // Light green background
+    color: '#000000', // White text color
+  },
+  
+  title: {
+    fontSize: '17px', // Set the font size to 17px
+    color: '#ffffff', // White text color
+    marginBottom: theme.spacing(1), // Adjust margin if necessary
   },
 }));
 
-export default function CardComponent({ title, grade, credit, text, edit = false, partial = [{}], updateQualifications,updateLock, canLock = true , parcelation = true }) {
+export default function CardComponent({ title, grade, weight, text, updateQualifications, updateLock, canLock = true, cardType }) {
   const classes = useStyles();
   const [editGrade, setEditGrade] = useState('');
   const [previousGrade, setPreviousGrade] = useState(grade);
@@ -41,12 +61,15 @@ export default function CardComponent({ title, grade, credit, text, edit = false
 
   useEffect(() => {
     const gradeContent = validateGradeType(grade);
-    setEditGrade(gradeContent.toString()); // Convertir el grade a string al iniciar
+    if (typeof gradeContent === 'number') {
+      setEditGrade(parseFloat(gradeContent).toFixed(1));
+    } else {
+      setEditGrade(gradeContent.toString());
+    }
   }, [grade]);
 
-  const handleGradeChange = (event) => {
+  const handleGradeChange = (newValue) => {
     if (!isLocked) {
-      const newValue = event.target.value;
       const validatedGrade = validateGrade(newValue);
 
       if (validatedGrade !== null) {
@@ -56,10 +79,20 @@ export default function CardComponent({ title, grade, credit, text, edit = false
           setPreviousGrade(newValue);
         }
       } else if (newValue === "") {
-        setEditGrade(0);
+        setEditGrade("0");
         updateQualifications(0);
       }
     }
+  };
+
+  const increaseGrade = () => {
+    const newValue = parseFloat(editGrade) + 0.1;
+    handleGradeChange(newValue.toFixed(1));
+  };
+
+  const decreaseGrade = () => {
+    const newValue = parseFloat(editGrade) - 0.1;
+    handleGradeChange(newValue.toFixed(1));
   };
 
   const toggleLock = () => {
@@ -67,74 +100,40 @@ export default function CardComponent({ title, grade, credit, text, edit = false
     updateLock(!isLocked);
   };
 
-
-  const navigate = useNavigate();
-
-  const handleParcelacionClick = () => {
-    navigate('/partial', { state: { datos: partial } });
-  };
-
-
-  if (partial) {
-    if (partial.length <= 1) {
-      parcelation = false;
-    }
-  }
-
+  if (!weight) return null;
 
   return (
-    <Paper className={classes.paper}>
-      <Grid item xs={12} sm container>
-        <Grid item xs container direction="column" spacing={1}>
-          <Grid item xs>
-            <Typography gutterBottom variant="h6">
-              {title}
+    <Paper className={`${classes.paper} ${cardType === 'blue' ? classes.blueCard : cardType === 'green' ? classes.greenCard : ''}`}>
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <Typography>
+            {title}
+          </Typography>
+          <Typography variant="body2" >{text}</Typography>
+        </Grid>
+        <Grid item xs={6} container alignItems="center" justifyContent="flex-end">
+          <Grid item>
+            <Typography variant="h6"  style={{ margin: '0 8px' }}>
+              {parseFloat(editGrade).toFixed(1)}
             </Typography>
-            {credit > 0 && (
-              <Grid item>
-                <Typography variant="body2">Creditos: {credit}</Typography>
-              </Grid>
+          </Grid>
+          <Grid item>
+            <Grid container direction="column" alignItems="center">
+              <IconButton className={classes.iconButton} onClick={increaseGrade} disabled={isLocked}>
+                <ArrowDropUpIcon style={{ color: '#000000' }} />
+              </IconButton>
+              <IconButton className={classes.iconButton} onClick={decreaseGrade} disabled={isLocked}>
+                <ArrowDropDownIcon style={{ color: '#000000' }} />
+              </IconButton>
+            </Grid>
+          </Grid>
+          <Grid item>
+            {canLock && (
+              <IconButton className={classes.iconButton} onClick={toggleLock}>
+                {isLocked ? <LockIcon style={{ color: '#ffffff' }} /> : <LockOpenIcon style={{ color: '#ffffff' }} />}
+              </IconButton>
             )}
           </Grid>
-          {
-            parcelation && (
-              <Grid item>
-                <Typography
-                  variant="body2"
-                  style={{ cursor: 'pointer' }}
-                  onClick={handleParcelacionClick}
-                >
-                  Ver parcelacion
-                </Typography>
-              </Grid>
-            )
-          }
-          {text && (
-            <Grid className={classes.text} item>
-              <Typography variant="body2">{text}</Typography>
-            </Grid>
-          )}
-        </Grid>
-        <Grid item className={classes.grade}>
-          {edit ? (
-            <>
-              <TextField 
-                className={classes.gradeInput} 
-                type="text" 
-                value={editGrade} 
-                onChange={handleGradeChange} 
-                disabled={isLocked}
-              />
-              {canLock ? (
-                <IconButton onClick={toggleLock}>
-                  {isLocked ? <LockIcon /> : <LockOpenIcon />}
-                </IconButton>
-              ) : null
-              }
-            </>
-          ) : (
-            <Typography className={classes.gradeInput} variant="body1">{grade}</Typography>
-          )}
         </Grid>
       </Grid>
     </Paper>
@@ -144,12 +143,10 @@ export default function CardComponent({ title, grade, credit, text, edit = false
 CardComponent.propTypes = {
   title: PropTypes.string.isRequired,
   grade: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  credit: PropTypes.number,
   text: PropTypes.string,
-  edit: PropTypes.bool,
-  partial: PropTypes.array,
-  updateQualifications: PropTypes.func,
+  weight: PropTypes.number,
+  updateQualifications: PropTypes.func.isRequired,
   updateLock: PropTypes.func,
   canLock: PropTypes.bool,
-  parcelation: PropTypes.bool,
+  cardType: PropTypes.string,
 };
