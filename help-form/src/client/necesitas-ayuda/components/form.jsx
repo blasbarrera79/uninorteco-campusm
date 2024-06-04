@@ -23,7 +23,7 @@ const HelpdeskForm = () => {
     descripcion: '',
     ext: '',
     categorias: [],
-    categoriaPrincipal: 'Equipo de computo y telefonía', // Establecer la categoría por defecto aquí
+    categoriaPrincipal: 'Servicios generales', // Establecer la categoría por defecto aquí
     user: ''
   };
   const [formData, setFormData] = useState(initialFormData);

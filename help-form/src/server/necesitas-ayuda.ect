@@ -16,7 +16,7 @@
 {% set usuariouninorte = attrs.extraAttrs.usuariouninorte %}
 
 {% if aek.action == "get-roles" %}
-  {% set service = aek.create_service("https://intunqa.uninorte.edu.co/sba-roles/api/v1/roles/" ~ usuariouninorte) %}
+  {% set service = aek.create_service("https://intun.uninorte.edu.co/sba-roles/api/v1/roles/" ~ username) %}
   
   {{ service.set_method("GET") }}
   {{ aek.respond(service.json) }}
@@ -25,7 +25,6 @@
 {% if aek.action == "send-email" %}
   {% set email = aek.create_email() %}
   {# set to whichever email the client desires #}
-  {{ email.to("lgalviz@uninorte.edu.co") }}
   {{ email.to("cmartinez@uninorte.edu.co") }}
   {{ email.to("yonyh@uninorte.edu.co") }}
   {# the email can be sent from the client side, but the campusm_user_email utility below might be more convenient #}
