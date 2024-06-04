@@ -17,24 +17,26 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: 0,
   }
 }));
-
 const CheckboxList = ({ formData, categoriasOptions, handleCategoriaChange }) =>{
-
   const classes = useStyles();
+
+  // Verificar si categoriasOptions está definido y si la categoría principal seleccionada tiene opciones
+  const categoriaPrincipal = formData.categoriaPrincipal;
+  const categorias = categoriasOptions[categoriaPrincipal] || [];
 
   return (
     <List className={classes.root}>
-      {formData.categoriaPrincipal && categoriasOptions[formData.categoriaPrincipal].map((categoria) => (
+      {categorias.map((categoria) => (
         <ListItem className={classes.listItem} key={categoria}>
           <ListItemIcon>
-          <Checkbox
-            edge="start"
-            checked={formData.categorias.includes(categoria)}
-            tabIndex={-1}
-            disableRipple
-            inputProps={{ 'aria-labelledby': categoria }}
-            onChange={() => handleCategoriaChange(categoria)}
-          />
+            <Checkbox
+              edge="start"
+              checked={formData.categorias.includes(categoria)}
+              tabIndex={-1}
+              disableRipple
+              inputProps={{ 'aria-labelledby': categoria }}
+              onChange={() => handleCategoriaChange(categoria)}
+            />
           </ListItemIcon>
           <ListItemText primary={categoria} />
         </ListItem>
@@ -42,12 +44,6 @@ const CheckboxList = ({ formData, categoriasOptions, handleCategoriaChange }) =>
     </List>
   );
 }
-
-CheckboxList.propTypes = {
-  formData: PropTypes.object.isRequired,
-  categoriasOptions: PropTypes.object.isRequired,
-  handleCategoriaChange: PropTypes.func.isRequired,
-};
 
 
 export default CheckboxList;

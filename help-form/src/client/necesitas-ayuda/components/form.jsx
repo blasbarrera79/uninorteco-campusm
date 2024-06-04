@@ -12,8 +12,6 @@ import ButtonComponent from './ButtonComponent';
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
   },
 }));
 
@@ -25,7 +23,7 @@ const HelpdeskForm = () => {
     descripcion: '',
     ext: '',
     categorias: [],
-    categoriaPrincipal: '',
+    categoriaPrincipal: 'Equipo de computo y telefonía', // Establecer la categoría por defecto aquí
     user: ''
   };
   const [formData, setFormData] = useState(initialFormData);
@@ -137,4 +135,3 @@ const HelpdeskForm = () => {
 };
 
 export default HelpdeskForm;
-

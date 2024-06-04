@@ -5,19 +5,21 @@ import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(() => ({
   button: {
-    width: '100%',    
+    width: '100%',
+    color: '#FFFFFF', // Color blanco para el texto
+    fontSize: '1.2rem', // Tamaño de fuente más grande
+    textTransform: 'none', //
   },
 }));
 
-const ButtonComponent = ({ disabled}) => {
-
+const ButtonComponent = ({ disabled }) => {
   const classes = useStyles();
 
   return (
     <Button
       className={classes.button}
       variant="contained"
-      color="primary"
+      style={{ backgroundColor: '#6fa1d2' }} // Cambiar el color de fondo aquí
       type="submit"
       disabled={disabled}
     >
