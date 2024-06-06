@@ -55,9 +55,3 @@ export default function SelectComponent({ label, value, onChange, options }) {
   );
 }
 
-SelectComponent.propTypes = {
-  label: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  options: PropTypes.array.isRequired,
-};

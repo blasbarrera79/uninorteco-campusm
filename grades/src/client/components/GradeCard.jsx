@@ -26,20 +26,23 @@ const useStyles = makeStyles({
 const GradeCard = ({ gradeName, items }) => {
   const classes = useStyles();
   const [notaFinal, setNotaFinal] = useState(0);
-  console.log('GradeCard', items);
 
   useEffect(() => {
-    let finalGrade = 0;
-    items.forEach((item) => { 
-      const gradeNumber = parseFloat(item.value);
-      const parcialGrade = (item.peso / 100) * gradeNumber;
-      finalGrade += parcialGrade;
-    });
-    console.log('GradeCard2', finalGrade);
-    setNotaFinal(finalGrade.toFixed(1).toString());
+    const calculateFinalGrade = () => {
+      let finalGrade = items.reduce((acc, item) => {
+        const gradeNumber = parseFloat(item.value);
+        const parcialGrade = (item.peso / 100) * gradeNumber;
+        return acc + parcialGrade;
+      }, 0);
+
+      // Apply rounding logic
+      const roundedGrade = Math.round(finalGrade * 10) / 10;
+      setNotaFinal(roundedGrade.toFixed(1));
+    };
+
+    calculateFinalGrade();
   }, [items]);
-  
-  console.log('typeof notaFinal', typeof notaFinal);
+
   return (
     <Card className={classes.card}>
       <GradeHeader gradeName={gradeName} finalGrade={notaFinal} />
@@ -50,9 +53,6 @@ const GradeCard = ({ gradeName, items }) => {
   );
 };
 
-GradeCard.propTypes = {
-  gradeName: PropTypes.string.isRequired,
-  items: PropTypes.array.isRequired,
-};
+
 
 export default GradeCard;
