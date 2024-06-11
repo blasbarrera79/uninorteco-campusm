@@ -4,3 +4,5 @@ homepage:
     replace:
       - desc: Multiple Link
         tileComponent: MultipleLinkTile
+        tileWidth: 3
+        tileHeight: 2

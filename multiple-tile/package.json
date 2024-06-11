@@ -62,5 +62,9 @@
   },
   "resolution": {
     "@babel/core": "~7.20.0"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.12.4",
+    "git-cz": "^4.9.0"
   }
 }
