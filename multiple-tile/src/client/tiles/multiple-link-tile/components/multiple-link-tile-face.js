@@ -1,33 +1,14 @@
 import React from "react";
-import PropTypes from "prop-types";
-
-import {
-  TileFace,
-  // HBlock,
-  // VBlock,
-  // TextBox,
-  // TextLine,
-  // ImageBox,
-  // Badge,
-  // SvgBox,
-  // Layer,
-
-} from "@ombiel/cm-tile-sdk";
-
-export default function MultipleLinkTileFace({text,image,icon}) {
+import { TileFace } from "@ombiel/cm-tile-sdk";
+import ServicesList from "./multiple-link-tile";
+export default function MultipleLinkTileFace() {
 
   return (
-    <TileFace
-      text={text}
-      image={image}
-      icon={icon}
-    />
+    <TileFace>
+      <ServicesList />
+    </TileFace>
   );
 
 }
 
-MultipleLinkTileFace.propTypes = {
-  text: PropTypes.string,
-  image: PropTypes.string,
-  icon: PropTypes.string,
-};
+
