@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 20,
     boxShadow: 'none',
     marginBottom: theme.spacing(1),
-    minHeight: '80px', // Reduced height
+    minHeight: '80px',
   },
   gradeContainer: {
     display: 'flex',
@@ -30,25 +30,24 @@ const useStyles = makeStyles((theme) => ({
   },
   iconButton: {
     padding: 5,
-    color: '#000000', // black icon color
+    color: '#000000',
   },
   text: {
-    textAlign: 'left', // Align text to the left
-    color: '#000000', // White text color
+    textAlign: 'left',
+    color: '#000000',
   },
   blueCard: {
-    backgroundColor: '#87ceeb', // Light blue background
-    color: '#000000', // text color
+    backgroundColor: '#87ceeb',
+    color: '#000000',
   },
   greenCard: {
-    backgroundColor: '#32cd32', // Light green background
-    color: '#000000', // White text color
+    backgroundColor: '#32cd32',
+    color: '#000000',
   },
-  
   title: {
-    fontSize: '17px', // Set the font size to 17px
-    color: '#000000', // White text color
-    marginBottom: theme.spacing(1), // Adjust margin if necessary
+    fontSize: '17px',
+    color: '#000000',
+    marginBottom: theme.spacing(1),
   },
 }));
 
@@ -63,7 +62,7 @@ export default function CardComponent({ title, grade, weight, text, updateQualif
     if (typeof gradeContent === 'number') {
       setEditGrade(parseFloat(gradeContent).toFixed(1));
     } else {
-      setEditGrade(gradeContent.toString());
+      setEditGrade(gradeContent ? gradeContent.toString() : '-');
     }
   }, [grade]);
 
@@ -99,6 +98,11 @@ export default function CardComponent({ title, grade, weight, text, updateQualif
     updateLock(!isLocked);
   };
 
+  const displayGrade = () => {
+    const gradeValue = parseFloat(editGrade);
+    return isNaN(gradeValue) ? '-' : gradeValue.toFixed(1);
+  };
+
   if (!weight) return null;
 
   return (
@@ -108,12 +112,12 @@ export default function CardComponent({ title, grade, weight, text, updateQualif
           <Typography>
             {title}
           </Typography>
-          <Typography variant="body2" >{text}</Typography>
+          <Typography variant="body2">{text}</Typography>
         </Grid>
         <Grid item xs={6} container alignItems="center" justifyContent="flex-end">
           <Grid item>
-            <Typography variant="h6"  style={{ margin: '0 8px' }}>
-              {parseFloat(editGrade).toFixed(1)}
+            <Typography variant="h6" style={{ margin: '0 8px' }}>
+              {displayGrade()}
             </Typography>
           </Grid>
           <Grid item>
