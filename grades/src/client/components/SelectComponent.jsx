@@ -3,8 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import NativeSelect from "@material-ui/core/NativeSelect";
-import PropTypes from "prop-types";
-
 const useStyles = makeStyles(() => ({
   formControl: {
     minWidth: 120,
