@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
   },
   grade: {
     alignSelf: 'center',
-    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     color: '#000000', // black text color
@@ -31,18 +30,18 @@ const useStyles = makeStyles((theme) => ({
   },
   text: {
     maxWidth: '60%',
-    color: '#ffffff', // White text color
+    color: '#000000', // White text color
   },
   blueCard: {
-    backgroundColor: '#6FA1D2', // Light blue background
-    color: '#ffffff', // White text color
+    backgroundColor: '#87ceeb', // Light blue background
+    color: '#000000', // text color
   },
   greenCard: {
-    backgroundColor: '#e0f7fa', // Light green background
+    backgroundColor: '#32cd32', // Light green background
     color: '#000000', // White text color
   },
   whiteText: {
-    color: '#ffffff', // White text color
+    color: '#000000', // White text color
   },
 }));
 
@@ -112,7 +111,7 @@ export default function CardComponent({ title, grade, weight, text, updateQualif
           />
           {canLock && (
             <IconButton onClick={toggleLock}>
-              {isLocked ? <LockIcon style={{ color: '#ffffff' }} /> : <LockOpenIcon style={{ color: '#ffffff' }} />}
+              {isLocked ? <LockIcon style={{ color: '#000000' }} /> : <LockOpenIcon style={{ color: '#000000' }} />}
             </IconButton>
           )}
         </Grid>
@@ -134,5 +133,5 @@ CardComponent.propTypes = {
 };
 
 CardComponent.defaultProps = {
-  gradeInputWidth: '6em', // Default value for the width
+  gradeInputWidth: '2.5em', // Default value for the width
 };

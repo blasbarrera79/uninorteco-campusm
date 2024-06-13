@@ -37,10 +37,12 @@ const useStyles = makeStyles((theme) => ({
     textAlignLast: 'center',
   },
   blueCard: {
-    backgroundColor: '#7ec1ee', // Light blue background
+    backgroundColor: '#87ceeb', // Light blue background
+    color: '#000000', // text color
   },
   greenCard: {
-    backgroundColor: '#6FA1D2', // Light green background
+    backgroundColor: '#32cd32', // Light green background
+    color: '#000000', // White text color
   },
 }));
 
