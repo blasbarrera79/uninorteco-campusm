@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { HBlock, VBlock, TextBox, TileFace, SvgBox, useServerAction, LoadingSpinner} from "@ombiel/cm-tile-sdk";
-import { PieChart } from "react-minimal-pie-chart";
+import {
+  Box,
+  Typography,
+  Avatar,
+} from "@mui/material";
+import { PieChart } from 'react-minimal-pie-chart';
 import { FaCheckSquare } from "react-icons/fa";
 import { TiWarning } from "react-icons/ti";
+import { useServerAction, TileFace, LoadingSpinner } from "@ombiel/cm-tile-sdk";
 
 export default function MyTile() {
-  // Inicializamos los promedios y el estado de carga
   const [promedioAcumulado, setPromedioAcumulado] = useState(null);
   const [promedioSemestral, setPromedioSemestral] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Llamada al servidor para obtener los datos
   const [response] = useServerAction("notas", { method: "GET" });
 
   useEffect(() => {
@@ -21,7 +24,6 @@ export default function MyTile() {
     }
   }, [response]);
 
-  // Calculamos el estado del rendimiento académico
   const getEstado = (promedio) => {
     if (promedio < 3.25) return "Riesgo";
     if (promedio >= 3.25 && promedio < 3.96) return "Normal";
@@ -31,82 +33,93 @@ export default function MyTile() {
   const estadoAcumulado = promedioAcumulado !== null ? getEstado(promedioAcumulado) : "";
   const estadoSemestral = promedioSemestral !== null ? getEstado(promedioSemestral) : "";
 
-  // Configuramos los datos para los gráficos tipo donut
-  const getData = (promedio, estado) => [
-    { title: estado, value: promedio * 20, color: estado === "Riesgo" ? "#E38627" : "#4CAF50" },
-    { title: "Restante", value: (5 - promedio) * 20, color: estado === "Riesgo" ? "#C13C37" : "#2196F3" }
-  ];
-
-  const dataAcumulado = promedioAcumulado !== null ? getData(promedioAcumulado, estadoAcumulado) : [];
-  const dataSemestral = promedioSemestral !== null ? getData(promedioSemestral, estadoSemestral) : [];
-
-  // Determina el ícono y el color basado en el estado
-  const getIcon = (estado) => (estado === "Riesgo" ? <TiWarning /> : <FaCheckSquare />);
+  const getIcon = (estado) => (estado === "Riesgo" ? <TiWarning size={30} /> : <FaCheckSquare size={30} />);
   const getColor = (estado) => (estado === "Riesgo" ? "#F8ED0F" : "#0F46F8");
 
-  // Si está cargando, mostramos el componente de carga
   if (isLoading) {
     return (
-      <TileFace backgroundColor="#4BE9BC">
-        <VBlock>
-          <LoadingSpinner size={50} />
-        </VBlock>
+      <TileFace>
+        <Box display="flex" alignItems="center" justifyContent="center" height="100vh">
+          <LoadingSpinner />
+        </Box>
       </TileFace>
     );
   }
 
-  // Si los datos están cargados, mostramos la vista normal
+  const createData = (value, color) => [
+    { value, color },
+    { value: 5 - value, color: "#e0e0e0" }
+  ];
+
+  const dataAcumulado = createData(promedioAcumulado, "#8884d8");
+  const dataSemestral = createData(promedioSemestral, "#82ca9d");
+
+  const radius = 50; // Valor predeterminado para el radio
+
   return (
     <TileFace>
-      <VBlock>
-        <TextBox>Rendimiento Académico</TextBox>
-        <HBlock>
-          <TextBox>Promedio Acumulado</TextBox>
-          <TextBox>Promedio Semestral</TextBox>
-        </HBlock>
-        
-        <HBlock>
-          <VBlock>
+      <Box p={3} bgcolor="#f5f5f5">
+        <Typography variant="h5" gutterBottom align="center">
+          Rendimiento Académico
+        </Typography>
+        <Box display="flex" justifyContent="space-around" mt={2}>
+          <Box position="relative">
             <PieChart
               data={dataAcumulado}
-              startAngle={0}
-              lengthAngle={360}
+              startAngle={180}
+              lengthAngle={180}
               lineWidth={20}
-              label={() => `${promedioAcumulado}`}
-              labelStyle={{ fontSize: '20px', fontFamily: 'sans-serif' }}
-              labelPosition={0} // Position the label in the center
+              paddingAngle={5}
+              rounded
+              label={({ dataEntry }) => dataEntry.value === promedioAcumulado ? promedioAcumulado.toFixed(2) : ""}
+              labelStyle={(index) => ({
+                fill: index === 0 ? '#8884d8' : 'transparent',
+                fontSize: '8px',
+                fontFamily: 'sans-serif',
+              })}
+              radius={radius - 6}
+              labelPosition={0}
+              animate
             />
-          </VBlock>
+            <Box position="absolute" top="50%" left="60%" transform="translate(-50%, -50%)">
+              <Avatar sx={{ width: 35, height: 35, backgroundColor: getColor(estadoAcumulado) }}>
+                {getIcon(estadoAcumulado)}
+              </Avatar>
+            </Box>
+            <Box position="absolute" top="85%" left="20%" transform="translate(-50%, -50%)">
+              <Typography>Acumulado</Typography>
+            </Box>
+          </Box>
 
-          <VBlock>
+          <Box position="relative">
             <PieChart
               data={dataSemestral}
-              startAngle={0}
-              lengthAngle={360}
+              startAngle={180}
+              lengthAngle={180}
               lineWidth={20}
-              label={() => `${promedioSemestral}`}
-              labelStyle={{ fontSize: '20px', fontFamily: 'sans-serif' }}
-              labelPosition={0} // Position the label in the center
+              paddingAngle={5}
+              rounded
+              label={({ dataEntry }) => dataEntry.value === promedioSemestral ? promedioSemestral.toFixed(2) : ""}
+              labelStyle={(index) => ({
+                fill: index === 0 ? '#82ca9d' : 'transparent',
+                fontSize: '8px',
+                fontFamily: 'sans-serif',
+              })}
+              radius={radius - 6}
+              labelPosition={0}
+              animate
             />
-          </VBlock>
-        </HBlock>
-        
-        <HBlock>
-          <HBlock>
-            <SvgBox color={getColor(estadoAcumulado)} maxSize={25}>
-              {getIcon(estadoAcumulado)}
-            </SvgBox>
-            <TextBox>{estadoAcumulado}</TextBox>
-          </HBlock>
-          <HBlock>
-            <SvgBox color={getColor(estadoSemestral)} maxSize={25}>
-              {getIcon(estadoSemestral)}
-            </SvgBox>
-            <TextBox>{estadoSemestral}</TextBox>
-          </HBlock>
-        </HBlock>
-      </VBlock>
+            <Box position="absolute" top="50%" left="60%" transform="translate(-50%, -50%)">
+              <Avatar sx={{ width: 35, height: 35, backgroundColor: getColor(estadoSemestral) }}>
+                {getIcon(estadoSemestral)}
+              </Avatar>
+            </Box>
+            <Box position="absolute" top="85%" left="20%" transform="translate(-50%, -50%)">
+              <Typography>Semestral</Typography>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
     </TileFace>
   );
 }
-

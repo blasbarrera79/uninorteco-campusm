@@ -64,6 +64,8 @@
     "@babel/core": "~7.20.0"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@mui/material": "^5.15.20",
     "react-minimal-pie-chart": "^8.4.0"
   }
 }
