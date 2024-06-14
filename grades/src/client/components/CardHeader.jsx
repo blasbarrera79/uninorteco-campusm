@@ -46,9 +46,6 @@ const GradeHeader = ({ gradeName, finalGrade }) => {
   );
 };
 
-GradeHeader.propTypes = {
-  gradeName: PropTypes.string.isRequired,
-  finalGrade: PropTypes.string.isRequired,
-};
+
 
 export default GradeHeader;

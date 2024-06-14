@@ -41,8 +41,12 @@ const GradeTable = ({ items }) => {
         {items.length > 0 ? (
           items.map((item) => (
             <TableRow key={item.name} className={classes.tableRow}>
-              <TableCell className={classes.tableFontSize}>{item.name}</TableCell>
-              <TableCell className={classes.gradeCell}>{item.value}</TableCell>
+              <TableCell className={classes.tableFontSize}>
+                {`${item.name} - ${item.peso}%`}
+              </TableCell>
+              <TableCell className={classes.gradeCell}>
+                {item.value}
+              </TableCell>
             </TableRow>
           ))
         ) : (
@@ -57,8 +61,6 @@ const GradeTable = ({ items }) => {
   );
 };
 
-GradeTable.propTypes = {
-  items: PropTypes.array.isRequired,
-};
+
 
 export default GradeTable;
