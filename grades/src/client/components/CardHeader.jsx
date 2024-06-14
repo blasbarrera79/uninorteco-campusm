@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 const useStyles = makeStyles({
   CardHeader: {
-    backgroundColor: "#6FA1D2",
+    backgroundColor: "#1d1d1b",
     padding: "0",
   },
   table: {
