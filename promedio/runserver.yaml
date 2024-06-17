@@ -4,3 +4,5 @@ homepage:
     replace:
       - desc: Promedio
         tileComponent: PromedioTile
+        tileWidth: 3
+        tileHeight: 3
