@@ -1,6 +1,6 @@
 {
   "name": "@ombiel/bibliographic-services",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "repository": "-",
   "license": "UNLICENSED",
   "scripts": {
@@ -15,6 +15,7 @@
     "gen:screen": "cross-env NODE_OPTIONS=\"--openssl-legacy-provider\" aekdevserver gen:screen"
   },
   "dependencies": {
+    "@fontsource/quicksand": "^5.0.18",
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
     "@ombiel/aek-asset-store": "^0.0.8",
@@ -23,7 +24,8 @@
     "cz": "^1.8.2",
     "git": "^0.1.5",
     "react": "^16.8.6",
-    "react-dom": "^16.6.6"
+    "react-dom": "^16.6.6",
+    "react-transition-group": "^4.4.5"
   },
   "devDependencies": {
     "@ombiel/aek-devserver": ">=1.4.0-0 <1.5.0",
