@@ -65,6 +65,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
+    "@fontsource/quicksand": "^5.0.18",
     "@mui/material": "^5.15.20"
   }
 }
