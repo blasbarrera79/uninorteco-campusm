@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Quicksand, sans-serif',
   },
   header: {
-    backgroundColor: '#d10a11',
+    backgroundImage: 'linear-gradient(to right, black, #d10a11)',
     padding: '15px',
     borderRadius: '8px',
     boxShadow: '0px 4px 10px rgba(0,0,0,0.1)',
