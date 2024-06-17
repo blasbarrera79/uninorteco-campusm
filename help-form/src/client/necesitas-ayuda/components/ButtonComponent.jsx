@@ -19,7 +19,7 @@ const ButtonComponent = ({ disabled }) => {
     <Button
       className={classes.button}
       variant="contained"
-      style={{ backgroundColor: '#6fa1d2' }} // Cambiar el color de fondo aquí
+      style={{ backgroundColor: '#d10a11' }} // Cambiar el color de fondo aquí
       type="submit"
       disabled={disabled}
     >
