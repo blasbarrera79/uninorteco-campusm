@@ -1,3 +1,0 @@
-{% set service = aek.create_service("https://api-disponibilidad.web.app/promedio") %}
-{{ service.set_method("GET") }}
-{{ aek.respond(service.json) }}

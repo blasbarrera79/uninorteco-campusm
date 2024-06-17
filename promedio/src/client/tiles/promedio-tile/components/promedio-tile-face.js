@@ -37,7 +37,7 @@ export default function ServicesList() {
                 },
                 maxWidth: 180,
                 margin: 'auto',
-                textAlign: 'center', // Center align text
+                textAlign: 'left', // Center align text
               }}
             >
               <Avatar
@@ -46,7 +46,7 @@ export default function ServicesList() {
                 sx={{
                   width: 60,
                   height: 60,
-                  marginRight: 1, // Add margin between Avatar and text
+                  marginRight: 1,
                 }}
               />
               <Typography variant="subtitle1" fontWeight="bold" sx={{ fontSize: '0.7rem' }}>
