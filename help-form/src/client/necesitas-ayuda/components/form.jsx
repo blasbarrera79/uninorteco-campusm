@@ -12,6 +12,20 @@ import ButtonComponent from './ButtonComponent';
 
 const useStyles = makeStyles((theme) => ({
   container: {
+    backgroundColor: '#ffffff',
+    padding: theme.spacing(3),
+    borderRadius: '8px',
+    color: '#FFFFFF',
+  },
+  header: {
+    color: '#d10a11',
+    fontSize: '1.5rem',
+    fontWeight: 'bold',
+    marginBottom: theme.spacing(2),
+    fontFamily: 'Quicksand, sans-serif',
+  },
+  section: {
+    marginBottom: theme.spacing(1), // Reducido el espaciado vertical entre secciones
   },
 }));
 
@@ -99,11 +113,16 @@ const HelpdeskForm = () => {
 
   return (
     <form id="formHelpdesk" onSubmit={handleSubmit} encType="multipart/form-data">
-      <Container maxWidth="lg" className={classes.container}>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
+      <Container maxWidth="md" className={classes.container}>
+        <h1 className={classes.header}>Completa la siguiente información:</h1>
+        <Grid container spacing={1}> {/* Reducido el espaciado horizontal */}
+          <Grid item xs={12} className={classes.section}>
             <SelectComponent options={Object.keys(categoriasOptions)} value={formData.categoriaPrincipal} handleChange={handleCategoriaPrincipalChange} />
+          </Grid>
+          <Grid item xs={12} className={classes.section}>
             <CheckboxList formData={formData} categoriasOptions={categoriasOptions} handleCategoriaChange={handleCategoriaChange} />
+          </Grid>
+          <Grid item xs={12} className={classes.section}>
             <InputComponent 
               label="Ubicación" 
               name="ubicacion"
@@ -111,6 +130,8 @@ const HelpdeskForm = () => {
               onChange={handleInputChange}
               placeholder="Bloque-piso-salón/oficina" 
             />
+          </Grid>
+          <Grid item xs={12} className={classes.section}>
             <TextAreaComponent
               label="Descripción"
               name="descripcion"
@@ -118,6 +139,8 @@ const HelpdeskForm = () => {
               onChange={handleInputChange}
               placeholder="Descripción del problema"
             />
+          </Grid>
+          <Grid item xs={12} className={classes.section}>
             <InputComponent
               label="Extensión o Teléfono"
               name="ext"
@@ -126,7 +149,9 @@ const HelpdeskForm = () => {
               type="number"
               placeholder="Extensión o Teléfono"
             />
-            <ButtonComponent text={isSending ? "Enviando..." : "Enviar"} disabled={isSending} />
+          </Grid>
+          <Grid item xs={12}>
+            <ButtonComponent disabled={isSending} />
           </Grid>
         </Grid>
       </Container>
@@ -135,3 +160,7 @@ const HelpdeskForm = () => {
 };
 
 export default HelpdeskForm;
+
+
+
+

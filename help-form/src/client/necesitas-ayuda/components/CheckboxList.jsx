@@ -11,16 +11,34 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     backgroundColor: theme.palette.background.paper,
+    borderRadius: '4px',
+    padding: theme.spacing(1),
+    borderColor: '#1d1d1b',
+    borderStyle: 'solid',
+    borderWidth: '1px',
+    marginBottom: theme.spacing(2),
   },
-  listItem:{
-    paddingTop: 0,
-    paddingBottom: 0,
-  }
+  listItem: {
+    paddingTop: theme.spacing(0.5),
+    paddingBottom: theme.spacing(0.5),
+    fontFamily: 'Quicksand, sans-serif',
+  },
+  checkbox: {
+    color: '#d10a11',
+    '&.Mui-checked': {
+      color: '#d10a11',
+    },
+  },
+  text: {
+    fontFamily: 'Quicksand, sans-serif',
+    fontWeight: 'bold',
+    color: '#1d1d1b',
+  },
 }));
-const CheckboxList = ({ formData, categoriasOptions, handleCategoriaChange }) =>{
+
+const CheckboxList = ({ formData, categoriasOptions, handleCategoriaChange }) => {
   const classes = useStyles();
 
-  // Verificar si categoriasOptions está definido y si la categoría principal seleccionada tiene opciones
   const categoriaPrincipal = formData.categoriaPrincipal;
   const categorias = categoriasOptions[categoriaPrincipal] || [];
 
@@ -30,6 +48,7 @@ const CheckboxList = ({ formData, categoriasOptions, handleCategoriaChange }) =>
         <ListItem className={classes.listItem} key={categoria}>
           <ListItemIcon>
             <Checkbox
+              className={classes.checkbox}
               edge="start"
               checked={formData.categorias.includes(categoria)}
               tabIndex={-1}
@@ -38,12 +57,20 @@ const CheckboxList = ({ formData, categoriasOptions, handleCategoriaChange }) =>
               onChange={() => handleCategoriaChange(categoria)}
             />
           </ListItemIcon>
-          <ListItemText primary={categoria} />
+          <ListItemText primary={categoria} classes={{ primary: classes.text }} />
         </ListItem>
       ))}
     </List>
   );
-}
+};
 
+CheckboxList.propTypes = {
+  formData: PropTypes.object.isRequired,
+  categoriasOptions: PropTypes.object.isRequired,
+  handleCategoriaChange: PropTypes.func.isRequired,
+};
 
 export default CheckboxList;
+
+
+

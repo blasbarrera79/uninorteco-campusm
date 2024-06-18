@@ -3,12 +3,24 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   button: {
     width: '100%',
-    color: '#FFFFFF', // Color blanco para el texto
-    fontSize: '1.2rem', // Tamaño de fuente más grande
-    textTransform: 'none', //
+    color: '#FFFFFF',
+    fontSize: '1.2rem',
+    textTransform: 'none',
+    backgroundColor: '#d10a11',
+    borderRadius: '4px',
+    padding: theme.spacing(1.5),
+    fontFamily: 'Quicksand, sans-serif',
+    fontWeight: 'bold',
+    '&:hover': {
+      backgroundColor: '#b0090f',
+    },
+    '&:disabled': {
+      backgroundColor: '#d10a11',
+      opacity: 0.7,
+    },
   },
 }));
 
@@ -19,7 +31,6 @@ const ButtonComponent = ({ disabled }) => {
     <Button
       className={classes.button}
       variant="contained"
-      style={{ backgroundColor: '#d10a11' }} // Cambiar el color de fondo aquí
       type="submit"
       disabled={disabled}
     >
@@ -33,3 +44,5 @@ ButtonComponent.propTypes = {
 };
 
 export default ButtonComponent;
+
+
