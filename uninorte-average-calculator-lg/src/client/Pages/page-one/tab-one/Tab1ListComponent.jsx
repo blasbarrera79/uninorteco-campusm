@@ -21,12 +21,12 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Quicksand', // Font family
   },
   container: {
-    paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(2),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
   },
   divider: {
     backgroundColor: '#d10a11', // Red color for the divider
-    margin: theme.spacing(3, 0), // Margin for the divider
+    margin: theme.spacing(2, 0), // Margin for the divider
   },
 }));
 

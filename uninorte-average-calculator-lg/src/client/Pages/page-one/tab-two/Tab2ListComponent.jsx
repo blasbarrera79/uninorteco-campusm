@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Container } from '@ombiel/aek-lib';
-import { makeStyles } from '@material-ui/core';
+import { Container } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
+import Typography from '@material-ui/core/Typography';
 import CardComponent from './CardComponent';
 import { calculateSemesterAverage, calculateNeededGrades } from '../../../utils/semester-grades';
 
@@ -14,19 +15,27 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     width: '100%',
-    padding: theme.spacing(1),
-    backgroundColor: '#444444', // Dark grey background for the main container
-    fontFamily: 'Quicksand, sans-serif', // Apply Quicksand font
+    padding: theme.spacing(2),
+    backgroundColor: '#1d1d1b',
+    fontFamily: 'Quicksand, sans-serif',
+    color: '#ffffff',
+    borderRadius: 10,
+    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
   },
-  container: {
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
+  description: {
+    padding: theme.spacing(1),
+    color: '#ffffff',
+    textAlign: 'left',
+    fontWeight: 'bold',
+  },
+  divider: {
+    backgroundColor: '#ffffff',
+    margin: `${theme.spacing(2)}px 0`,
   },
 }));
 
-function Tab2ListComponent(props) {
+function Tab2ListComponent({ materias }) {
   const classes = useStyles();
-  const { materias } = props;
 
   const [currentPSA, setCurrentPSA] = useState(0);
   const [gradesWithQualifications, setGradesWithQualifications] = useState([]);
@@ -43,24 +52,20 @@ function Tab2ListComponent(props) {
     setCurrentPSA(calculateSemesterAverage(initialGrades));
   }, [materias]);
 
-  const filteredGrades = gradesWithQualifications.filter(item => item.CREDITOS);
-
   const updateQualifications = (targetGrade, newGrade) => {
     setGradesWithQualifications((prevGrades) => {
       const updatedGrades = prevGrades.map(materia => {
         if (materia.SSBSECT_CRSE_TITLE === targetGrade.SSBSECT_CRSE_TITLE) {
-          // Comprobamos si el nuevo valor es numérico
           const parsedGrade = parseFloat(newGrade);
           if (isNaN(parsedGrade)) {
             setErrorMessage('Invalid grade input. Please enter a valid number.');
             setOpenSnackbar(true);
-            return materia; // Devolvemos el materia sin cambios
+            return materia;
           }
-          // Validamos que el nuevo valor esté dentro del rango permitido
           if (parsedGrade < 0 || parsedGrade > 100) {
             setErrorMessage('Grade must be between 0 and 100.');
             setOpenSnackbar(true);
-            return materia; // Devolvemos el materia sin cambios
+            return materia;
           }
           return {
             ...materia,
@@ -83,18 +88,18 @@ function Tab2ListComponent(props) {
       return subject;
     });
     setGradesWithQualifications(updatedGrades);
-  }
+  };
 
   const updateAverage = (newGrade) => {
     try {
       const updatedGrades = calculateNeededGrades(gradesWithQualifications, newGrade);
       setGradesWithQualifications(updatedGrades);
-      setCurrentPSA(newGrade); // Asignar el promedio deseado temporalmente para calcular las calificaciones necesarias
+      setCurrentPSA(newGrade);
     } catch (error) {
       setErrorMessage(error.message);
       setOpenSnackbar(true); 
     }
-  }
+  };
 
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false);
@@ -102,21 +107,27 @@ function Tab2ListComponent(props) {
 
   return (
     <Container className={classes.root}>
-      {filteredGrades.map((item) => (
+      <Typography className={classes.description}>
+        PARA DEJAR UNA NOTA FIJA, DEBE SELECCIONAR EL CHECKBOX CORRESPONDIENTE.
+      </Typography>
+      {gradesWithQualifications.map((item) => (
         <CardComponent
           key={item.SSBSECT_CRSE_TITLE}
           title={item.SSBSECT_CRSE_TITLE}
           credit={item.SFRSTCR_CREDIT_HR}
           grade={typeof item.NOTAA === 'number' ? parseFloat(item.NOTAA).toFixed(1) : item.NOTAA}
           partial={item.items}
-          updateLock={(lock) => handleIsLocked(item, lock)}
+          updateLock={() => handleIsLocked(item)}
           edit
           updateQualifications={(newGrade) => updateQualifications(item, newGrade)}
           cardType="blue"
           weight={item.SFRSTCR_CREDIT_HR}
         />
       ))}
-      <Divider />
+      <Divider className={classes.divider} />
+      <Typography className={classes.description}>
+        ESCRIBA AQUÍ EL PROMEDIO DEL SEMESTRE DESEADO.
+      </Typography>
       <CardComponent
         weight={1}
         cardType="green"
@@ -142,6 +153,13 @@ Tab2ListComponent.propTypes = {
 };
 
 export default Tab2ListComponent;
+
+
+
+
+
+
+
 
 
 

@@ -7,9 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import LockIcon from '@material-ui/icons/Lock';
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import { validateGrade } from '../../../utils/semester-grades';
 import { validateGradeType } from '../../../utils/validations';
 
 const useStyles = makeStyles((theme) => ({
@@ -18,15 +15,16 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
-    borderRadius: 20,
-    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', // Light shadow for better visual appearance
+    borderRadius: 10,
+    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
     marginBottom: theme.spacing(3),
-    border: `3px solid #1d1d1b`, // Black border
-    backgroundColor: '#ffffff', // White background for the card
-    display: 'flex', 
-    alignItems: 'center', // Center vertically
-    textAlign: 'left', // Align text to the left
-    fontFamily: 'Quicksand, sans-serif', // Apply Quicksand font
+    border: `1px solid #ddd`,
+    backgroundColor: '#ffffff',
+    display: 'flex',
+    alignItems: 'center',
+    textAlign: 'left',
+    fontFamily: 'Quicksand, sans-serif',
+    color: '#1d1d1b',
   },
   gradeContainer: {
     display: 'flex',
@@ -36,123 +34,89 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     marginRight: theme.spacing(1),
     fontWeight: '700',
+    fontSize: '1.2rem',
+    width: '50px',
+    border: '1px solid #ddd',
+    borderRadius: 5,
+    padding: '5px',
+    backgroundColor: '#f5f5f5',
   },
   iconButton: {
     padding: 5,
-    color: '#000000',
+    color: '#1d1d1b',
   },
   text: {
-    textAlign: 'left', // Align text to the left
-    color: '#000000',
+    textAlign: 'left',
+    color: '#1d1d1b',
     fontWeight: '700',
   },
   blueCard: {
-    backgroundColor: '#ffffff', // White background for blue cards
-    border: `3px solid #1d1d1b`, // Black border for blue cards
-    color: '#000000',
+    border: `1px solid #ddd`,
   },
   greenCard: {
-    backgroundColor: '#ffffff', // White background for green cards
-    border: '3px solid', // Border for green cards
-    borderImage: 'linear-gradient(to right, #1d1d1b, #d10a11) 1', // Gradient border
-    color: '#000000',
-    borderRadius: 20, // Rounded corners for green cards
+    border: '1px solid #4caf50',
   },
   title: {
-    fontSize: '17px',
-    color: '#000000',
-    marginBottom: theme.spacing(1),
+    fontSize: '1rem',
+    color: '#d10a11',
     fontWeight: '700',
-    textAlign: 'left', // Align text to the left
+    textAlign: 'left',
   },
 }));
 
-export default function CardComponent({ title, grade, weight, text, updateQualifications, updateLock, canLock = true, cardType }) {
+function CardComponent({ title, grade, weight, text, updateQualifications, updateLock, canLock = true, cardType }) {
   const classes = useStyles();
-  const [editGrade, setEditGrade] = useState('');
-  const [previousGrade, setPreviousGrade] = useState(grade);
+  const [currentGrade, setCurrentGrade] = useState(grade);
   const [isLocked, setIsLocked] = useState(false);
 
   useEffect(() => {
-    const gradeContent = validateGradeType(grade);
-    if (typeof gradeContent === 'number') {
-      setEditGrade(parseFloat(gradeContent).toFixed(1));
-    } else {
-      setEditGrade(gradeContent ? gradeContent.toString() : '-');
-    }
+    setCurrentGrade(grade);
   }, [grade]);
 
-  const handleGradeChange = (newValue) => {
-    if (!isLocked) {
-      const validatedGrade = validateGrade(newValue);
-
-      if (validatedGrade !== null) {
-        setEditGrade(newValue);
-        updateQualifications(parseFloat(newValue));
-        if (newValue !== previousGrade.toString()) {
-          setPreviousGrade(newValue);
-        }
-      } else if (newValue === "") {
-        setEditGrade("0");
-        updateQualifications(0);
-      }
+  const handleChange = (event) => {
+    const newGrade = event.target.value;
+    if (validateGradeType(newGrade)) {
+      setCurrentGrade(newGrade);
+      updateQualifications(newGrade);
     }
   };
 
-  const increaseGrade = () => {
-    const newValue = parseFloat(editGrade) + 0.1;
-    handleGradeChange(newValue.toFixed(1));
-  };
-
-  const decreaseGrade = () => {
-    const newValue = parseFloat(editGrade) - 0.1;
-    handleGradeChange(newValue.toFixed(1));
-  };
-
-  const toggleLock = () => {
+  const handleLock = () => {
     setIsLocked(!isLocked);
-    updateLock(!isLocked);
+    updateLock();
   };
-
-  const displayGrade = () => {
-    const gradeValue = parseFloat(editGrade);
-    return isNaN(gradeValue) ? '-' : gradeValue.toFixed(1);
-  };
-
-  if (!weight) return null;
 
   return (
-    <Paper className={`${classes.paper} ${cardType === 'blue' ? classes.blueCard : cardType === 'green' ? classes.greenCard : ''}`}>
-      <Grid container spacing={2} alignItems="center">
-        <Grid item xs={6}>
+    <Paper className={`${classes.paper} ${cardType === 'blue' ? classes.blueCard : classes.greenCard}`}>
+      <Grid container spacing={2} alignItems="center" justifyContent="space-between">
+        <Grid item xs={12} sm={6} className={classes.text}>
           <Typography className={classes.title}>
-            {title}
+            {title} ({weight} Créditos)
           </Typography>
-          <Typography variant="body2" className={classes.text}>{text}</Typography>
-        </Grid>
-        <Grid item xs={6} container alignItems="center" justifyContent="flex-end">
-          <Grid item>
-            <Typography variant="h6" style={{ margin: '0 8px', fontWeight: '700', textAlign: 'center' }}>
-              {displayGrade()}
+          {text && (
+            <Typography variant="body2" className={classes.text}>
+              {text}
             </Typography>
-          </Grid>
-          <Grid item>
-            <Grid container direction="column" alignItems="center">
-              <IconButton className={classes.iconButton} onClick={increaseGrade} disabled={isLocked}>
-                <ArrowDropUpIcon style={{ color: '#000000' }} />
-              </IconButton>
-              <IconButton className={classes.iconButton} onClick={decreaseGrade} disabled={isLocked}>
-                <ArrowDropDownIcon style={{ color: '#000000' }} />
-              </IconButton>
-            </Grid>
-          </Grid>
-          <Grid item>
-            {canLock && (
-              <IconButton className={classes.iconButton} onClick={toggleLock}>
-                {isLocked ? <LockIcon style={{ color: '#000000' }} /> : <LockOpenIcon style={{ color: '#000000' }} />}
-              </IconButton>
-            )}
-          </Grid>
+          )}
+        </Grid>
+        <Grid item xs={12} sm={6} className={classes.gradeContainer}>
+          <input
+            className={classes.gradeInput}
+            type="text"
+            value={currentGrade}
+            onChange={handleChange}
+            readOnly={isLocked}
+          />
+          {canLock && (
+            <IconButton className={classes.iconButton} onClick={handleLock}>
+              {isLocked ? <LockIcon /> : <LockOpenIcon />}
+            </IconButton>
+          )}
+          {!canLock && (
+            <Typography className={classes.title}>
+              (Desbloqueado)
+            </Typography>
+          )}
         </Grid>
       </Grid>
     </Paper>
@@ -162,13 +126,29 @@ export default function CardComponent({ title, grade, weight, text, updateQualif
 CardComponent.propTypes = {
   title: PropTypes.string.isRequired,
   grade: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  weight: PropTypes.number.isRequired,
   text: PropTypes.string,
-  weight: PropTypes.number,
   updateQualifications: PropTypes.func.isRequired,
-  updateLock: PropTypes.func,
+  updateLock: PropTypes.func.isRequired,
   canLock: PropTypes.bool,
-  cardType: PropTypes.string,
+  cardType: PropTypes.oneOf(['blue', 'green']),
 };
+
+CardComponent.defaultProps = {
+  text: '',
+  canLock: true,
+  cardType: 'blue',
+};
+
+export default CardComponent;
+
+
+
+
+
+
+
+
 
 
 
