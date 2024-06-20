@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Grid } from '@mui/material';
-import { TileFace } from '@ombiel/cm-tile-sdk';
 const services = [
   { id: 1, name: 'Mis Notas', image: 'https://portal-na.campusm.exlibrisgroup.com/assets/UniversidaddelNorte/UniversidaddelNorte/icons-rounded/mis-notas-rounded.png', url: 'campusm://loadaek?toolbar=AEK1000030212' },
   { id: 2, name: 'Evaluación Docente', image: 'https://portal-na.campusm.exlibrisgroup.com/assets/UniversidaddelNorte/UniversidaddelNorte/icons-rounded/evaluacion-docente-rounded.png', url: 'campusm://openURL?url=https://pomelo.uninorte.edu.co/evaluaciondoc/index.zul' },
@@ -16,43 +15,41 @@ const services = [
 
 export default function ServicesList() {
   return (
-    <TileFace>
-      <Box>
-        <Grid container justifyContent="center">
-          {services.map((service) => (
-            <Grid item key={service.id} xs={6} md={6}>
+    <Box>
+      <Grid container justifyContent="center">
+        {services.map((service) => (
+          <Grid item key={service.id} xs={6} md={6}>
+            <Box
+              component="a"
+              href={service.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              display="flex"
+              justifyContent="center"
+              textDecoration="none"
+              color="inherit"
+              sx={{
+                transition: 'background-color 0.3s ease',
+                '&:hover': {
+                  backgroundColor: '#e0e0e0',
+                },
+                margin: 'auto',
+                textAlign: 'center', // Center align text
+              }}
+            >
               <Box
-                component="a"
-                href={service.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                display="flex"
-                justifyContent="center"
-                textDecoration="none"
-                color="inherit"
+                component="img"
+                alt={service.name}
+                src={service.image}
                 sx={{
-                  transition: 'background-color 0.3s ease',
-                  '&:hover': {
-                    backgroundColor: '#e0e0e0',
-                  },
-                  margin: 'auto',
-                  textAlign: 'center', // Center align text
+                  width: '100%',
+                  height: 'auto',
                 }}
-              >
-                <Box
-                  component="img"
-                  alt={service.name}
-                  src={service.image}
-                  sx={{
-                    width: '100%',
-                    height: 'auto',
-                  }}
-                />
-              </Box>
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
-    </TileFace>
+              />
+            </Box>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   );
 }
