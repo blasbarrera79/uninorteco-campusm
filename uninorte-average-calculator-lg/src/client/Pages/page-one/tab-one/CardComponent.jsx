@@ -9,10 +9,7 @@ import { validateGradeType } from '../../../utils/validations';
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
-    '@font-face': {
-      fontFamily: 'Quicksand',
-      src: `url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap') format('woff2')`,
-    },
+    '@import': "url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap')",
   },
   paper: {
     padding: theme.spacing(2),
