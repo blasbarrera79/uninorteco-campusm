@@ -12,16 +12,18 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     padding: theme.spacing(1),
+    fontFamily: 'Quicksand, sans-serif',
+    backgroundColor: '#444444', // Light gray background
+    color: '#1d1d1b', // Dark gray text color
   },
-  card: {
-    width: '100%',
+  title: {
+    textAlign: 'center',
+    marginBottom: theme.spacing(2),
+    color: '#d10a11', // Red text color
   },
   container: {
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
-  },
-  title: {
-    textAlign: 'center',
   },
 }));
 
@@ -132,3 +134,4 @@ function PartialPageComponent() {
 PartialPageComponent.propTypes = {};
 
 export default PartialPageComponent;
+

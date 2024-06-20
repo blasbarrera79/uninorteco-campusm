@@ -17,31 +17,36 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 20,
     boxShadow: 'none',
     marginBottom: theme.spacing(1),
+    fontFamily: 'Quicksand, sans-serif',
+    backgroundColor: '#f2f2f2', // Light gray background
+    color: '#1d1d1b', // Dark gray text color
   },
   grade: {
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    color: '#000000', // black text color
   },
   gradeInput: {
-    textAlignLast: 'center',
-    color: '#000000', // black text color
+    textAlign: 'center',
+    color: '#d10a11', // Dark gray text color
   },
   text: {
     maxWidth: '60%',
-    color: '#000000', // White text color
+    color: '#1d1d1b', // Dark gray text color
   },
   blueCard: {
-    backgroundColor: '#87ceeb', // Light blue background
-    color: '#000000', // text color
+    borderRadius: 20,
+    borderColor: '#1d1d1b',
+    border: '3px solid #ddd',
+    backgroundColor: '#ffffff', // Light blue background
+    color: '#1d1d1b', // Dark gray text color
   },
   greenCard: {
-    backgroundColor: '#32cd32', // Light green background
-    color: '#000000', // White text color
-  },
-  whiteText: {
-    color: '#000000', // White text color
+    borderRadius: 20,
+    borderColor: '#1d1d1b',
+    border: '3px solid #ddd',
+    backgroundColor: '#ffffff', // Light green background
+    color: '#1d1d1b', // Dark gray text color
   },
 }));
 
@@ -53,7 +58,7 @@ export default function CardComponent({ title, grade, weight, text, updateQualif
 
   useEffect(() => {
     const gradeContent = validateGradeType(grade);
-    setEditGrade(parseFloat(gradeContent).toFixed(1)); // Convertir el grade a string y redondear a un decimal al iniciar
+    setEditGrade(parseFloat(gradeContent).toFixed(1));
   }, [grade]);
 
   const handleGradeChange = (event) => {
@@ -62,14 +67,14 @@ export default function CardComponent({ title, grade, weight, text, updateQualif
       const validatedGrade = validateGrade(newValue);
 
       if (validatedGrade !== null) {
-        setEditGrade(parseFloat(newValue).toFixed(1)); // Convertir el newValue a string y redondear a un decimal
+        setEditGrade(parseFloat(newValue).toFixed(1));
         updateQualifications(parseFloat(newValue));
         if (newValue !== previousGrade.toString()) {
           setPreviousGrade(newValue);
         }
       } else if (newValue === "") {
-        setEditGrade(0);
-        updateQualifications(0);
+        setEditGrade(''); // Clear input if empty string
+        updateQualifications(0); // Update qualifications with 0 if empty string
       }
     }
   };
@@ -84,18 +89,22 @@ export default function CardComponent({ title, grade, weight, text, updateQualif
       <Grid item xs={12} sm container>
         <Grid item xs container direction="column" spacing={1}>
           <Grid item xs>
-            <Typography gutterBottom variant="h6">
+            <Typography gutterBottom variant="h6" className={classes.grade}>
               {title}
             </Typography>
             {weight && (
               <Grid item>
-                <Typography variant="body2" >Porcentaje: {weight} %</Typography>
+                <Typography variant="body2" className={classes.text}>
+                  Porcentaje: {weight} %
+                </Typography>
               </Grid>
             )}
           </Grid>
           {text && (
             <Grid item>
-              <Typography variant="body2" >{text}</Typography>
+              <Typography variant="body2" className={classes.text}>
+                {text}
+              </Typography>
             </Grid>
           )}
         </Grid>
@@ -107,11 +116,18 @@ export default function CardComponent({ title, grade, weight, text, updateQualif
             value={editGrade}
             onChange={handleGradeChange}
             disabled={isLocked}
-            inputProps={{ style: { color: '#000000' } }} // Black text color in TextField
+            InputProps={{
+              style: { textAlign: 'center', color: '#1d1d1b' }, // Dark gray text color
+              inputProps: { min: 0, max: 100 },
+            }}
           />
           {canLock && (
             <IconButton onClick={toggleLock}>
-              {isLocked ? <LockIcon style={{ color: '#000000' }} /> : <LockOpenIcon style={{ color: '#000000' }} />}
+              {isLocked ? (
+                <LockIcon style={{ color: '#1d1d1b' }} />
+              ) : (
+                <LockOpenIcon style={{ color: '#1d1d1b' }} />
+              )}
             </IconButton>
           )}
         </Grid>
@@ -129,9 +145,12 @@ CardComponent.propTypes = {
   updateLock: PropTypes.func,
   canLock: PropTypes.bool,
   cardType: PropTypes.string,
-  gradeInputWidth: PropTypes.string, // Add this prop type
+  gradeInputWidth: PropTypes.string,
 };
 
 CardComponent.defaultProps = {
-  gradeInputWidth: '2.5em', // Default value for the width
+  gradeInputWidth: '2.5em',
 };
+
+
+
