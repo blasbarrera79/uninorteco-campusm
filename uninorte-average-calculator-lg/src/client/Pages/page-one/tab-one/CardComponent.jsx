@@ -8,23 +8,34 @@ import { useNavigate } from 'react-router-dom';
 import { validateGradeType } from '../../../utils/validations';
 
 const useStyles = makeStyles((theme) => ({
+  '@global': {
+    '@font-face': {
+      fontFamily: 'Quicksand',
+      src: `url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap') format('woff2')`,
+    },
+  },
   paper: {
-    padding: 0,
+    padding: theme.spacing(2),
     borderRadius: 12,
-    boxShadow: 'none',
-    marginBottom: theme.spacing(1),
-    borderRadius: 12, // Rounded border
+    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', // Light shadow for better visual appearance
+    marginBottom: theme.spacing(3),
+    border: `1px solid ${theme.palette.divider}`, // Border for the paper
   },
   header: {
     padding: theme.spacing(2),
-    color: '#000000', // Black text color
+    backgroundColor: '#444444', // Dark grey background color for the header
+    color: '#ffffff', // White text color for the header
     borderRadius: '12px 12px 0 0', // Rounded top corners
+    fontFamily: 'Quicksand', // Font family
+    fontWeight: '700', // Bold font
   },
   content: {
     padding: theme.spacing(2),
-    backgroundColor: '#f0f0f0', // Light grey background for the content
-    color: '#000000', // Black text color for the content
+    backgroundColor: '#f7f7f7', // Light grey background for the content
+    color: '#1d1d1b', // Black text color for the content
     borderRadius: '0 0 12px 12px', // Rounded bottom corners
+    fontFamily: 'Quicksand', // Font family
+    fontWeight: '700', // Bold font
   },
   grade: {
     alignSelf: 'center',
@@ -32,17 +43,22 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    color: '#1d1d1b', // Black text color for the grade
+    fontFamily: 'Quicksand', // Font family
+    fontWeight: '700', // Bold font
   },
   gradeInput: {
-    textAlignLast: 'center',
+    textAlign: 'center',
+    fontFamily: 'Quicksand', // Font family
+    fontWeight: '700', // Bold font
   },
-  blueCard: {
-    backgroundColor: '#87ceeb', // Light blue background
-    color: '#000000', // text color
+  defaultCard: {
+    backgroundColor: '#ffffff', // White background for default cards
+    border: '1px solid #cccccc', // Light grey border
   },
-  greenCard: {
-    backgroundColor: '#32cd32', // Light green background
-    color: '#000000', // White text color
+  highlightCard: {
+    background: 'linear-gradient(to right, #1d1d1b, #d10a11)', // Gradient background for highlight cards
+    color: '#ffffff', // White text color
   },
 }));
 
@@ -64,30 +80,28 @@ export default function CardComponent({ title, grade, credit, text, partial = [{
   }
 
   return (
-    <Paper className={`${classes.paper} ${cardType === 'blue' ? classes.blueCard : cardType === 'green' ? classes.greenCard : ''}`}>
-      <div className={`${classes.header} ${cardType === 'blue' ? classes.blueCard : cardType === 'green' ? classes.greenCard : ''}`}>
+    <Paper className={`${classes.paper} ${cardType === 'highlight' ? classes.highlightCard : classes.defaultCard}`}>
+      <div className={`${classes.header}`}>
         <Typography gutterBottom variant="h6">
           {title}
         </Typography>
       </div>
       <div className={classes.content}>
         <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={1}>
+          <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
               {credit > 0 && (
-                <Grid item>
-                  <Typography variant="body2">Creditos: {credit}</Typography>
-                </Grid>
+                <Typography variant="body2">Créditos: {credit}</Typography>
               )}
             </Grid>
             {parcelation && (
               <Grid item>
                 <Typography
                   variant="body2"
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: 'pointer', color: '#d10a11', fontWeight: '700' }} // Red color for the text
                   onClick={handleParcelacionClick}
                 >
-                  Ver parcelacion
+                  Ver parcelación
                 </Typography>
               </Grid>
             )}
@@ -115,5 +129,7 @@ CardComponent.propTypes = {
   text: PropTypes.string,
   partial: PropTypes.array,
   parcelation: PropTypes.bool,
-  cardType: PropTypes.string, // new prop
+  cardType: PropTypes.string,
 };
+
+

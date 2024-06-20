@@ -7,13 +7,26 @@ import CardComponent from './CardComponent';
 import { calculateSemesterCredits, semesterAverage } from '../../../utils/validations';
 
 const useStyles = makeStyles((theme) => ({
+  '@global': {
+    '@font-face': {
+      fontFamily: 'Quicksand',
+      src: `url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap') format('woff2')`,
+    },
+  },
   root: {
     width: '100%',
-    padding: theme.spacing(1),
+    padding: theme.spacing(2),
+    backgroundColor: '#1d1d1b', // Background color for the container
+    color: '#ffffff', // Text color for the container
+    fontFamily: 'Quicksand', // Font family
   },
   container: {
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+  },
+  divider: {
+    backgroundColor: '#d10a11', // Red color for the divider
+    margin: theme.spacing(3, 0), // Margin for the divider
   },
 }));
 
@@ -30,20 +43,20 @@ function Tab1ListComponent(props) {
 
   return (
     <Container className={classes.root}>
-      {materias.length > 0 && materias.map((item, index) => (
+      {materias.map((item, index) => (
         <CardComponent
-          key={item.SSBSECT_CRSE_TITLE}
+          key={index}
           title={item.SSBSECT_CRSE_TITLE}
           credit={item.SFRSTCR_CREDIT_HR}
           grade={item.NOTAA}
           partial={item.items}
-          cardType="blue" // Set card type for cards above the divider
+          cardType="default" // Default card type
         />
       ))}
-      <Divider />
+      <Divider className={classes.divider} />
       <Container className={classes.container}>
-        <CardComponent title="Promedio semestral" credit={semesterCredits} parcelation={false} grade={PSA} cardType="green" />
-        <CardComponent title="Promedio acumulado" parcelation={false} grade={PGA} text="Promediado con este semestre" cardType="green" />
+        <CardComponent title="Promedio semestral" credit={semesterCredits} parcelation={false} grade={PSA} cardType="highlight" />
+        <CardComponent title="Promedio acumulado" parcelation={false} grade={PGA} text="Promediado con este semestre" cardType="highlight" />
       </Container>
     </Container>
   );
@@ -54,3 +67,8 @@ Tab1ListComponent.propTypes = {
 };
 
 export default Tab1ListComponent;
+
+
+
+
+

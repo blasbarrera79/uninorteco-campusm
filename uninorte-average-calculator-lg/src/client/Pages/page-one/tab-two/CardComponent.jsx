@@ -13,12 +13,20 @@ import { validateGrade } from '../../../utils/semester-grades';
 import { validateGradeType } from '../../../utils/validations';
 
 const useStyles = makeStyles((theme) => ({
+  '@global': {
+    '@import': "url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap')",
+  },
   paper: {
     padding: theme.spacing(2),
     borderRadius: 20,
-    boxShadow: 'none',
-    marginBottom: theme.spacing(1),
-    minHeight: '80px',
+    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', // Light shadow for better visual appearance
+    marginBottom: theme.spacing(3),
+    border: `3px solid #1d1d1b`, // Black border
+    backgroundColor: '#ffffff', // White background for the card
+    display: 'flex', 
+    alignItems: 'center', // Center vertically
+    textAlign: 'left', // Align text to the left
+    fontFamily: 'Quicksand, sans-serif', // Apply Quicksand font
   },
   gradeContainer: {
     display: 'flex',
@@ -27,27 +35,35 @@ const useStyles = makeStyles((theme) => ({
   gradeInput: {
     textAlign: 'center',
     marginRight: theme.spacing(1),
+    fontWeight: '700',
   },
   iconButton: {
     padding: 5,
     color: '#000000',
   },
   text: {
-    textAlign: 'left',
+    textAlign: 'left', // Align text to the left
     color: '#000000',
+    fontWeight: '700',
   },
   blueCard: {
-    backgroundColor: '#87ceeb',
+    backgroundColor: '#ffffff', // White background for blue cards
+    border: `3px solid #1d1d1b`, // Black border for blue cards
     color: '#000000',
   },
   greenCard: {
-    backgroundColor: '#32cd32',
+    backgroundColor: '#ffffff', // White background for green cards
+    border: '3px solid', // Border for green cards
+    borderImage: 'linear-gradient(to right, #1d1d1b, #d10a11) 1', // Gradient border
     color: '#000000',
+    borderRadius: 20, // Rounded corners for green cards
   },
   title: {
     fontSize: '17px',
     color: '#000000',
     marginBottom: theme.spacing(1),
+    fontWeight: '700',
+    textAlign: 'left', // Align text to the left
   },
 }));
 
@@ -107,16 +123,16 @@ export default function CardComponent({ title, grade, weight, text, updateQualif
 
   return (
     <Paper className={`${classes.paper} ${cardType === 'blue' ? classes.blueCard : cardType === 'green' ? classes.greenCard : ''}`}>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} alignItems="center">
         <Grid item xs={6}>
-          <Typography>
+          <Typography className={classes.title}>
             {title}
           </Typography>
-          <Typography variant="body2">{text}</Typography>
+          <Typography variant="body2" className={classes.text}>{text}</Typography>
         </Grid>
         <Grid item xs={6} container alignItems="center" justifyContent="flex-end">
           <Grid item>
-            <Typography variant="h6" style={{ margin: '0 8px' }}>
+            <Typography variant="h6" style={{ margin: '0 8px', fontWeight: '700', textAlign: 'center' }}>
               {displayGrade()}
             </Typography>
           </Grid>
@@ -153,3 +169,6 @@ CardComponent.propTypes = {
   canLock: PropTypes.bool,
   cardType: PropTypes.string,
 };
+
+
+

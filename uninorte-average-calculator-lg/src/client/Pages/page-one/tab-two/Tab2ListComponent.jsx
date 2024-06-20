@@ -9,9 +9,14 @@ import CardComponent from './CardComponent';
 import { calculateSemesterAverage, calculateNeededGrades } from '../../../utils/semester-grades';
 
 const useStyles = makeStyles((theme) => ({
+  '@global': {
+    '@import': "url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap')",
+  },
   root: {
     width: '100%',
     padding: theme.spacing(1),
+    backgroundColor: '#444444', // Dark grey background for the main container
+    fontFamily: 'Quicksand, sans-serif', // Apply Quicksand font
   },
   container: {
     paddingTop: theme.spacing(1),
@@ -47,20 +52,28 @@ function Tab2ListComponent(props) {
           // Comprobamos si el nuevo valor es numérico
           const parsedGrade = parseFloat(newGrade);
           if (isNaN(parsedGrade)) {
-            throw new Error("La calificación debe ser un número válido.");
+            setErrorMessage('Invalid grade input. Please enter a valid number.');
+            setOpenSnackbar(true);
+            return materia; // Devolvemos el materia sin cambios
           }
-          return { ...materia, NOTAA: parsedGrade, isModified: true };
+          // Validamos que el nuevo valor esté dentro del rango permitido
+          if (parsedGrade < 0 || parsedGrade > 100) {
+            setErrorMessage('Grade must be between 0 and 100.');
+            setOpenSnackbar(true);
+            return materia; // Devolvemos el materia sin cambios
+          }
+          return {
+            ...materia,
+            NOTAA: parsedGrade,
+            isModified: true,
+          };
         }
         return materia;
       });
-      // Calculamos el nuevo promedio con las calificaciones actualizadas
-      const newSemesterAverage = calculateSemesterAverage(updatedGrades);
-      setCurrentPSA(newSemesterAverage);
+      setCurrentPSA(calculateSemesterAverage(updatedGrades));
       return updatedGrades;
     });
   };
-  
-  
 
   const handleIsLocked = (targetGrade) => {
     const updatedGrades = gradesWithQualifications.map(subject => {
@@ -104,7 +117,17 @@ function Tab2ListComponent(props) {
         />
       ))}
       <Divider />
-      <CardComponent weight={1} cardType="green" title="Promedio Semestral" parcelacion={false} canLock={false} grade={currentPSA.toFixed(1)} text="Las asignaturas no bloqueadas serán modificadas para obtener un promedio semestral de:" edit updateQualifications={(newGrade) => updateAverage(newGrade)} />      
+      <CardComponent
+        weight={1}
+        cardType="green"
+        title="Promedio Semestral"
+        parcelacion={false}
+        canLock={false}
+        grade={currentPSA.toFixed(1)}
+        text="Las asignaturas no bloqueadas serán modificadas para obtener un promedio semestral de:"
+        edit
+        updateQualifications={(newGrade) => updateAverage(newGrade)}
+      />
       <Snackbar open={openSnackbar} autoHideDuration={5000} onClose={handleCloseSnackbar}>
         <Alert onClose={handleCloseSnackbar} severity="error">
           {errorMessage}
@@ -119,3 +142,8 @@ Tab2ListComponent.propTypes = {
 };
 
 export default Tab2ListComponent;
+
+
+
+
+
