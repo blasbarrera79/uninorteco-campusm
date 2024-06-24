@@ -1,6 +1,6 @@
 {
   "name": "@ombiel/uninorte-average-calculator-lg",
-  "version": "2.0.50",
+  "version": "2.0.52",
   "repository": "-",
   "license": "UNLICENSED",
   "scripts": {
@@ -46,7 +46,8 @@
     "access": {
       "write": {
         "users": [
-          "na::uninorte_admin"
+          "na::uninorte_admin",
+          "pn::uninorte_admin"
         ]
       }
     },
